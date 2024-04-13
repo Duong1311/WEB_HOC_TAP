@@ -25,4 +25,9 @@ const middleware = {
   },
 };
 
+// const verifyRole = (arrayRole) {
+//   //xử lí logic
+// }
+
+// verifyRole(["admin", "user"]);
 module.exports = middleware;
