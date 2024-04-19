@@ -37,25 +37,26 @@ const authControllers = {
       const hashed = await bcrypt.hash(req.body.password, salt);
 
       //create new user
-      // const newUser = await new User({
-      //   username: req.body.username,
-      //   email: req.body.email,
-      //   password: hashed,
-      // });
-
-      //save to database
-      // const user = await newUser.save();
-      const user = await UserModel.create({
+      const newUser = await new User({
         username: req.body.username,
         email: req.body.email,
         password: hashed,
       });
-      if (!user) {
-      }
-      res.json({
-        user: user,
-        message: "aaaaa",
-      });
+
+      //save to database
+      const user = await newUser.save();
+      // const user = await UserModel.create({
+      //   username: req.body.username,
+      //   email: req.body.email,
+      //   password: hashed,
+      // });
+      // if (!user) {
+      // }
+      // res.json({
+      //   user: user,
+      //   message: "aaaaa",
+      // });
+      res.status(200).json(user);
     } catch (err) {
       res.status(500).json(err);
     }
