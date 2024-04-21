@@ -5,7 +5,7 @@ const UserModel = require("../models/user");
 
 // thu viện lodash
 
-const refreshTokens = [];
+let refreshTokens = [];
 
 const authControllers = {
   //generate access token
@@ -17,7 +17,7 @@ const authControllers = {
         admin: user.admin,
       },
       process.env.JWT_ACCESS_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "10s" }
     );
   },
   generateRefreshToken: (user) => {
@@ -63,6 +63,7 @@ const authControllers = {
   },
   loginUser: async (req, res) => {
     try {
+      console.log("login");
       const user = await User.findOne({ username: req.body.username });
       if (!user) return res.status(404).json("Wrong username");
       const validPassword = await bcrypt.compare(
@@ -89,34 +90,49 @@ const authControllers = {
       res.status(500).json(err);
     }
   },
-  refreshToken: (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken)
-      return res.status(401).json("You are not authenticated!");
-
-    if (!refreshTokens.includes(refreshToken))
-      return res.status(403).json("Refresh token is not valid!");
-    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-
-    jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
-      if (err) return res.status(403).json("Token is not valid!");
-      const newAccessToken = authControllers.generateAccessToken(user);
-      const newRefreshToken = authControllers.generateRefreshToken(user);
-      refreshTokens.push(newRefreshToken);
-      res.cookie("refreshToken", newRefreshToken, {
-        httpOnly: true,
-        path: "/",
-        secure: false,
-        sameSite: "strict",
+  refreshToken: async (req, res) => {
+    try {
+      console.log("refresh token");
+      //Take refresh token from user
+      const refreshToken = req.cookies.refreshToken;
+      if (!refreshToken)
+        return res.status(401).json("You're not authenticated");
+      if (!refreshTokens.includes(refreshToken)) {
+        return res.status(403).json("Refresh token is not valid");
+      }
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
+        if (err) {
+          console.log(err);
+        }
+        refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+        //Create new accesstoken, refresh token
+        const newAccessToken = authControllers.generateAccessToken(user);
+        const newRefreshToken = authControllers.generateRefreshToken(user);
+        refreshTokens.push(newRefreshToken);
+        res.cookie("refreshToken", newRefreshToken, {
+          httpOnly: true,
+          secure: false,
+          path: "/",
+          sameSite: "strict",
+        });
+        res.status(200).json({ accessToken: newAccessToken });
       });
-      res.status(200).json({ accessToken: newAccessToken });
-    });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
   },
-  logout: (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-    res.clearCookie("refreshToken");
-    res.status(200).json("You logged out successfully!");
+  logout: async (req, res) => {
+    try {
+      console.log("logout");
+      res.clearCookie("refreshToken");
+      refreshTokens = refreshTokens.filter(
+        (token) => token !== req.cookies.refreshToken
+      );
+      return res.status(200).json("Logged out !");
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 

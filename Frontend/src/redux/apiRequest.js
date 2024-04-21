@@ -6,6 +6,9 @@ import {
   registerFailure,
   registerStart,
   registerSuccess,
+  logOutStart,
+  logOutSuccess,
+  logOutFailed,
 } from "./authSlice";
 
 export const loginUser = async (user, dispatch, navigate) => {
@@ -32,5 +35,20 @@ export const registerUser = async (user, dispatch, navigate) => {
     navigate("/");
   } catch (err) {
     dispatch(registerFailure());
+  }
+};
+
+export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
+  dispatch(logOutStart());
+  try {
+    console.log("logout api");
+    await axiosJWT.post("http://localhost:3000/api/auth/logout", id, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    dispatch(logOutSuccess());
+    navigate("/login");
+  } catch (err) {
+    dispatch(logOutFailed());
+    console.log(err);
   }
 };

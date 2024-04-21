@@ -92,12 +92,12 @@ export default function Login() {
                         required
                       />
                       <Link to="/forgot-password">
-                        <a
+                        <div
                           href="#"
-                          className="w-full text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          className="w-[308px] text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                           Forgot Password?
-                        </a>
+                        </div>
                       </Link>
                     </div>
                     <div className="flex items-center justify-between mb-4">
