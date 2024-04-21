@@ -94,7 +94,9 @@ const authControllers = {
     try {
       console.log("refresh token");
       //Take refresh token from user
+
       const refreshToken = req.cookies.refreshToken;
+      console.log(refreshToken);
       if (!refreshToken)
         return res.status(401).json("You're not authenticated");
       if (!refreshTokens.includes(refreshToken)) {

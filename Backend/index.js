@@ -11,7 +11,12 @@ const port = 3000;
 
 dotenv.config();
 
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
+
+app.use("*", cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 

@@ -3,17 +3,11 @@ import axios from "axios";
 // import { jwt_Decode } from "jwt-decode";
 // axios.defaults.withCredentials = true;
 import { jwtDecode } from "jwt-decode";
-
+axios.defaults.withCredentials = true;
 const refreshToken = async () => {
   try {
     console.log("refresh token");
-    const res = await axios.post(
-      "http://localhost:3000/api/auth/refresh",
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+    const res = await axios.post("http://localhost:3000/api/auth/refresh", {});
     return res.data;
   } catch (err) {
     console.log(err);

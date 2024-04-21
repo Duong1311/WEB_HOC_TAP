@@ -25,7 +25,7 @@ export default function Header() {
         <div>Logo</div>
         <div>Trang chủ</div>
         <div>Thể loại</div>
-        <div>Giảng viên</div>
+        <div>Tạo khóa học</div>
       </div>
 
       {user ? (
