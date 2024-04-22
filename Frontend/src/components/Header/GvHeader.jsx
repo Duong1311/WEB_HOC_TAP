@@ -1,12 +1,10 @@
-// import { FaUserCircle } from "react-icons/fa";
-// import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../redux/apiRequest";
 import { createAxios } from "../../utils/createInstance";
 import { logOutSuccess } from "../../redux/authSlice";
 
-export default function Header() {
+export default function GvHeader() {
   const user = useSelector((state) => state.auth.login.currentUser);
   // console.log(user);
   const accessToken = user?.accessToken;
@@ -20,17 +18,21 @@ export default function Header() {
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   return (
-    <div className="w-full h-[60px] flex justify-between items-center ">
-      <div className="flex space-x-8 justify-center items-center ml-8 font-medium ">
+    <div className="w-full h-[60px] flex justify-between items-center bg-black ">
+      <div className="flex space-x-8 justify-center items-center ml-8 font-medium text-white">
         <div>Logo</div>
-        <div>Trang chủ</div>
-        <div>Thể loại</div>
-        <Link to="/gvhome">
-          <div>Tạo khóa học</div>
+        <div>Tạo khóa học</div>
+      </div>
+      <div className="flex space-x-8 mr-8">
+        <p className="navbar-user">
+          Hi, <span> {user?.username} </span>{" "}
+        </p>
+        <Link to="/" onClick={handleLogout}>
+          {" "}
+          Log out
         </Link>
       </div>
-
-      {user ? (
+      {/* {user ? (
         <>
           <div className="flex space-x-8 mr-8">
             <p className="navbar-user">
@@ -57,7 +59,7 @@ export default function Header() {
             </Link>
           </div>
         </>
-      )}
+      )} */}
     </div>
   );
 }

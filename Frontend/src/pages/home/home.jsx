@@ -135,7 +135,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-
+      <div className="ml-5 mt-5 font-semibold text-2xl">Khoá học nổi bật</div>
       <div className="flex justify-center w-screen">
         <div className="grid gap-4 grid-cols-4 mt-7 w-5/6">
           {courses &&
