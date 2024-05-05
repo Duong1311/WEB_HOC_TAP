@@ -1,3 +1,4 @@
+import CreateCourse from "~/pages/createCourse/createCourse.jsx";
 import GvLayout from "../components/Layout/GvLayout/GvLayout.jsx";
 import CourseChapter from "../pages/chapter/CourseChapter.jsx";
 import GvHome from "../pages/gvhome/GvHome.jsx";
@@ -26,13 +27,18 @@ const publicRoutes = [
     layout: GvLayout,
   },
   {
-    path: "/CourseChapter",
+    path: "/CourseChapter/:id",
     component: CourseChapter,
     layout: GvLayout,
   },
   {
     path: "/CourseLesson",
     component: CourseLesson,
+    layout: GvLayout,
+  },
+  {
+    path: "/CreateCourse",
+    component: CreateCourse,
     layout: GvLayout,
   },
 ];

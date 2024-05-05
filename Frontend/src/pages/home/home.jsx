@@ -151,15 +151,16 @@ export default function Home() {
                   </div>
                   <div className="font-medium">{data.name}</div>
                   <div className="font-light">{data.actor}</div>
-                  <div className="flex flex-row">
+                  <div className="flex flex-row ">
                     <Rating
                       disableFillHover={true}
                       initialValue={data.rating}
                       size={20}
                       SVGstyle={{ display: "inline" }}
                       allowFraction={true}
+                      className="float-left"
                     />
-                    <div className="">{data.rating}</div>
+                    <div className="items-center">{data.rating}</div>
                   </div>
                 </div>
               );

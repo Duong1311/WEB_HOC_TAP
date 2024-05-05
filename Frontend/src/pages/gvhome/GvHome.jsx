@@ -1,11 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getAllCourseCreate } from "~/services/courseServices";
 
 export default function GvHome() {
+  const [courses, setCourses] = useState([]);
+  const id = "66110bbe6da80b59f28b6689";
+  const getAllCourses = async (id) => {
+    try {
+      const res = await getAllCourseCreate(id);
+      console.log(res.data);
+      setCourses(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getAllCourses(id);
+  }, []);
   return (
     <div className=" min-h-[1000px]">
       <div className="flex justify-center items-center ">
         <div className="flex flex-col justify-between w-5/6 mt-10">
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row justify-between mb-3">
             <div>
               <div className="max-w-xl mx-auto">
                 <form className="flex items-center">
@@ -56,41 +72,54 @@ export default function GvHome() {
               </div>
             </div>
             <div>
-              <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-                Tạo khóa học
-              </button>
+              <Link to="/CreateCourse">
+                <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
+                  Tạo khóa học
+                </button>
+              </Link>
             </div>
           </div>
-          <div className="mt-10 border flex flex-row justify-between items-center">
-            <div className="flex flex-row">
-              <div>
-                <img
-                  className="object-cover w-40 h-32"
-                  src="https://s.udemycdn.com/course/200_H/placeholder.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="ml-4 flex items-center">
-                <div className="flex flex-col space-y-2">
-                  <p className="text-lg font-bold">Tên khóa học</p>
-                  {/* <p className="text-sm">Giáo viên: Tên giáo viên</p> */}
-                  <p className="text-sm">Danh mục: Tên danh mục</p>
-                  <p className="text-sm">Số học viên: 0</p>
+
+          {courses &&
+            courses?.map((course) => {
+              return (
+                <div
+                  key={course._id}
+                  className="mt-3 border flex flex-row justify-between items-center"
+                >
+                  <div className="flex flex-row">
+                    <div>
+                      <img
+                        className="object-cover w-40 h-32"
+                        src="https://s.udemycdn.com/course/200_H/placeholder.jpg"
+                        alt=""
+                      />
+                    </div>
+                    <div className="ml-4 flex items-center">
+                      <div className="flex flex-col space-y-2">
+                        <p className="text-lg font-bold">{course.title}</p>
+                        {/* <p className="text-sm">Giáo viên: Tên giáo viên</p> */}
+                        <p className="text-sm">Danh mục: Tên danh mục</p>
+                        <p className="text-sm">Số học viên: 0</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="">
+                    <Link to={`/CourseChapter/${course._id}`}>
+                      <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
+                        Chỉnh sửa nội dung
+                      </button>
+                    </Link>
+                    <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
+                      Chỉnh sửa mô tả
+                    </button>
+                    <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
+                      Xuất bản
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="">
-              <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-                Chỉnh sửa nội dung
-              </button>
-              <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-                Chỉnh sửa mô tả
-              </button>
-              <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-                Xuất bản
-              </button>
-            </div>
-          </div>
+              );
+            })}
         </div>
       </div>
     </div>
