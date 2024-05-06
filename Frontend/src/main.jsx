@@ -7,6 +7,8 @@ import { persistor, store } from "./redux/store";
 import theme from "~/theme";
 import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -14,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <CssVarsProvider theme={theme}>
         <CssBaseline />
         <App />
+        <ToastContainer />
       </CssVarsProvider>
     </PersistGate>
   </Provider>

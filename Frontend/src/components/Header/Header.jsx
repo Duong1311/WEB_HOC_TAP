@@ -33,12 +33,12 @@ export default function Header() {
       {user ? (
         <>
           <div className="flex space-x-8 mr-8">
-            <p className="navbar-user">
-              Hi, <span> {user.username} </span>{" "}
+            <p className="">
+              Hi, <span> {user.username} </span>
             </p>
             <Link to="/" onClick={handleLogout}>
               {" "}
-              Log out
+              <div className=""> Log out</div>
             </Link>
           </div>
         </>

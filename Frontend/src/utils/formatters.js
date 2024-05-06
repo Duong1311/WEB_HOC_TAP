@@ -20,11 +20,11 @@ export const capitalizeFirstLetter = (val) => {
  * => Kỹ hơn nữa về cách tạo chuẩn ở bước nào thì sẽ ở học phần tích hợp API Back-end vào dự
  * án. (bởi vì đây là file mock-data)
  */
-export const generatePlaceholderCard = (column) => {
+export const generatePlaceholderlesson = (chapter) => {
   return {
-    _id: `${column._id}-placeholder-card`,
-    boardId: column.boardId,
-    columnId: column._id,
+    _id: `${chapter._id}-placeholder-card`,
+    courseId: chapter.courseId,
+    chapterId: chapter._id,
     FE_PlaceholderCard: true,
   };
 };

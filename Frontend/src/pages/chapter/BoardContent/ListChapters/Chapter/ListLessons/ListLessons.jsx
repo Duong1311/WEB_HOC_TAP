@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import Box from "@mui/material/Box";
-import Card from "./Card/Card";
+import Lesson from "./Lesson/Lesson";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-function ListCards({ cards }) {
+function ListLessons({ lessons }) {
   return (
     <SortableContext
-      items={cards?.map((c) => c._id)}
+      items={lessons?.map((c) => c._id)}
       strategy={verticalListSortingStrategy}
     >
       <Box
@@ -26,12 +26,12 @@ function ListCards({ cards }) {
           "&::-webkit-scrollbar-thumb:hover": { backgroundColor: "#dfc2cf" },
         }}
       >
-        {cards?.map((card) => (
-          <Card key={card._id} card={card} />
+        {lessons?.map((lesson) => (
+          <Lesson key={lesson._id} lesson={lesson} />
         ))}
       </Box>
     </SortableContext>
   );
 }
 
-export default ListCards;
+export default ListLessons;

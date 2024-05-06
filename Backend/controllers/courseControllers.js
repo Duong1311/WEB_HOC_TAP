@@ -4,9 +4,9 @@ const courseController = {
   createCategory: async (req, res, next) => {
     try {
       const createCategory = await courseService.createCategory(req.body);
-      res.status(StatusCodes.OK).json(createCategory);
+      res.status(StatusCodes.CREATED).json(createCategory);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(createCategory);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
   getAllCategory: async (req, res, next) => {
@@ -15,15 +15,15 @@ const courseController = {
 
       res.status(StatusCodes.OK).json(categorys);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(category);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
   createNewCourse: async (req, res, next) => {
     try {
       const createNewCourse = await courseService.createNewCourse(req.body);
-      res.status(StatusCodes.OK).json(createNewCourse);
+      res.status(StatusCodes.CREATED).json(createNewCourse);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(createNewCourse);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
   getAllCourseCreate: async (req, res, next) => {
@@ -33,7 +33,7 @@ const courseController = {
       );
       res.status(StatusCodes.OK).json(courseDetails);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(courseDetails);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
   getCourseCreateById: async (req, res, next) => {
@@ -41,9 +41,26 @@ const courseController = {
       const courseDetails = await courseService.getCourseCreateById(
         req.params.id
       );
+
       res.status(StatusCodes.OK).json(courseDetails);
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(courseDetails);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  createChapter: async (req, res, next) => {
+    try {
+      const createChapter = await courseService.createChapter(req.body);
+      res.status(StatusCodes.CREATED).json(createChapter);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  createLesson: async (req, res, next) => {
+    try {
+      const createLesson = await courseService.createLesson(req.body);
+      res.status(StatusCodes.CREATED).json(createLesson);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
 };

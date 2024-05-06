@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllCourseCreate } from "~/services/courseServices";
+import { useSelector } from "react-redux";
 
 export default function GvHome() {
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const id = user?._id;
+  // console.log(id);
+
   const [courses, setCourses] = useState([]);
-  const id = "66110bbe6da80b59f28b6689";
+  // const id = "66110bbe6da80b59f28b6689";
   const getAllCourses = async (id) => {
     try {
       const res = await getAllCourseCreate(id);
@@ -99,7 +104,9 @@ export default function GvHome() {
                       <div className="flex flex-col space-y-2">
                         <p className="text-lg font-bold">{course.title}</p>
                         {/* <p className="text-sm">Giáo viên: Tên giáo viên</p> */}
-                        <p className="text-sm">Danh mục: Tên danh mục</p>
+                        <p className="text-sm">
+                          Danh mục: {course.categoryId?.categoryName}
+                        </p>
                         <p className="text-sm">Số học viên: 0</p>
                       </div>
                     </div>

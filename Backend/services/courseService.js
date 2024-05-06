@@ -1,7 +1,12 @@
 // const { StatusCodes } = require("http-status-codes");
-const Course = require("../models/courseModel");
-const Chapter = require("../models/chapterModel");
+const Courses = require("../models/courseModel");
+const Chapters = require("../models/chapterModel");
+const Lessons = require("../models/lessonModel");
 const Category = require("../models/categoryModel");
+const { ObjectId } = require("mongodb");
+const mongoose = require("mongoose");
+const { cloneDeep, forEach, create } = require("lodash");
+
 const courseService = {
   createCategory: async (data) => {
     try {
@@ -18,9 +23,7 @@ const courseService = {
   getAllCategory: async () => {
     try {
       const categorys = await Category.find();
-      const categoryList = categorys.map((category) => {
-        category.categoryName, category._id;
-      });
+
       // return categoryList;
       return categorys;
     } catch (error) {
@@ -29,7 +32,7 @@ const courseService = {
   },
   createNewCourse: async (data) => {
     try {
-      const newCourse = await new Course({
+      const newCourse = await new Courses({
         userId: data.userId,
         title: data.title,
         categoryId: data.categoryId,
@@ -43,7 +46,9 @@ const courseService = {
   },
   getAllCourseCreate: async (id) => {
     try {
-      const courseDetails = await Course.find({ userId: id });
+      const courseDetails = await Courses.find({ userId: id }).populate(
+        "categoryId"
+      );
       return courseDetails;
     } catch (error) {
       throw error;
@@ -51,9 +56,67 @@ const courseService = {
   },
   getCourseCreateById: async (id) => {
     try {
-      //co course id tim chapter
-      const chapters = await Chapter.findById({ courseId: id });
-      return course;
+      const result = await Courses.aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId.createFromHexString(id),
+          },
+        },
+        {
+          $lookup: {
+            from: "chapters",
+            localField: "_id",
+            foreignField: "courseId",
+            as: "chapters",
+          },
+        },
+        {
+          $lookup: {
+            from: "lessons",
+            localField: "_id",
+            foreignField: "courseId",
+            as: "lessons",
+          },
+        },
+      ]);
+      // console.log(result[0]);
+      const resResults = cloneDeep(result[0]);
+      resResults.chapters.forEach((chapter) => {
+        chapter.lessons = resResults.lessons.filter((lesson) =>
+          lesson.chapterId.equals(chapter._id)
+        );
+      });
+      delete resResults.lessons;
+      // console.log(result);
+      return resResults;
+    } catch (error) {
+      throw error;
+    }
+  },
+  createChapter: async (data) => {
+    try {
+      const newChapter = await new Chapters({
+        courseId: data.courseId,
+        title: data.title,
+      });
+
+      //save to database
+      const chapter = await newChapter.save();
+      return chapter;
+    } catch (error) {
+      throw error;
+    }
+  },
+  createLesson: async (data) => {
+    try {
+      const newLesson = await new Lessons({
+        courseId: data.courseId,
+        chapterId: data.chapterId,
+        title: data.title,
+      });
+      //save to database
+      const lesson = await newLesson.save();
+      return lesson;
     } catch (error) {
       throw error;
     }

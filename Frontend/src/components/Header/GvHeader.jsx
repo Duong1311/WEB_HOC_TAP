@@ -18,12 +18,12 @@ export default function GvHeader() {
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   return (
-    <div className="w-full h-[60px] flex justify-between items-center bg-black ">
-      <div className="flex space-x-8 justify-center items-center ml-8 font-medium text-white">
+    <div className="w-full h-[60px] flex justify-between items-center border ">
+      <div className="flex space-x-8 justify-center items-center ml-8 font-medium ">
         <div>Logo</div>
         <div>Tạo khóa học</div>
       </div>
-      <div className="flex space-x-8 mr-8">
+      <div className="flex space-x-8 mr-8 ">
         <p className="navbar-user">
           Hi, <span> {user?.username} </span>{" "}
         </p>
