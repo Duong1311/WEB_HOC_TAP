@@ -5,7 +5,7 @@ const Lessons = require("../models/lessonModel");
 const Category = require("../models/categoryModel");
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
-const { cloneDeep, forEach, create } = require("lodash");
+const { cloneDeep } = require("lodash");
 
 const courseService = {
   createCategory: async (data) => {
@@ -60,6 +60,7 @@ const courseService = {
         {
           $match: {
             _id: mongoose.Types.ObjectId.createFromHexString(id),
+            // _id: new ObjectId(id),
           },
         },
         {
@@ -96,12 +97,27 @@ const courseService = {
   createChapter: async (data) => {
     try {
       const newChapter = await new Chapters({
-        courseId: data.courseId,
+        courseId: mongoose.Types.ObjectId.createFromHexString(data.courseId),
         title: data.title,
       });
-
       //save to database
       const chapter = await newChapter.save();
+      if (chapter) {
+        chapter.lessons = [];
+        //update chapterOrderIds in course
+        await Courses.findOneAndUpdate(
+          { _id: data.courseId },
+          {
+            $push: {
+              chapterOrderIds: new ObjectId(chapter._id),
+            },
+          },
+          {
+            returnDocument: "after",
+          }
+        );
+      }
+
       return chapter;
     } catch (error) {
       throw error;
@@ -110,13 +126,123 @@ const courseService = {
   createLesson: async (data) => {
     try {
       const newLesson = await new Lessons({
-        courseId: data.courseId,
-        chapterId: data.chapterId,
+        courseId: mongoose.Types.ObjectId.createFromHexString(data.courseId),
+        chapterId: mongoose.Types.ObjectId.createFromHexString(data.chapterId),
         title: data.title,
       });
       //save to database
       const lesson = await newLesson.save();
+      if (lesson) {
+        //update lessonOrderIds in chapter
+        await Chapters.findOneAndUpdate(
+          { _id: data.chapterId },
+          {
+            $push: {
+              lessonOrderIds: new ObjectId(lesson._id),
+            },
+          },
+          {
+            returnDocument: "after",
+          }
+        );
+      }
       return lesson;
+    } catch (error) {
+      throw error;
+    }
+  },
+  moveChapter: async (id, updateData) => {
+    try {
+      const update = {
+        ...updateData,
+      };
+
+      // console.log(update);
+      const result = await Courses.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: update,
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  moveLessonInOneChapter: async (id, updateData) => {
+    try {
+      const update = {
+        ...updateData,
+      };
+
+      // console.log(update);
+      const result = await Chapters.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: update,
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  deleteChapter: async (id) => {
+    try {
+      //delete chapterOrderIds in course
+      const chapterDelete = await Chapters.findOne({
+        _id: id,
+      });
+      console.log(chapterDelete);
+      if (!chapterDelete) {
+        return { message: "Không tìm thấy chương" };
+      }
+      const res = await Courses.findOneAndUpdate(
+        { _id: chapterDelete.courseId },
+        {
+          $pull: {
+            chapterOrderIds: new ObjectId(id),
+          },
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+      console.log(res);
+      //delete chapter
+      await Chapters.deleteOne({ _id: id });
+
+      //delete all lessons in chapter
+      await Lessons.deleteMany({ chapterId: id });
+
+      return { message: "Xóa chương thành công " };
+    } catch (error) {
+      throw error;
+    }
+  },
+  updateChapter: async (id, updateData) => {
+    try {
+      const update = {
+        ...updateData,
+      };
+
+      // console.log(update);
+      const result = await Chapters.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: update,
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+      return { result: result, message: "Cập nhật chương thành công" };
     } catch (error) {
       throw error;
     }

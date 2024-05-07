@@ -63,5 +63,49 @@ const courseController = {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
+  moveChapter: async (req, res, next) => {
+    try {
+      const moveChapter = await courseService.moveChapter(
+        req.params.id,
+        req.body
+      );
+
+      res.status(StatusCodes.OK).json(moveChapter);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  moveLessonInOneChapter: async (req, res, next) => {
+    try {
+      const moveLessonInOneChapter = await courseService.moveLessonInOneChapter(
+        req.params.id,
+        req.body
+      );
+
+      res.status(StatusCodes.OK).json(moveLessonInOneChapter);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  deleteChapter: async (req, res, next) => {
+    try {
+      const deleteChapter = await courseService.deleteChapter(req.params.id);
+      res.status(StatusCodes.OK).json(deleteChapter);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  updateChapter: async (req, res, next) => {
+    try {
+      const updateChapter = await courseService.updateChapter(
+        req.params.id,
+        req.body
+      );
+
+      res.status(StatusCodes.OK).json(updateChapter);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
 };
 module.exports = courseController;

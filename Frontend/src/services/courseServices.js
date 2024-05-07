@@ -13,10 +13,35 @@ const createNewCourse = (data) => {
 const getCourseCreatedById = (id) => {
   return axios.get(`/course/CourseDetails/${id}`);
 };
+const createChapter = (data) => {
+  return axios.post("/course/createChapter", data);
+};
+const createLesson = (data) => {
+  return axios.post("/course/createLesson", data);
+};
+const updateMoveChapter = (courseId, updateData) => {
+  return axios.put(`/course/moveChapter/${courseId}`, updateData);
+};
+const updateMoveLessonInOneChapter = (chapterId, updateData) => {
+  return axios.put(`/course/moveLessonOne/${chapterId}`, updateData);
+};
+
+const updateChapter = (chapterId, data) => {
+  return axios.put(`/course/updateChapter/${chapterId}`, data);
+};
+const deleteChapter = (chapterId) => {
+  return axios.delete(`/course/deleteChapter/${chapterId}`);
+};
 
 export {
   getAllCourseCreate,
   getAllCategory,
   createNewCourse,
   getCourseCreatedById,
+  createChapter,
+  createLesson,
+  updateMoveChapter,
+  updateMoveLessonInOneChapter,
+  updateChapter,
+  deleteChapter,
 };

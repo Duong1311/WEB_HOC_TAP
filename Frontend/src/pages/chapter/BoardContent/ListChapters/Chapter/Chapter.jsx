@@ -6,14 +6,10 @@ import AddCardIcon from "@mui/icons-material/AddCard";
 import Tooltip from "@mui/material/Tooltip";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ContentCut from "@mui/icons-material/ContentCut";
-import ContentCopy from "@mui/icons-material/ContentCopy";
-import ContentPaste from "@mui/icons-material/ContentPaste";
-import Cloud from "@mui/icons-material/Cloud";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -22,11 +18,17 @@ import { mapOrder } from "~/utils/sorts";
 import { TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
-
+import { useConfirm } from "material-ui-confirm";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useParams } from "react-router-dom";
 
-function Chapter({ chapter }) {
+function Chapter({
+  chapter,
+  addNewLessonApi,
+  deleteChapterApi,
+  updateChapterTitleApi,
+}) {
   const {
     attributes,
     listeners,
@@ -62,17 +64,59 @@ function Chapter({ chapter }) {
     chapter?.lessonOrderIds,
     "_id"
   );
+  const { id } = useParams();
 
   const [openNewLesson, setOpenNewLesson] = useState(false);
   const [lessonTitle, setLessonTitle] = useState("");
-  const toggleNewLesson = () => setOpenNewLesson(!openNewLesson);
+  const [updateChapterNameButton, setUpdateChapterNameButton] = useState(false);
+  const [chapterName, setChapterName] = useState("");
+  const confirm = useConfirm();
+  const toggleNewLesson = () => {
+    setOpenNewLesson(!openNewLesson);
+  };
+  const toggleUpdateChapter = () => {
+    setUpdateChapterNameButton(!updateChapterNameButton);
+  };
+  const updateChapterTitle = () => {
+    if (!chapterName) {
+      toast.error("Tên chapter không được để trống");
+      return;
+    }
+    if (chapterName === chapter.title) {
+      toast.error("Hãy nhập tên khác với tên cũ");
+      return;
+    }
+
+    // Call API to update chapter
+    updateChapterTitleApi(chapter._id, { title: chapterName });
+
+    toggleUpdateChapter();
+    setChapterName("");
+  };
+  const deleteChapter = () => {
+    confirm({
+      title: "Xóa chương",
+      description: "Hành động này sẽ xóa chương của bạn",
+    })
+      .then(() => {
+        deleteChapterApi(chapter._id);
+      })
+      .catch(() => {});
+  };
+
   const addNewLesson = () => {
     if (!lessonTitle) {
       toast.error("Lesson title is required");
       return;
     }
 
-    // Call API to add new chapter
+    // Call API to add new lesson
+
+    addNewLessonApi({
+      title: lessonTitle,
+      chapterId: chapter._id,
+      courseId: id,
+    });
     toggleNewLesson();
     setLessonTitle("");
   };
@@ -98,88 +142,104 @@ function Chapter({ chapter }) {
             justifyContent: "space-between",
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{
-              fontSize: "1rem",
-              fontWeight: "bold",
-              cursor: "pointer",
-            }}
-          >
-            {chapter?.title}
-          </Typography>
-
-          <Box>
-            <Tooltip title="More options">
-              <ExpandMoreIcon
-                sx={{ color: "text.primary", cursor: "pointer" }}
-                id="basic-chapter-dropdown"
-                aria-controls={open ? "basic-menu-chapter-dropdown" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
+          {!updateChapterNameButton ? (
+            <div className="flex justify-between w-full">
+              <Typography
+                variant="h6"
+                sx={{
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                {chapter?.title}
+              </Typography>
+              <Box>
+                <Tooltip title="More options">
+                  <ExpandMoreIcon
+                    sx={{ color: "text.primary", cursor: "pointer" }}
+                    id="basic-chapter-dropdown"
+                    aria-controls={
+                      open ? "basic-menu-chapter-dropdown" : undefined
+                    }
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                  />
+                </Tooltip>
+                <Menu
+                  id="basic-menu-chapter-dropdown"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-chapter-dropdown",
+                  }}
+                >
+                  <MenuItem onClick={deleteChapter}>
+                    <ListItemIcon>
+                      <DeleteForeverIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Delete</ListItemText>
+                    <Typography variant="body2" color="text.secondary">
+                      ⌘X
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={toggleUpdateChapter}>
+                    <ListItemIcon>
+                      <ContentCut fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Update</ListItemText>
+                    <Typography variant="body2" color="text.secondary">
+                      ⌘X
+                    </Typography>
+                  </MenuItem>
+                </Menu>
+              </Box>
+            </div>
+          ) : (
+            <div className="flex flex-row w-full items-center mt-1">
+              <TextField
+                label={chapter?.title}
+                type="text"
+                size="small"
+                variant="outlined"
+                autoFocus
+                onChange={(e) => setChapterName(e.target.value)}
+                className="w-full bg-white"
               />
-            </Tooltip>
-            <Menu
-              id="basic-menu-chapter-dropdown"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-chapter-dropdown",
-              }}
-            >
-              <MenuItem>
-                <ListItemIcon>
-                  <AddCardIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Add new lesson</ListItemText>
-                <Typography variant="body2" color="text.secondary">
-                  ⌘X
-                </Typography>
-              </MenuItem>
-              <MenuItem>
-                <ListItemIcon>
-                  <ContentCut fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Cut</ListItemText>
-                <Typography variant="body2" color="text.secondary">
-                  ⌘X
-                </Typography>
-              </MenuItem>
-              <MenuItem>
-                <ListItemIcon>
-                  <ContentCopy fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Copy</ListItemText>
-                <Typography variant="body2" color="text.secondary">
-                  ⌘C
-                </Typography>
-              </MenuItem>
-              <MenuItem>
-                <ListItemIcon>
-                  <ContentPaste fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Paste</ListItemText>
-                <Typography variant="body2" color="text.secondary">
-                  ⌘V
-                </Typography>
-              </MenuItem>
-              <Divider />
-              <MenuItem>
-                <ListItemIcon>
-                  <DeleteForeverIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Remove Archive this chapter</ListItemText>
-              </MenuItem>
-              <MenuItem>
-                <ListItemIcon>
-                  <Cloud fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Archive this chapter</ListItemText>
-              </MenuItem>
-            </Menu>
-          </Box>
+              <div className="flex items-center gap-1 ml-2">
+                <Button
+                  onClick={updateChapterTitle}
+                  variant="contained"
+                  color="success"
+                  size="small"
+                  sx={{
+                    boxShadow: "none",
+                    border: "0.5px solid",
+                    borderColor: "rgb(25, 118, 210)",
+                    bgcolor: "rgb(25, 118, 210)",
+                  }}
+                >
+                  Update
+                </Button>
+                <div>
+                  <CloseIcon
+                    fontSize="small"
+                    sx={{
+                      color: "white",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: (theme) => theme.palette.warning.light,
+                      },
+                    }}
+                    onClick={toggleUpdateChapter}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </Box>
 
         {/* List lessons */}
@@ -190,7 +250,7 @@ function Chapter({ chapter }) {
           {!openNewLesson ? (
             <>
               <Button onClick={toggleNewLesson} startIcon={<AddCardIcon />}>
-                Add new lesson
+                Thêm bài mới
               </Button>
               <Tooltip title="Drag to move">
                 <DragHandleIcon sx={{ cursor: "pointer" }} />

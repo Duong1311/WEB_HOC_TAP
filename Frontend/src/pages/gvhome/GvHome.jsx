@@ -22,6 +22,7 @@ export default function GvHome() {
   useEffect(() => {
     getAllCourses(id);
   }, []);
+
   return (
     <div className=" min-h-[1000px]">
       <div className="flex justify-center items-center ">

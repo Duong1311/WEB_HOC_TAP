@@ -9,14 +9,17 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/s
 import CssBaseline from "@mui/material/CssBaseline";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ConfirmProvider } from "material-ui-confirm";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <CssVarsProvider theme={theme}>
-        <CssBaseline />
-        <App />
-        <ToastContainer />
+        <ConfirmProvider>
+          <CssBaseline />
+          <App />
+          <ToastContainer />
+        </ConfirmProvider>
       </CssVarsProvider>
     </PersistGate>
   </Provider>

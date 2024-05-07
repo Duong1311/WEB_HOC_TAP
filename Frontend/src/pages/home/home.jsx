@@ -79,11 +79,19 @@ export default function Home() {
   return (
     <div className=" w-screen">
       <div className="relative ">
-        <img
+        {/* <img
           className="object-cover h-[560px] w-screen"
           src="https://www.w3schools.com/images/background_in_space.gif"
           alt=""
-        />
+        /> */}
+        {/* <img
+          className="object-cover h-[560px] w-screen"
+          // src="https://cdn.dribbble.com/users/4025749/screenshots/7319596/media/e8e15b54c947cdc39e9abe93a9080e73.gif"
+          // src="https://giphy.com/embed/YrTJKOe0FhQJAUXTyp"
+          alt=""
+        /> */}
+
+        <div className="h-[560px] w-screen bg-gradient-to-r from-cyan-700 via-blue-500 to-indigo-600"></div>
         <div className="absolute mx-auto my-auto top-11 left-0 right-0 text-center  text-white">
           <div className="flex flex-col space-y-10 justify-center items-center">
             <div>

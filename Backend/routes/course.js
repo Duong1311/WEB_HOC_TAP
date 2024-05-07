@@ -10,9 +10,19 @@ router.post(
 router.get("/AllCourseDetails/:id", courseController.getAllCourseCreate);
 router.get("/CourseDetails/:id", courseController.getCourseCreateById);
 
+//move chapter, lesson
+router.put("/moveChapter/:id", courseController.moveChapter);
+router.put("/moveLessonOne/:id", courseController.moveLessonInOneChapter);
+
 //add chapter, lesson
 router.post("/createChapter", courseController.createChapter);
 router.post("/createLesson", courseController.createLesson);
+
+//delete chapter
+router.delete("/deleteChapter/:id", courseController.deleteChapter);
+
+//update chapter
+router.put("/updateChapter/:id", courseController.updateChapter);
 
 //add category
 router.post("/createCategory", courseController.createCategory);

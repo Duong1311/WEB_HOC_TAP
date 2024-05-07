@@ -25,7 +25,15 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   lesson: "ACTIVE_DRAG_ITEM_TYPE_lesson",
 };
 
-function BoardContent({ course }) {
+function BoardContent({
+  course,
+  addNewChapterApi,
+  addNewLessonApi,
+  moveChapter,
+  moveLessonInOneChapter,
+  deleteChapterApi,
+  updateChapterTitleApi,
+}) {
   // https://docs.dndkit.com/api-documentation/sensors
   // Nếu dùng PointerSensor mặc định thì phải kết hợp thuộc tính CSS touch-action: none ở trong phần tử kéo thả - nhưng mà còn bug
 
@@ -286,6 +294,10 @@ function BoardContent({ course }) {
           newlessonIndex
         );
 
+        const dndOrderedlessonsIds = dndOrderedlessons.map(
+          (lesson) => lesson._id
+        );
+
         setOrderedchapters((prevchapters) => {
           // Clone mảng OrderedchaptersState cũ ra một cái mới để xử lý data rồi return - cập nhật lại OrderedchaptersState mới
           const nextchapters = cloneDeep(prevchapters);
@@ -297,13 +309,16 @@ function BoardContent({ course }) {
 
           // Cập nhật lại 2 giá trị mới là lesson và lessonOrderIds trong cái targetchapter
           targetchapter.lessons = dndOrderedlessons;
-          targetchapter.lessonOrderIds = dndOrderedlessons.map(
-            (lesson) => lesson._id
-          );
+          targetchapter.lessonOrderIds = dndOrderedlessonsIds;
 
           // Trả về giá trị state mới (chuẩn vị trí)
           return nextchapters;
         });
+        moveLessonInOneChapter(
+          dndOrderedlessons,
+          dndOrderedlessonsIds,
+          oldchapterWhenDragginglesson._id
+        );
       }
     }
 
@@ -327,13 +342,16 @@ function BoardContent({ course }) {
           oldchapterIndex,
           newchapterIndex
         );
+        // Cập nhật state chapters ban đầu sau khi đã kéo thả
+
+        setOrderedchapters(dndOrderedchapters);
+
         // 2 cái console.log dữ liệu này sau dùng để xử lý gọi API
         // const dndOrderedchaptersIds = dndOrderedchapters.map((c) => c._id)
         // console.log('dndOrderedchapters', dndOrderedchapters)
         // console.log('dndOrderedchaptersIds', dndOrderedchaptersIds)
 
-        // Cập nhật state chapters ban đầu sau khi đã kéo thả
-        setOrderedchapters(dndOrderedchapters);
+        moveChapter(dndOrderedchapters);
       }
     }
 
@@ -429,7 +447,13 @@ function BoardContent({ course }) {
         onDragEnd={handleDragEnd}
       >
         <div className=" flex h-auto ">
-          <ListChapters chapters={orderedchapters} />
+          <ListChapters
+            chapters={orderedchapters}
+            addNewChapterApi={addNewChapterApi}
+            addNewLessonApi={addNewLessonApi}
+            deleteChapterApi={deleteChapterApi}
+            updateChapterTitleApi={updateChapterTitleApi}
+          />
           <DragOverlay dropAnimation={customDropAnimation}>
             {!activeDragItemType && null}
             {activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.chapter && (

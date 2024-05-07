@@ -11,22 +11,39 @@ import {
   // horizontalListSortingStrategy,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { useParams } from "react-router-dom";
 
 import { useState } from "react";
-function ListChapters({ chapters }) {
+
+function ListChapters({
+  chapters,
+  addNewChapterApi,
+  addNewLessonApi,
+  deleteChapterApi,
+  updateChapterTitleApi,
+}) {
   const [openNewChapter, setOpenNewChapter] = useState(false);
   const [chapterTitle, setChapterTitle] = useState("");
+  const { id } = useParams();
+
   const toggleNewChapter = () => setOpenNewChapter(!openNewChapter);
+
   const addNewChapter = () => {
     if (!chapterTitle) {
       toast.error("Chapter title is required");
       return;
     }
-
     // Call API to add new chapter
+    const newChapter = {
+      title: chapterTitle,
+      courseId: id,
+    };
+    addNewChapterApi(newChapter);
+    //reset data
     toggleNewChapter();
     setChapterTitle("");
   };
+
   /**
    * Thằng Sortable yêu cầu items là một mảng dạng ['id-1', 'id-2'] chứ không phải [{id: 'id-1'}, {id: 'id-2'}]
    * Nếu không đúng thì vẫn kéo thả được nhưng không có animation
@@ -50,7 +67,13 @@ function ListChapters({ chapters }) {
         }}
       >
         {chapters?.map((chapter) => (
-          <Chapter key={chapter._id} chapter={chapter} />
+          <Chapter
+            key={chapter._id}
+            chapter={chapter}
+            addNewLessonApi={addNewLessonApi}
+            deleteChapterApi={deleteChapterApi}
+            updateChapterTitleApi={updateChapterTitleApi}
+          />
         ))}
 
         {/* Box Add new chapter CTA */}
@@ -75,11 +98,11 @@ function ListChapters({ chapters }) {
               }}
               onClick={toggleNewChapter}
             >
-              Add new chapter
+              Thêm chương mới
             </Button>
           </Box>
         ) : (
-          <div className="w-full bg-gray-200 p-2 rounded-md h-fit flex flex-col gap-1">
+          <div className="w-[800px] bg-gray-200 p-2 rounded-md h-fit flex flex-col gap-1">
             <TextField
               label="Enter chapter title..."
               type="text"
@@ -90,7 +113,7 @@ function ListChapters({ chapters }) {
               onChange={(e) => setChapterTitle(e.target.value)}
               className="w-full bg-white"
             />
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 w-full">
               <Button
                 onClick={addNewChapter}
                 variant="contained"
@@ -103,7 +126,7 @@ function ListChapters({ chapters }) {
                   bgcolor: "rgb(25, 118, 210)",
                 }}
               >
-                Add Column
+                Thêm
               </Button>
               <CloseIcon
                 fontSize="small"
