@@ -19,6 +19,12 @@ const createChapter = (data) => {
 const createLesson = (data) => {
   return axios.post("/course/createLesson", data);
 };
+const createLessonContent = (id, data) => {
+  return axios.post(`/course/createLessonContent/${id}`, data);
+};
+const getLessonContent = (id) => {
+  return axios.get(`/course/getLessonContent/${id}`);
+};
 const updateMoveChapter = (courseId, updateData) => {
   return axios.put(`/course/moveChapter/${courseId}`, updateData);
 };
@@ -44,4 +50,6 @@ export {
   updateMoveLessonInOneChapter,
   updateChapter,
   deleteChapter,
+  createLessonContent,
+  getLessonContent,
 };

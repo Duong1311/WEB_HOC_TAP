@@ -1,6 +1,17 @@
 const { StatusCodes } = require("http-status-codes");
 const courseService = require("../services/courseService");
 const courseController = {
+  createLessonContent: async (req, res, next) => {
+    try {
+      const createLessonContent = await courseService.createLessonContent(
+        req.params.id,
+        req.body
+      );
+      res.status(StatusCodes.CREATED).json(createLessonContent);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   createCategory: async (req, res, next) => {
     try {
       const createCategory = await courseService.createCategory(req.body);
@@ -103,6 +114,14 @@ const courseController = {
       );
 
       res.status(StatusCodes.OK).json(updateChapter);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  getLessonContent: async (req, res, next) => {
+    try {
+      const lessonContent = await courseService.getLessonContent(req.params.id);
+      res.status(StatusCodes.OK).json(lessonContent);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }

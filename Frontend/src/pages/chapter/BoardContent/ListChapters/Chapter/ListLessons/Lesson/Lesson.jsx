@@ -49,7 +49,7 @@ function Lesson({ lesson }) {
       className="hover:border-blue-500 border border-transparent rounded-md shadow-sm hover:shadow-lg transition duration-300 ease-in-out"
     >
       <CardContent sx={{ p: 1.5, "&:last-child": { p: 1.5 } }}>
-        <Link to={"/CourseLesson"}>
+        <Link to={`/CourseLesson/${lesson._id}`}>
           <Typography>{lesson?.title}</Typography>
         </Link>
       </CardContent>

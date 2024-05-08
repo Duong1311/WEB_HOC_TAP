@@ -18,6 +18,11 @@ router.put("/moveLessonOne/:id", courseController.moveLessonInOneChapter);
 router.post("/createChapter", courseController.createChapter);
 router.post("/createLesson", courseController.createLesson);
 
+//get lesson content
+router.get("/getLessonContent/:id", courseController.getLessonContent);
+//update lesson content
+router.post("/createLessonContent/:id", courseController.createLessonContent);
+
 //delete chapter
 router.delete("/deleteChapter/:id", courseController.deleteChapter);
 

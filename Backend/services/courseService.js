@@ -8,6 +8,34 @@ const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
 
 const courseService = {
+  createLessonContent: async (id, data) => {
+    try {
+      //find lesson and update
+      const lesson = await Lessons.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            entityMap: data.entityMap,
+            blocks: data.blocks,
+          },
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+      return { message: "Cập nhật bài học thành công" };
+    } catch (error) {
+      throw error;
+    }
+  },
+  getLessonContent: async (id) => {
+    try {
+      const lessonContent = await Lessons.findOne({ _id: id });
+      return lessonContent;
+    } catch (error) {
+      throw error;
+    }
+  },
   createCategory: async (data) => {
     try {
       const newCategory = await new Category({

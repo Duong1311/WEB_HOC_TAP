@@ -16,14 +16,11 @@ const lessonSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
+    entityMap: {
+      type: mongoose.SchemaTypes.Mixed,
     },
-    video: {
-      type: String,
-    },
-    text: {
-      type: String,
+    blocks: {
+      type: mongoose.SchemaTypes.Mixed,
     },
     pdf: {
       type: String,
