@@ -3,45 +3,35 @@ import { useEffect, useState } from "react";
 import Question from "./Question/Question";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { getLessonQuestions } from "~/services/courseServices";
+import {
+  getLessonQuestions,
+  createLessonQuestion,
+} from "~/services/courseServices";
 export default function QuestionList() {
   const { id } = useParams();
-  const [questionsData, setQuestionsData] = useState([
-    {
-      _id: 1,
-      title: "Câu hỏi 1",
-      answers: ["Đáp án 1", "Đáp án 2", "Đáp án 3", "Đáp án 4"],
-      correct: 1,
-      explanation: "Gi",
-    },
-
-    {
-      _id: 2,
-      title: "Câu hỏi 2",
-      answers: ["Đáp án 1", "Đáp án 2", "Đáp án 3", "Đáp án 4"],
-      correct: 2,
-      explanation: "Gi",
-    },
-
-    {
-      _id: 3,
-      title: "Câu hỏi 3",
-      answers: ["Đáp án 1", "Đáp án 2", "Đáp án 3", "Đáp án 4"],
-      correct: 3,
-      explanation: "Gi",
-    },
-  ]);
+  const [questionsData, setQuestionsData] = useState([]);
 
   const getLessonQuestionApi = async (id) => {
     try {
       const res = await getLessonQuestions(id);
       console.log("questions", res.data);
+      setQuestionsData(res.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  const createLesssonQuestionApi = async (id, questionsData) => {
+    try {
+      const res = await createLessonQuestion(id, questionsData);
+      console.log("questions", res.data);
+      getLessonQuestionApi(id);
     } catch (error) {
       console.log("error", error);
     }
   };
   const handleCreateLessonQuestions = () => {
-    console.log("list questions");
+    console.log("list questions", questionsData);
+    createLesssonQuestionApi(id, questionsData);
   };
   const addNewQuestion = () => {
     console.log("add new question");
@@ -104,7 +94,7 @@ export default function QuestionList() {
         </button>
       </div>
       <div>
-        {questionsData.map((question) => (
+        {questionsData?.map((question) => (
           <Question
             key={question._id}
             question={question}

@@ -3,11 +3,66 @@ const Courses = require("../models/courseModel");
 const Chapters = require("../models/chapterModel");
 const Lessons = require("../models/lessonModel");
 const Category = require("../models/categoryModel");
-const { ObjectId } = require("mongodb");
+const Questions = require("../models/questionModel");
+// const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
 
 const courseService = {
+  isValidObjectId: (id) => {
+    if (ObjectId.isValid(id)) {
+      if (String(new ObjectId(id)) === id) return true;
+      return false;
+    }
+    return false;
+  },
+  createLessonQuestions: async (id, data) => {
+    try {
+      for (const question of data) {
+        // find question created
+
+        if (mongoose.isObjectIdOrHexString(question._id)) {
+          //update question
+          const res = await Questions.findOneAndUpdate(
+            { _id: question._id },
+            {
+              $set: {
+                question: question.title,
+                answers: question.answers,
+                correct: question.correct,
+                explanation: question.explanation,
+              },
+            },
+            {
+              returnDocument: "after",
+            }
+          );
+        } else {
+          //create new question
+          const newQuestion = await new Questions({
+            lessonId: mongoose.Types.ObjectId.createFromHexString(id),
+            question: question.title,
+            answers: question.answers,
+            correct: question.correct,
+            explanation: question.explanation,
+          });
+          //save to database
+          await newQuestion.save();
+        }
+      }
+      return { message: "Cập nhật câu hỏi thành công" };
+    } catch (error) {
+      throw error;
+    }
+  },
+  getLessonQuestions: async (id) => {
+    try {
+      const lessonQuestions = await Questions.find({ lessonId: id });
+      return lessonQuestions;
+    } catch (error) {
+      throw error;
+    }
+  },
   createLessonContent: async (id, data) => {
     try {
       //find lesson and update

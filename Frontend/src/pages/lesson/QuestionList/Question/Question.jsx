@@ -25,7 +25,7 @@ export default function Question({
               type="text"
               className="w-full px-4 py-3 text-gray-800    focus:outline-none"
               placeholder="search"
-              defaultValue={question.title}
+              defaultValue={question.question}
             />
           </div>
         </div>

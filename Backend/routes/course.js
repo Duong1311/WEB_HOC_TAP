@@ -20,6 +20,15 @@ router.post("/createLesson", courseController.createLesson);
 
 //get lesson content
 router.get("/getLessonContent/:id", courseController.getLessonContent);
+
+//get lesson questions
+router.get("/getLessonQuestions/:id", courseController.getLessonQuestions);
+
+//create lesson questions
+router.post(
+  "/createLessonQuestions/:id",
+  courseController.createLessonQuestions
+);
 //update lesson content
 router.post("/createLessonContent/:id", courseController.createLessonContent);
 

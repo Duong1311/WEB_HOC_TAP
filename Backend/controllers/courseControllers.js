@@ -1,6 +1,27 @@
 const { StatusCodes } = require("http-status-codes");
 const courseService = require("../services/courseService");
 const courseController = {
+  createLessonQuestions: async (req, res, next) => {
+    try {
+      const createLessonQuestions = await courseService.createLessonQuestions(
+        req.params.id,
+        req.body
+      );
+      res.status(StatusCodes.CREATED).json(createLessonQuestions);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  getLessonQuestions: async (req, res, next) => {
+    try {
+      const lessonQuestions = await courseService.getLessonQuestions(
+        req.params.id
+      );
+      res.status(StatusCodes.OK).json(lessonQuestions);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   createLessonContent: async (req, res, next) => {
     try {
       const createLessonContent = await courseService.createLessonContent(

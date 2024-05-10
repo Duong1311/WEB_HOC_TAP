@@ -22,6 +22,9 @@ const createLesson = (data) => {
 const createLessonContent = (id, data) => {
   return axios.post(`/course/createLessonContent/${id}`, data);
 };
+const createLessonQuestion = (id, data) => {
+  return axios.post(`/course/createLessonQuestions/${id}`, data);
+};
 const getLessonContent = (id) => {
   return axios.get(`/course/getLessonContent/${id}`);
 };
@@ -56,4 +59,5 @@ export {
   createLessonContent,
   getLessonContent,
   getLessonQuestions,
+  createLessonQuestion,
 };
