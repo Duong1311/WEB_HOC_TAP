@@ -25,6 +25,9 @@ const createLessonContent = (id, data) => {
 const getLessonContent = (id) => {
   return axios.get(`/course/getLessonContent/${id}`);
 };
+const getLessonQuestions = (id) => {
+  return axios.get(`/course/getLessonQuestions/${id}`);
+};
 const updateMoveChapter = (courseId, updateData) => {
   return axios.put(`/course/moveChapter/${courseId}`, updateData);
 };
@@ -52,4 +55,5 @@ export {
   deleteChapter,
   createLessonContent,
   getLessonContent,
+  getLessonQuestions,
 };
