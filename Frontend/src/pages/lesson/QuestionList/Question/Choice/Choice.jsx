@@ -1,8 +1,22 @@
 /* eslint-disable react/prop-types */
 import DeleteIcon from "@mui/icons-material/Delete";
-export default function Choice({ choice, index, deleteChoice, questionId }) {
+import { useState } from "react";
+
+export default function Choice({
+  choice,
+  index,
+  deleteChoice,
+  questionId,
+  addNewChoiceData,
+}) {
+  const [choiceDataState, setChoiceDataState] = useState(choice);
+
   const handleDeleteChoice = () => {
     deleteChoice(questionId, index);
+  };
+  const handleChoiseDataChange = (e) => {
+    setChoiceDataState(e.target.value);
+    addNewChoiceData(questionId, index, e.target.value);
   };
   return (
     <div className="w-full border mb-2 flex flex-row items-center">
@@ -10,7 +24,9 @@ export default function Choice({ choice, index, deleteChoice, questionId }) {
         type="text"
         className="w-full px-4 py-3 text-gray-800    focus:outline-none"
         placeholder="search"
-        defaultValue={choice}
+        // defaultValue={choice}
+        value={choiceDataState}
+        onChange={handleChoiseDataChange}
       />
       <div className="mr-3">
         <DeleteIcon

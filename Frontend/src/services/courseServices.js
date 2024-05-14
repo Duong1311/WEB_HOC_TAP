@@ -44,6 +44,9 @@ const updateChapter = (chapterId, data) => {
 const deleteChapter = (chapterId) => {
   return axios.delete(`/course/deleteChapter/${chapterId}`);
 };
+const createLessonQuestionByOpenAi = (data) => {
+  return axios.post("/openai", data);
+};
 
 export {
   getAllCourseCreate,
@@ -60,4 +63,5 @@ export {
   getLessonContent,
   getLessonQuestions,
   createLessonQuestion,
+  createLessonQuestionByOpenAi,
 };

@@ -12,6 +12,7 @@ import QuestionList from "./QuestionList/QuestionList";
 
 export default function CourseLesson() {
   const { id } = useParams();
+  const { chaptername } = useParams();
   const [lesson, setLesson] = useState({});
   const [old, setOld] = useState({});
   const [displayEditor, setDisplayEditor] = useState(true);
@@ -60,7 +61,7 @@ export default function CourseLesson() {
   if (!lesson) return <div>Loading...</div>;
   return (
     <div className="min-h-[960px] flex justify-center">
-      <div className="w-5/6">
+      <div className="w-4/6">
         {/* <div className="flex font-medium text-lg mt-10">
           <div className=" inline-block align-middle ">Khóa học</div>
           <AiOutlineRight className="self-center" />
@@ -83,7 +84,7 @@ export default function CourseLesson() {
                 href="#"
                 className="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700"
               >
-                Chương
+                {chaptername}
               </a>
             </li>
             <li className="text-purple-700" aria-current="page">

@@ -7,7 +7,7 @@ import { createAxios } from "../../utils/createInstance";
 import { logOutSuccess } from "../../redux/authSlice";
 
 export default function Header() {
-  const user = useSelector((state) => state.auth.login.currentUser);
+  const user = useSelector((state) => state.root.auth.login.currentUser);
   // console.log(user);
   const accessToken = user?.accessToken;
   // console.log(accessToken);

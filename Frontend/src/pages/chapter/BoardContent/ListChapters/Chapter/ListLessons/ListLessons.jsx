@@ -6,7 +6,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-function ListLessons({ lessons }) {
+function ListLessons({ lessons, chapter }) {
   return (
     <SortableContext
       items={lessons?.map((c) => c._id)}
@@ -27,7 +27,7 @@ function ListLessons({ lessons }) {
         }}
       >
         {lessons?.map((lesson) => (
-          <Lesson key={lesson._id} lesson={lesson} />
+          <Lesson key={lesson._id} lesson={lesson} chapter={chapter} />
         ))}
       </Box>
     </SortableContext>

@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+// import { v4 as uuidv4 } from "uuid";
+
 // import { mapOrder } from "~/utils/sorts";
 
 // import { cloneDeep, isEmpty } from "lodash";
@@ -59,8 +61,12 @@ export default function CourseChapter() {
       // console.log(res.data);
 
       const newCourse = { ...course };
-      newCourse.chapters.push(res.data);
-      newCourse.chapterOrderIds.push(res.data._id);
+      const newChapter = {
+        ...res.data,
+        lessons: [],
+      };
+      newCourse.chapters.push(newChapter);
+      newCourse.chapterOrderIds.push(newChapter._id);
       setCourse(newCourse);
     } catch (error) {
       console.log(error);
@@ -69,12 +75,13 @@ export default function CourseChapter() {
   const addNewLessonApi = async (data) => {
     try {
       const res = await createLesson(data);
-      // console.log(res.data);
+      console.log("old data", data);
       const newCourse = { ...course };
       const chapterUpdate = newCourse.chapters.find(
-        (chapter) => chapter._id === res.data.chapterId
+        (chapter) => chapter._id === data.chapterId
       );
       if (chapterUpdate) {
+        console.log("chapterUpdate", chapterUpdate);
         chapterUpdate.lessons.push(res.data);
         chapterUpdate.lessonOrderIds.push(res.data._id);
       }

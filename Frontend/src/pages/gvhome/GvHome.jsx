@@ -4,7 +4,7 @@ import { getAllCourseCreate } from "~/services/courseServices";
 import { useSelector } from "react-redux";
 
 export default function GvHome() {
-  const user = useSelector((state) => state.auth.login.currentUser);
+  const user = useSelector((state) => state.root.auth.login.currentUser);
   const id = user?._id;
   // console.log(id);
 

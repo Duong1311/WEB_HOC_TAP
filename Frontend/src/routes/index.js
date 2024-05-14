@@ -32,7 +32,7 @@ const publicRoutes = [
     layout: GvLayout,
   },
   {
-    path: "/CourseLesson/:id",
+    path: "/CourseLesson/:chaptername/:id",
     component: CourseLesson,
     layout: GvLayout,
   },

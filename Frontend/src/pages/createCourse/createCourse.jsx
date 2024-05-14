@@ -15,7 +15,7 @@ export default function CreateCourse() {
   const [courseTitle, setCourseTitle] = useState("");
   const navigate = useNavigate();
 
-  const user = useSelector((state) => state.auth.login.currentUser);
+  const user = useSelector((state) => state.root.auth.login.currentUser);
   const id = user?._id;
   const getCategories = async () => {
     try {

@@ -243,7 +243,7 @@ function Chapter({
         </Box>
 
         {/* List lessons */}
-        <ListLesson lessons={orderedlessons} />
+        <ListLesson lessons={orderedlessons} chapter={chapter} />
 
         {/* Box chapter Footer */}
         <div className="w-full bg-gray-200 p-2 rounded-md h-fit flex items-center justify-between">

@@ -1,5 +1,6 @@
 import Choice from "./Choice/Choice";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useState } from "react";
 
 /* eslint-disable react/prop-types */
 export default function Question({
@@ -7,12 +8,31 @@ export default function Question({
   addNewChoice,
   deleteChoice,
   deleteQuestion,
+  addNewQuestionData,
+  addNewChoiceData,
+  addExplanation,
+  addCorrect,
 }) {
+  const [questionDataState, setQuestionDataState] = useState(question.question);
+  const [explain, setExplain] = useState(question.explanation);
+  const [correct, setCorrect] = useState(question.correct);
   const handleAddNewChoice = () => {
     addNewChoice(question._id);
   };
   const handleDeleteQuestion = () => {
     deleteQuestion(question._id);
+  };
+  const handleQuestionDataChange = (e) => {
+    setQuestionDataState(e.target.value);
+    addNewQuestionData(question._id, e.target.value);
+  };
+  const handleCorrectChange = (e) => {
+    setCorrect(e.target.value);
+    addCorrect(question._id, e.target.value);
+  };
+  const handleExplainChange = (e) => {
+    setExplain(e.target.value);
+    addExplanation(question._id, e.target.value);
   };
   return (
     <div className="border border-black rounded-sm min-h-[100px] mb-5 flex justify-center items-center">
@@ -25,7 +45,9 @@ export default function Question({
               type="text"
               className="w-full px-4 py-3 text-gray-800    focus:outline-none"
               placeholder="search"
-              defaultValue={question.question}
+              value={questionDataState}
+              // defaultValue={question.question}
+              onChange={handleQuestionDataChange}
             />
           </div>
         </div>
@@ -41,6 +63,7 @@ export default function Question({
                 index={i}
                 questionId={question._id}
                 deleteChoice={deleteChoice}
+                addNewChoiceData={addNewChoiceData}
               />
             ))}
 
@@ -60,10 +83,11 @@ export default function Question({
           <div className="w-20">Đáp án</div>
           <div className="w-full border flex justify-center items-center ">
             <input
-              type="text"
+              type="number"
               className="w-full px-4 py-3 text-gray-800    focus:outline-none"
-              placeholder="search"
-              defaultValue={question.correct}
+              placeholder="Đáp án"
+              value={correct}
+              onChange={handleCorrectChange}
             />
           </div>
         </div>
@@ -75,7 +99,8 @@ export default function Question({
               type="text"
               className="w-full px-4 py-3 text-gray-800    focus:outline-none"
               placeholder="Giai thich"
-              defaultValue={question.explain}
+              value={explain}
+              onChange={handleExplainChange}
             />
           </div>
         </div>
