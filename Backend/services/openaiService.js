@@ -34,7 +34,7 @@ const openaiService = {
       // Please answer in Vietnamese
       // `;
       const prompt = `
-    tạo một mảng JSON cho ${number} câu hỏi trong lĩnh vực ${field}, trong đó liệt kê một tập hợp các đối tượng con có cấu trúc JSON:
+    tạo một mảng JSON có tên là questions cho ${number} câu hỏi trong lĩnh vực ${field}, trong đó liệt kê một tập hợp các đối tượng con có cấu trúc JSON:
     {
       "question": "câu hỏi",
       "answers": ["câu trả lời 1", "câu trả lời 2", "câu trả lời 3", "câu trả lời 4"],

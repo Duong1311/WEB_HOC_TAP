@@ -21,6 +21,7 @@ function ListChapters({
   addNewLessonApi,
   deleteChapterApi,
   updateChapterTitleApi,
+  deleteLessonApi,
 }) {
   const [openNewChapter, setOpenNewChapter] = useState(false);
   const [chapterTitle, setChapterTitle] = useState("");
@@ -73,6 +74,7 @@ function ListChapters({
             addNewLessonApi={addNewLessonApi}
             deleteChapterApi={deleteChapterApi}
             updateChapterTitleApi={updateChapterTitleApi}
+            deleteLessonApi={deleteLessonApi}
           />
         ))}
 

@@ -28,6 +28,7 @@ function Chapter({
   addNewLessonApi,
   deleteChapterApi,
   updateChapterTitleApi,
+  deleteLessonApi,
 }) {
   const {
     attributes,
@@ -243,7 +244,10 @@ function Chapter({
         </Box>
 
         {/* List lessons */}
-        <ListLesson lessons={orderedlessons} chapter={chapter} />
+        <ListLesson
+          lessons={orderedlessons}
+          deleteLessonApi={deleteLessonApi}
+        />
 
         {/* Box chapter Footer */}
         <div className="w-full bg-gray-200 p-2 rounded-md h-fit flex items-center justify-between">

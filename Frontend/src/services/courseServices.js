@@ -44,6 +44,12 @@ const updateChapter = (chapterId, data) => {
 const deleteChapter = (chapterId) => {
   return axios.delete(`/course/deleteChapter/${chapterId}`);
 };
+const deleteQuestionApi = (questionId) => {
+  return axios.delete(`/course/deleteQuestion/${questionId}`);
+};
+const deleteLesson = (lessonId) => {
+  return axios.delete(`/course/deleteLesson/${lessonId}`);
+};
 const createLessonQuestionByOpenAi = (data) => {
   return axios.post("/openai", data);
 };
@@ -64,4 +70,6 @@ export {
   getLessonQuestions,
   createLessonQuestion,
   createLessonQuestionByOpenAi,
+  deleteQuestionApi,
+  deleteLesson,
 };

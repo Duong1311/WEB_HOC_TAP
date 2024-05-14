@@ -3,13 +3,14 @@
 import { Card as MuiCard } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { Link } from "react-router-dom";
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-function Lesson({ lesson, chapter }) {
+function Lesson({ lesson, deleteLessonApi }) {
   const {
     attributes,
     listeners,
@@ -33,7 +34,9 @@ function Lesson({ lesson, chapter }) {
     opacity: isDragging ? 0.5 : undefined,
     border: isDragging ? "1px solid #2ecc71" : undefined,
   };
-
+  const handleDeleteLesson = () => {
+    deleteLessonApi(lesson._id);
+  };
   return (
     <MuiCard
       ref={setNodeRef}
@@ -46,12 +49,21 @@ function Lesson({ lesson, chapter }) {
         overflow: "unset",
         // display: lesson?.FE_PlaceholderCard ? "none" : "block",
       }}
-      className="hover:border-blue-500 border border-transparent rounded-md shadow-sm hover:shadow-lg transition duration-300 ease-in-out"
+      className=" hover:border-blue-500 border border-transparent rounded-md shadow-sm hover:shadow-lg transition duration-300 ease-in-out"
     >
-      <CardContent sx={{ p: 1.5, "&:last-child": { p: 1.5 } }}>
-        <Link to={`/CourseLesson/${chapter.title}/${lesson._id}`}>
+      <CardContent
+        sx={{
+          p: 1.5,
+          "&:last-child": { p: 1.5 },
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Link to={`/CourseLesson/${lesson._id}`}>
           <Typography>{lesson?.title}</Typography>
         </Link>
+        <DeleteIcon className="cursor-pointer" onClick={handleDeleteLesson} />
       </CardContent>
     </MuiCard>
   );

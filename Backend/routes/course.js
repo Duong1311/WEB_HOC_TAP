@@ -29,6 +29,10 @@ router.post(
   "/createLessonQuestions/:id",
   courseController.createLessonQuestions
 );
+//delete lesson question
+router.delete("/deleteQuestion/:id", courseController.deleteQuestion);
+//delete lesson
+router.delete("/deleteLesson/:id", courseController.deleteLesson);
 //update lesson content
 router.post("/createLessonContent/:id", courseController.createLessonContent);
 

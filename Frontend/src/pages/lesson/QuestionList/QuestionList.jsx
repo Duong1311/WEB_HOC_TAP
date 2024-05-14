@@ -7,7 +7,9 @@ import {
   getLessonQuestions,
   createLessonQuestion,
   createLessonQuestionByOpenAi,
+  deleteQuestionApi,
 } from "~/services/courseServices";
+import { toast } from "react-toastify";
 
 export default function QuestionList() {
   const { id } = useParams();
@@ -91,7 +93,7 @@ export default function QuestionList() {
     setQuestionsData(newQuestionsData);
     console.log(questionsData);
   };
-  const deleteQuestion = (questionId) => {
+  const deleteQuestion = async (questionId) => {
     console.log("delete question", questionId);
     const newQuestionsData = [...questionsData];
     const question = newQuestionsData.find((q) => q._id === questionId);
@@ -100,6 +102,9 @@ export default function QuestionList() {
       newQuestionsData.splice(index, 1);
     }
     setQuestionsData(newQuestionsData);
+    const res = await deleteQuestionApi(questionId);
+    console.log("delete question", res.data);
+    toast.success(res.data.message);
   };
   const addExplanation = (questionId, data) => {
     const newQuestionsData = [...questionsData];
@@ -141,7 +146,7 @@ export default function QuestionList() {
   };
   useEffect(() => {
     getLessonQuestionApi(id);
-  }, []);
+  }, [id]);
   return (
     <div>
       <div className="flex flex-col mb-3">

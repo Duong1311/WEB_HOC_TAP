@@ -9,6 +9,24 @@ const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
 
 const courseService = {
+  deleteLesson: async (id) => {
+    try {
+      //delete lesson
+      await Lessons.deleteOne({ _id: id });
+      return { message: "Xóa bài học thành công" };
+    } catch (error) {
+      throw error;
+    }
+  },
+  deleteQuestion: async (id) => {
+    try {
+      //delete question
+      await Questions.deleteOne({ _id: id });
+      return { message: "Xóa câu hỏi thành công" };
+    } catch (error) {
+      throw error;
+    }
+  },
   createLessonQuestions: async (id, data) => {
     try {
       // console.log(data);

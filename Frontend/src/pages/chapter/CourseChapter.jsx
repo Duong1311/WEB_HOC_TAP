@@ -8,6 +8,7 @@ import {
   updateMoveLessonInOneChapter,
   updateChapter,
   deleteChapter,
+  deleteLesson,
 } from "~/services/courseServices";
 import { createChapter, createLesson } from "~/services/courseServices";
 import { toast } from "react-toastify";
@@ -86,6 +87,24 @@ export default function CourseChapter() {
         chapterUpdate.lessonOrderIds.push(res.data._id);
       }
       setCourse(newCourse);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteLessonApi = async (lessonId) => {
+    try {
+      const newCourse = { ...course };
+      newCourse.chapters.forEach((chapter) => {
+        chapter.lessons = chapter.lessons.filter(
+          (lesson) => lesson._id !== lessonId
+        );
+        chapter.lessonOrderIds = chapter.lessonOrderIds.filter(
+          (id) => id !== lessonId
+        );
+      });
+      setCourse(newCourse);
+      const res = await deleteLesson(lessonId);
+      toast.success(res.data.message);
     } catch (error) {
       console.log(error);
     }
@@ -196,6 +215,7 @@ export default function CourseChapter() {
             moveLessonInOneChapter={moveLessonInOneChapter}
             deleteChapterApi={deleteChapterApi}
             updateChapterTitleApi={updateChapterTitleApi}
+            deleteLessonApi={deleteLessonApi}
           />
         </div>
       </div>

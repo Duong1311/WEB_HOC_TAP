@@ -33,6 +33,7 @@ function BoardContent({
   moveLessonInOneChapter,
   deleteChapterApi,
   updateChapterTitleApi,
+  deleteLessonApi,
 }) {
   // https://docs.dndkit.com/api-documentation/sensors
   // Nếu dùng PointerSensor mặc định thì phải kết hợp thuộc tính CSS touch-action: none ở trong phần tử kéo thả - nhưng mà còn bug
@@ -453,6 +454,7 @@ function BoardContent({
             addNewLessonApi={addNewLessonApi}
             deleteChapterApi={deleteChapterApi}
             updateChapterTitleApi={updateChapterTitleApi}
+            deleteLessonApi={deleteLessonApi}
           />
           <DragOverlay dropAnimation={customDropAnimation}>
             {!activeDragItemType && null}
