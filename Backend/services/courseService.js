@@ -4,30 +4,24 @@ const Chapters = require("../models/chapterModel");
 const Lessons = require("../models/lessonModel");
 const Category = require("../models/categoryModel");
 const Questions = require("../models/questionModel");
-// const { ObjectId } = require("mongodb");
+const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
 
 const courseService = {
-  isValidObjectId: (id) => {
-    if (ObjectId.isValid(id)) {
-      if (String(new ObjectId(id)) === id) return true;
-      return false;
-    }
-    return false;
-  },
   createLessonQuestions: async (id, data) => {
     try {
+      // console.log(data);
       for (const question of data) {
+        console.log(mongoose.isObjectIdOrHexString(question._id));
         // find question created
-
         if (mongoose.isObjectIdOrHexString(question._id)) {
           //update question
           const res = await Questions.findOneAndUpdate(
             { _id: question._id },
             {
               $set: {
-                question: question.title,
+                question: question.question,
                 answers: question.answers,
                 correct: question.correct,
                 explanation: question.explanation,
@@ -41,7 +35,7 @@ const courseService = {
           //create new question
           const newQuestion = await new Questions({
             lessonId: mongoose.Types.ObjectId.createFromHexString(id),
-            question: question.title,
+            question: question.question,
             answers: question.answers,
             correct: question.correct,
             explanation: question.explanation,
@@ -186,6 +180,8 @@ const courseService = {
       //save to database
       const chapter = await newChapter.save();
       if (chapter) {
+        //add lessons[] to chapter
+
         chapter.lessons = [];
         //update chapterOrderIds in course
         await Courses.findOneAndUpdate(
@@ -290,7 +286,7 @@ const courseService = {
         { _id: chapterDelete.courseId },
         {
           $pull: {
-            chapterOrderIds: new ObjectId(id),
+            chapterOrderIds: id,
           },
         },
         {

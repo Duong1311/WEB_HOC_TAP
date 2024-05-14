@@ -85,6 +85,7 @@ const courseController = {
       res.status(StatusCodes.CREATED).json(createChapter);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+      console.log(error);
     }
   },
   createLesson: async (req, res, next) => {
