@@ -6,6 +6,7 @@ import Home from "../pages/home/home.jsx";
 import CourseLesson from "../pages/lesson/CourseLesson.jsx";
 import Login from "../pages/login/Login.jsx";
 import Register from "../pages/register/Register.jsx";
+import CourseDetail from "~/pages/CourseDetail/CourseDetail.jsx";
 const publicRoutes = [
   {
     path: "/",
@@ -24,6 +25,11 @@ const publicRoutes = [
   {
     path: "/gvhome",
     component: GvHome,
+    layout: GvLayout,
+  },
+  {
+    path: "/coursedetail/:id",
+    component: CourseDetail,
     layout: GvLayout,
   },
   {

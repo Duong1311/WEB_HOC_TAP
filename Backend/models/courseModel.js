@@ -12,10 +12,11 @@ const courseSchema = new mongoose.Schema(
       type: String,
       // required: true,
     },
-    description: {
-      type: String,
-      maxlength: 1000,
-      default: "",
+    entityMap: {
+      type: mongoose.SchemaTypes.Mixed,
+    },
+    blocks: {
+      type: mongoose.SchemaTypes.Mixed,
     },
     public: {
       type: Boolean,

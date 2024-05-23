@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import Box from "@mui/material/Box";
+// import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chapter from "./Chapter/Chapter";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
@@ -55,17 +55,18 @@ function ListChapters({
       items={chapters?.map((c) => c._id)}
       strategy={verticalListSortingStrategy}
     >
-      <Box
-        sx={{
-          bgcolor: "inherit",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 1,
-          "&::-webkit-scrollbar-track": { m: 2 },
-        }}
+      <div
+        // sx={{
+        //   bgcolor: "inherit",
+        //   width: "100%",
+        //   height: "100%",
+        //   display: "flex",
+        //   flexDirection: "column",
+        //   alignItems: "center",
+        //   gap: 1,
+        //   "&::-webkit-scrollbar-track": { m: 2 },
+        // }}
+        className="w-full h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-200 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
       >
         {chapters?.map((chapter) => (
           <Chapter
@@ -80,14 +81,15 @@ function ListChapters({
 
         {/* Box Add new chapter CTA */}
         {!openNewChapter ? (
-          <Box
-            sx={{
-              width: "800px",
-              mx: 2,
-              borderRadius: "6px",
-              height: "fit-content",
-              bgcolor: "rgb(229, 231, 235)",
-            }}
+          <div
+            // sx={{
+            //   width: "800px",
+            //   mx: 2,
+            //   borderRadius: "6px",
+            //   height: "fit-content",
+            //   bgcolor: "rgb(229, 231, 235)",
+            // }}
+            className="w-full bg-gray-200 p-2 rounded-md h-fit flex flex-col gap-1"
           >
             <Button
               startIcon={<NoteAddIcon />}
@@ -102,9 +104,9 @@ function ListChapters({
             >
               Thêm chương mới
             </Button>
-          </Box>
+          </div>
         ) : (
-          <div className="w-[800px] bg-gray-200 p-2 rounded-md h-fit flex flex-col gap-1">
+          <div className="w-full bg-gray-200 p-2 rounded-md h-fit flex flex-col gap-1">
             <TextField
               label="Enter chapter title..."
               type="text"
@@ -142,7 +144,7 @@ function ListChapters({
             </div>
           </div>
         )}
-      </Box>
+      </div>
     </SortableContext>
   );
 }

@@ -76,21 +76,6 @@ export default function EditorLesson({ old }) {
               },
             }}
           />
-
-          {/* <Editor
-                // defaultContentState={contentState}
-                initialContentState={contentState}
-                onContentStateChange={setContentState}
-                wrapperClassName="wrapper-class"
-                editorClassName="editor-class"
-                toolbarClassName="toolbar-class"
-                placeholder="Write something!"
-                toolbar={{
-                  embedded: {
-                    embedCallback: embedVideoCallBack,
-                  },
-                }}
-              /> */}
         </div>
       </div>
       {/* <div className="w-1/2 border-2 rounded-md">

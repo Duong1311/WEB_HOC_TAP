@@ -16,7 +16,6 @@ export const loginUser = async (user, dispatch, navigate) => {
   try {
     const res = await axios.post("http://localhost:3000/api/auth/login", user);
     dispatch(loginSuccess(res.data));
-
     navigate("/");
   } catch (err) {
     dispatch(loginFailure());

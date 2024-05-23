@@ -16,6 +16,7 @@ export default function Login() {
       password: password,
     };
     loginUser(newUser, dispatch, navigate);
+    // console.log(res.);
   };
   return (
     <section className="h-screen">

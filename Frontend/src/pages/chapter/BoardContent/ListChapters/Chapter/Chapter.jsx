@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ContentCut from "@mui/icons-material/ContentCut";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ListLesson from "./ListLessons/ListLessons";
@@ -71,7 +72,13 @@ function Chapter({
   const [lessonTitle, setLessonTitle] = useState("");
   const [updateChapterNameButton, setUpdateChapterNameButton] = useState(false);
   const [chapterName, setChapterName] = useState("");
+  const [showListLesson, setShowListLesson] = useState(false);
+
   const confirm = useConfirm();
+
+  const handleShowListLesson = () => {
+    setShowListLesson(!showListLesson);
+  };
   const toggleNewLesson = () => {
     setOpenNewLesson(!openNewLesson);
   };
@@ -125,26 +132,28 @@ function Chapter({
   // Phải bọc div ở đây vì vấn đề chiều cao của chapter khi kéo thả sẽ có bug kiểu kiểu flickering (video 32)
   return (
     <div ref={setNodeRef} style={dndKitchapterStyles} {...attributes}>
-      <Box
+      <div
         {...listeners}
-        sx={{
-          width: "800px",
-          bgcolor: "#ebecf0",
-          borderRadius: "6px",
-          height: "fit-content",
-        }}
+        // sx={{
+        //   width: "800px",
+        //   bgcolor: "#ebecf0",
+        //   borderRadius: "6px",
+        //   height: "fit-content",
+        // }}
+        className="w-full bg-gray-200 rounded-md mb-2 "
       >
         {/* Box chapter Header */}
-        <Box
-          sx={{
-            p: 2,
-            display: "flex",
-            alignIems: "center",
-            justifyContent: "space-between",
-          }}
+        <div
+          // sx={{
+          //   p: 2,
+          //   display: "flex",
+          //   alignIems: "center",
+          //   justifyContent: "space-between",
+          // }}
+          className="w-full bg-gray-200 p-2 rounded-md h-fit flex items-center justify-between"
         >
           {!updateChapterNameButton ? (
-            <div className="flex justify-between w-full">
+            <div className="flex justify-between w-full ml-1">
               <Typography
                 variant="h6"
                 sx={{
@@ -157,7 +166,7 @@ function Chapter({
               </Typography>
               <Box>
                 <Tooltip title="More options">
-                  <ExpandMoreIcon
+                  <MoreVertIcon
                     sx={{ color: "text.primary", cursor: "pointer" }}
                     id="basic-chapter-dropdown"
                     aria-controls={
@@ -197,6 +206,7 @@ function Chapter({
                     </Typography>
                   </MenuItem>
                 </Menu>
+                <ExpandMoreIcon onClick={handleShowListLesson} />
               </Box>
             </div>
           ) : (
@@ -241,13 +251,15 @@ function Chapter({
               </div>
             </div>
           )}
-        </Box>
+        </div>
 
         {/* List lessons */}
-        <ListLesson
-          lessons={orderedlessons}
-          deleteLessonApi={deleteLessonApi}
-        />
+        {showListLesson && (
+          <ListLesson
+            lessons={orderedlessons}
+            deleteLessonApi={deleteLessonApi}
+          />
+        )}
 
         {/* Box chapter Footer */}
         <div className="w-full bg-gray-200 p-2 rounded-md h-fit flex items-center justify-between">
@@ -302,7 +314,7 @@ function Chapter({
             </div>
           )}
         </div>
-      </Box>
+      </div>
     </div>
   );
 }

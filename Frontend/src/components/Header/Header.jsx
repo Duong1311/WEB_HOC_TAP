@@ -20,7 +20,7 @@ export default function Header() {
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   return (
-    <div className="w-full h-[60px] flex justify-between items-center ">
+    <div className="w-full h-[60px] flex justify-between items-center fixed top-0 z-10 bg-white ">
       <div className="flex space-x-8 justify-center items-center ml-8 font-medium ">
         <div>Logo</div>
         <div>Trang chủ</div>

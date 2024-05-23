@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllCourseCreate } from "~/services/courseServices";
+import { getAllCourseCreate, publicCourse } from "~/services/courseServices";
 import { useSelector } from "react-redux";
+import Course from "./Course/Course";
 
 export default function GvHome() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
@@ -13,15 +14,38 @@ export default function GvHome() {
   const getAllCourses = async (id) => {
     try {
       const res = await getAllCourseCreate(id);
-      console.log(res.data);
       setCourses(res.data);
+      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
   };
+  const publicCourseApi = async (courseId) => {
+    try {
+      const res = await publicCourse(courseId);
+      console.log(res.data);
+      // getAllCourses(id);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handlePublic = (courseId) => {
+    console.log(courseId);
+    //find course by id
+    const newCourse = [...courses];
+    const course = newCourse.find((course) => course._id === courseId);
+    console.log(course);
+
+    if (course) {
+      course.public = !course.public;
+    }
+    setCourses(newCourse);
+    publicCourseApi(courseId);
+  };
   useEffect(() => {
     getAllCourses(id);
-  }, []);
+  }, [id]);
 
   return (
     <div className=" min-h-[1000px]">
@@ -89,43 +113,11 @@ export default function GvHome() {
           {courses &&
             courses?.map((course) => {
               return (
-                <div
+                <Course
                   key={course._id}
-                  className="mt-3 border flex flex-row justify-between items-center"
-                >
-                  <div className="flex flex-row">
-                    <div>
-                      <img
-                        className="object-cover w-40 h-32"
-                        src="https://s.udemycdn.com/course/200_H/placeholder.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="ml-4 flex items-center">
-                      <div className="flex flex-col space-y-2">
-                        <p className="text-lg font-bold">{course.title}</p>
-                        {/* <p className="text-sm">Giáo viên: Tên giáo viên</p> */}
-                        <p className="text-sm">
-                          Danh mục: {course.categoryId?.categoryName}
-                        </p>
-                        <p className="text-sm">Số học viên: 0</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="">
-                    <Link to={`/CourseChapter/${course._id}`}>
-                      <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-                        Chỉnh sửa nội dung
-                      </button>
-                    </Link>
-                    <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-                      Chỉnh sửa mô tả
-                    </button>
-                    <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-                      Xuất bản
-                    </button>
-                  </div>
-                </div>
+                  course={course}
+                  handlePublic={handlePublic}
+                />
               );
             })}
         </div>

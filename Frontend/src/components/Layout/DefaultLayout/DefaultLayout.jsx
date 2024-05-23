@@ -4,9 +4,9 @@ import Footer from "../../Footer/Footer";
 // eslint-disable-next-line react/prop-types
 function DefaultLayout({ children }) {
   return (
-    <div>
+    <div className="">
       <Header />
-      <div>{children}</div>
+      <div className="mt-[60px] mb-10 no-scrollbar">{children}</div>
       <Footer />
     </div>
   );

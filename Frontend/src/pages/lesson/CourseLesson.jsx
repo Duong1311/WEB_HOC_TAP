@@ -4,23 +4,39 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect, useState } from "react";
 // import Markdown from "react-markdown";
 // import rehypeRaw from "rehype-raw";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 import { getLessonContent } from "~/services/courseServices";
 import EditorLesson from "./Editor/EditorLesson";
 import QuestionList from "./QuestionList/QuestionList";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function CourseLesson() {
+  // const [nextId, setNextId] = useState("");
   const { id } = useParams();
-  const { chaptername } = useParams();
   const [lesson, setLesson] = useState({});
   const [old, setOld] = useState({});
   const [displayEditor, setDisplayEditor] = useState(true);
+  const [toggle, setToggle] = useState(true);
+  const [text, setText] = useState("");
+  const navigate = useNavigate();
+
   const toggleDisplayEditor = () => {
     setDisplayEditor(true);
     setDisplayQuestion(false);
   };
+
+  const toggleInput = () => {
+    setToggle(!toggle);
+  };
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+  console.log("text", text);
   const [displayQuestion, setDisplayQuestion] = useState(false);
+  const [displayPreButton, setDisplayPreButton] = useState(true);
+  const [displayNextButton, setDisplayNextButton] = useState(true);
   const toggleDisplayQuestion = () => {
     setDisplayQuestion(true);
     setDisplayEditor(false);
@@ -29,8 +45,10 @@ export default function CourseLesson() {
   const getLessonContentApi = async (id) => {
     try {
       const res = await getLessonContent(id);
+      console.log("getLessonContent", res.data);
       setLesson(res.data);
-      console.log(res.data);
+      checkButton(res.data);
+      setText(res.data.title);
 
       // Convert data to EditorState
       let a = {
@@ -55,9 +73,40 @@ export default function CourseLesson() {
     }
   };
 
+  const handleNextLesson = () => {
+    //find index of lesson in chapter
+    const lessonArray = lesson?.chapterId?.lessonOrderIds;
+    if (!lessonArray) return;
+    const index = lessonArray.indexOf(id);
+
+    //get next lesson id
+    const nextLessonId = lessonArray[index + 1];
+
+    navigate(`/CourseLesson/${nextLessonId}`);
+    window.location.reload();
+  };
+  const handlePreviousLesson = () => {
+    //find index of lesson in chapter
+    const lessonArray = lesson?.chapterId?.lessonOrderIds;
+    const index = lessonArray.indexOf(id);
+    //get previous lesson id
+    const previousLessonId = lessonArray[index - 1];
+
+    navigate(`/CourseLesson/${previousLessonId}`);
+    window.location.reload();
+  };
+  const checkButton = (lesson) => {
+    const lessonArray = lesson?.chapterId?.lessonOrderIds;
+    const index = lessonArray.indexOf(id);
+    console.log("index", index);
+    if (index === 0) return setDisplayPreButton(false);
+    if (index === lessonArray.length - 1) return setDisplayNextButton(false);
+  };
+
   useEffect(() => {
     getLessonContentApi(id);
   }, []);
+
   if (!lesson) return <div>Loading...</div>;
   return (
     <div className="min-h-[960px] flex justify-center">
@@ -72,32 +121,70 @@ export default function CourseLesson() {
         <nav aria-label="breadcrumb" className="mt-10">
           <ol className="flex space-x-2">
             <li>
-              <a
-                href="#"
-                className="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700"
-              >
-                Bài
-              </a>
+              <Link to="/gvhome">
+                <div className="after:content-['/'] after:ml-2 text-gray-600 hover:text-blue-700">
+                  {lesson?.courseId?.title}
+                </div>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700"
-              >
-                {chaptername}
-              </a>
+              <Link to={`/CourseChapter/${lesson?.courseId?._id}`}>
+                <div className="after:content-['/'] after:ml-2 text-gray-600 hover:text-blue-700">
+                  {lesson?.chapterId?.title}
+                </div>
+              </Link>
             </li>
-            <li className="text-purple-700" aria-current="page">
+            <li className="text-blue-700" aria-current="page">
               {lesson?.title}
             </li>
           </ol>
         </nav>
-        <div className="flex flex-row justify-between">
-          <div className="font-semibold text-2xl mt-4 ">{lesson?.title}</div>
-        </div>
-        <div className="flex flex-row justify-between mb-3">
-          <div></div>
+
+        <div className="flex flex-row justify-between items-center my-3">
           <div>
+            {displayPreButton && (
+              <button
+                onClick={handlePreviousLesson}
+                className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+              >
+                <ArrowBackIcon />
+              </button>
+            )}
+          </div>
+          {toggle ? (
+            <div
+              onDoubleClick={toggleInput}
+              className="font-semibold text-2xl mt-4 "
+            >
+              {lesson?.title}
+            </div>
+          ) : (
+            <input
+              autoFocus
+              type="text"
+              className="w-full mx-3 px-4 py-3 text-gray-800 font-semibold text-2xl bg-slate-100 rounded-md   focus:outline-none"
+              value={text}
+              onChange={handleChange}
+              // on={console.log("onBeforeInput")}
+            />
+          )}
+
+          <div>
+            {displayNextButton && (
+              <button
+                onClick={handleNextLesson}
+                className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+              >
+                {/* <div>Chương tiếp</div> */}
+                <ArrowForwardIcon className="" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-row justify-between mb-3 ">
+          <div></div>
+          <div className="flex flex-row">
             <button
               onClick={toggleDisplayEditor}
               className=" max-w-[7rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "

@@ -447,7 +447,7 @@ function BoardContent({
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div className=" flex h-auto ">
+        <div className=" flex h-auto min-w-[800px] ">
           <ListChapters
             chapters={orderedchapters}
             addNewChapterApi={addNewChapterApi}

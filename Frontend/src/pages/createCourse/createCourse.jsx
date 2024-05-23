@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { getAllCategory, createNewCourse } from "~/services/courseServices";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function CreateCourse() {
   const [categories, setCategory] = useState([]);
@@ -29,6 +30,10 @@ export default function CreateCourse() {
   const createCourseHandle = async (e) => {
     try {
       e.preventDefault();
+      if (!courseTitle || !courseCategory) {
+        toast.error("Vui lòng điền đầy đủ thông tin");
+        return;
+      }
 
       const res = await createNewCourse({
         userId: id,

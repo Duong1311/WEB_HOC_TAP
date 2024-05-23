@@ -33,6 +33,7 @@ export default function QuestionList() {
       const res = await createLessonQuestion(id, questionsData);
       console.log("questions", res.data);
       getLessonQuestionApi(id);
+      toast.success("Lưu câu hỏi thành công");
     } catch (error) {
       console.log("error", error);
     }
@@ -134,6 +135,7 @@ export default function QuestionList() {
       });
       console.log("newQuestionsData", newQuestionsData);
       setQuestionsData(newQuestionsData);
+      toast.success("Tạo câu hỏi thành công");
     } catch (error) {
       console.log("error", error);
     }
@@ -150,8 +152,8 @@ export default function QuestionList() {
   return (
     <div>
       <div className="flex flex-col mb-3">
-        <div className=" border px-3 py-3">
-          <h1 className="text-2xl font-bold">Tạo câu hỏi</h1>
+        <div className=" border border-black px-3 py-3">
+          <h1 className="text-xl font-bold">Tạo câu hỏi</h1>
           <div className="w-full flex flex-row items-center">
             <div className="min-w-[100px] font-bold text-xl">Chủ đề:</div>
             <input
@@ -183,7 +185,7 @@ export default function QuestionList() {
             Tạo
           </button>
         </div>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mt-3">
           <div></div>
           <button
             onClick={handleCreateLessonQuestions}

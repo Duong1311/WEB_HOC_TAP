@@ -46,6 +46,8 @@ const authSlice = createSlice({
       state.login.isFetching = false;
       state.login.currentUser = null;
       state.login.error = false;
+      //clear redux persist data
+      localStorage.removeItem("persist:root");
     },
     logOutFailed: (state) => {
       state.login.isFetching = false;

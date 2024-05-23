@@ -53,6 +53,15 @@ const deleteLesson = (lessonId) => {
 const createLessonQuestionByOpenAi = (data) => {
   return axios.post("/openai", data);
 };
+const publicCourse = (courseId) => {
+  return axios.put(`/course/publicCourse/${courseId}`);
+};
+const courseDetail = (id, data) => {
+  return axios.post(`/course/createCourseDetail/${id}`, data);
+};
+const getCourseDetail = (id) => {
+  return axios.get(`/course/getCourseDetail/${id}`);
+};
 
 export {
   getAllCourseCreate,
@@ -72,4 +81,7 @@ export {
   createLessonQuestionByOpenAi,
   deleteQuestionApi,
   deleteLesson,
+  publicCourse,
+  courseDetail,
+  getCourseDetail,
 };

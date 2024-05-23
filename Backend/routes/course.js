@@ -7,6 +7,13 @@ router.post(
   // courseValidation.createNewCourse,
   courseController.createNewCourse
 );
+//get course detail
+router.get("/getCourseDetail/:id", courseController.getCourseDetail);
+//update course detail
+router.post("/createCourseDetail/:id", courseController.createCourseDetail);
+//update course public
+router.put("/publicCourse/:id", courseController.publicCourse);
+
 router.get("/AllCourseDetails/:id", courseController.getAllCourseCreate);
 router.get("/CourseDetails/:id", courseController.getCourseCreateById);
 

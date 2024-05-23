@@ -9,6 +9,67 @@ const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
 
 const courseService = {
+  getCourseDetail: async (id) => {
+    try {
+      const courseDetails = await Courses.findOne({ _id: id }).populate(
+        "categoryId"
+      );
+      console.log(courseDetails);
+      return courseDetails;
+    } catch (error) {
+      throw error;
+    }
+  },
+  createCourseDetail: async (id, data) => {
+    try {
+      console.log(id, data);
+      const res = await Courses.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            title: data.courseName,
+            entityMap: data.dataUpdate.entityMap,
+            blocks: data.dataUpdate.blocks,
+            categoryId: data.courseCategory,
+          },
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+      console.log(res);
+      return {
+        message: "Chỉnh sửa thông tin khóa học thành công",
+        data: res,
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
+  publicCourse: async (id) => {
+    try {
+      //find course
+      const course = await Courses.findOne({ _id: id });
+      if (!course) {
+        return { message: "Không tìm thấy khóa học" };
+      }
+      //update course
+      const res = await Courses.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            public: !course.public,
+          },
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
   deleteLesson: async (id) => {
     try {
       //delete lesson
@@ -97,7 +158,9 @@ const courseService = {
   },
   getLessonContent: async (id) => {
     try {
-      const lessonContent = await Lessons.findOne({ _id: id });
+      const lessonContent = await Lessons.findOne({ _id: id })
+        .populate("courseId")
+        .populate("chapterId");
       return lessonContent;
     } catch (error) {
       throw error;
