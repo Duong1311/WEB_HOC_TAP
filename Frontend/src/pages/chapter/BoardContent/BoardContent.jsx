@@ -431,7 +431,7 @@ function BoardContent({
   return (
     <div>
       <div>
-        <div className="font-bold text-2xl mb-5">{course?.title}</div>
+        <div className="font-bold text-2xl mb-5 mt-5">{course?.title}</div>
       </div>
       <DndContext
         // Cảm biến (đã giải thích kỹ ở video số 30)

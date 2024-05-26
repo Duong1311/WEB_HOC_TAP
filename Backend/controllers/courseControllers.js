@@ -1,6 +1,14 @@
 const { StatusCodes } = require("http-status-codes");
 const courseService = require("../services/courseService");
 const courseController = {
+  getAllCourses: async (req, res, next) => {
+    try {
+      const courses = await courseService.getAllCourses();
+      res.status(StatusCodes.OK).json(courses);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   getCourseDetail: async (req, res, next) => {
     try {
       const courseDetails = await courseService.getCourseDetail(req.params.id);
@@ -9,6 +17,16 @@ const courseController = {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
+  createCourseImage: async (req, res, next) => {
+    try {
+      console.log(req.body);
+      const createCourseImage = await courseService.createCourseImage(req.body);
+      res.status(StatusCodes.CREATED).json(createCourseImage);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+
   createCourseDetail: async (req, res, next) => {
     try {
       const createCourseDetail = await courseService.createCourseDetail(

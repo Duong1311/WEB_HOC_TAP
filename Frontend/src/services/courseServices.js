@@ -3,6 +3,9 @@ import axios from "~/utils/CustomizeAxios";
 const getAllCourseCreate = (id) => {
   return axios.get(`/course/AllCourseDetails/${id}`);
 };
+const getAllcourses = () => {
+  return axios.get("/course/getAllCourses");
+};
 
 const getAllCategory = () => {
   return axios.get("/course/getAllCategory");
@@ -59,6 +62,13 @@ const publicCourse = (courseId) => {
 const courseDetail = (id, data) => {
   return axios.post(`/course/createCourseDetail/${id}`, data);
 };
+const courseImage = (data) => {
+  return axios.post("/course/createCourseImage", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 const getCourseDetail = (id) => {
   return axios.get(`/course/getCourseDetail/${id}`);
 };
@@ -84,4 +94,6 @@ export {
   publicCourse,
   courseDetail,
   getCourseDetail,
+  courseImage,
+  getAllcourses,
 };

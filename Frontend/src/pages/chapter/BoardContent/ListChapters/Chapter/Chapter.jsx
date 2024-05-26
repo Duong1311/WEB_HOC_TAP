@@ -179,6 +179,7 @@ function Chapter({
                 </Tooltip>
                 <Menu
                   id="basic-menu-chapter-dropdown"
+                  disableScrollLock={true}
                   anchorEl={anchorEl}
                   open={open}
                   onClose={handleClose}

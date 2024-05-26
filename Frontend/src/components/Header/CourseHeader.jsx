@@ -6,7 +6,7 @@ import { logOut } from "../../redux/apiRequest";
 import { createAxios } from "../../utils/createInstance";
 import { logOutSuccess } from "../../redux/authSlice";
 
-export default function Header() {
+export default function CourseHeader() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
   // console.log(user);
   const accessToken = user?.accessToken;
@@ -20,7 +20,7 @@ export default function Header() {
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   return (
-    <div className="w-full h-[60px] flex justify-between items-center  z-10 shadow-md bg-white ">
+    <div className="w-full h-[60px] flex justify-between items-center fixed top-0 z-10 shadow-md bg-white ">
       <div className="flex space-x-8 justify-center items-center ml-8 font-medium ">
         <div>Logo</div>
         <div>Trang chủ</div>

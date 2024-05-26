@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
+import { getAllcourses } from "~/services/courseServices";
 
 export default function Home() {
   const [message, setMessage] = useState("");
+  const [courses, setCourses] = useState([]);
 
   const handleChange = (event) => {
     setMessage(event.target.value);
@@ -26,56 +29,18 @@ export default function Home() {
     "Khoa học",
   ];
 
-  const courses = [
-    {
-      name: "Lập trình ReactJS",
-      image: "https://www.w3schools.com/images/background_in_space.gif",
-      rating: 4.5,
-      actor: "Nguyễn Thanh Tùng",
-    },
-    {
-      name: "Lập trình ReactJS",
-      image: "https://www.w3schools.com/images/background_in_space.gif",
-      rating: 4.5,
-      actor: "Nguyễn Thanh Tùng",
-    },
-    {
-      name: "Lập trình ReactJS",
-      image: "https://www.w3schools.com/images/background_in_space.gif",
-      rating: 4.5,
-      actor: "Nguyễn Thanh Tùng",
-    },
-    {
-      name: "Lập trình ReactJS",
-      image: "https://www.w3schools.com/images/background_in_space.gif",
-      rating: 4.5,
-      actor: "Nguyễn Thanh Tùng",
-    },
-    {
-      name: "Lập trình ReactJS",
-      image: "https://www.w3schools.com/images/background_in_space.gif",
-      rating: 4.5,
-      actor: "Nguyễn Thanh Tùng",
-    },
-    {
-      name: "Lập trình ReactJS",
-      image: "https://www.w3schools.com/images/background_in_space.gif",
-      rating: 4.5,
-      actor: "Nguyễn Thanh Tùng",
-    },
-    {
-      name: "Lập trình ReactJS",
-      image: "https://www.w3schools.com/images/background_in_space.gif",
-      rating: 4.5,
-      actor: "Nguyễn Thanh Tùng",
-    },
-    {
-      name: "Lập trình ReactJS",
-      image: "https://www.w3schools.com/images/background_in_space.gif",
-      rating: 4.5,
-      actor: "Nguyễn Thanh Tùng",
-    },
-  ];
+  const getAllcoursesData = async () => {
+    try {
+      const res = await getAllcourses();
+      console.log(res.data);
+      setCourses(res.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  useEffect(() => {
+    getAllcoursesData();
+  }, []);
   return (
     <div className=" w-screen">
       <div className="relative ">
@@ -149,27 +114,29 @@ export default function Home() {
           {courses &&
             courses?.map((data) => {
               return (
-                <div className="flex flex-col justify-center" key={data.actor}>
-                  <div>
-                    <img
-                      className="object-cover w-[306px] h-[161px] rounded-lg"
-                      src={data.image}
-                      alt=""
-                    />
-                  </div>
-                  <div className="font-medium">{data.name}</div>
-                  <div className="font-light">{data.actor}</div>
-                  <div className="flex flex-row ">
-                    <Rating
-                      disableFillHover={true}
-                      initialValue={data.rating}
-                      size={20}
-                      SVGstyle={{ display: "inline" }}
-                      allowFraction={true}
-                      className="float-left"
-                    />
-                    <div className="items-center">{data.rating}</div>
-                  </div>
+                <div className="flex flex-col justify-center" key={data._id}>
+                  <Link to={`/usercoursedetail/${data?._id}`}>
+                    <div>
+                      <img
+                        className="object-cover w-[306px] h-[161px] rounded-lg"
+                        src={data?.image}
+                        alt=""
+                      />
+                    </div>
+                    <div className="font-medium">{data?.title}</div>
+                    <div className="font-light">{data?.userId?.username}</div>
+                    <div className="flex flex-row ">
+                      <Rating
+                        disableFillHover={true}
+                        initialValue={data?.rating || 5}
+                        size={20}
+                        SVGstyle={{ display: "inline" }}
+                        allowFraction={true}
+                        className="float-left"
+                      />
+                      <div className="items-center">{data?.rating || 5}</div>
+                    </div>
+                  </Link>
                 </div>
               );
             })}

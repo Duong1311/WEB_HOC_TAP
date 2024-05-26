@@ -110,7 +110,7 @@ export default function CourseLesson() {
   if (!lesson) return <div>Loading...</div>;
   return (
     <div className="min-h-[960px] flex justify-center">
-      <div className="w-4/6">
+      <div className="w-4/6  ">
         {/* <div className="flex font-medium text-lg mt-10">
           <div className=" inline-block align-middle ">Khóa học</div>
           <AiOutlineRight className="self-center" />
@@ -118,7 +118,10 @@ export default function CourseLesson() {
           <AiOutlineRight className="self-center" />
           <div className="inline-block align-middle">{lesson?.title}</div>
         </div> */}
-        <nav aria-label="breadcrumb" className="mt-10">
+        <nav
+          aria-label="breadcrumb"
+          className="mt-10 bg-white px-2 py-2 rounded shadow-md dark:bg-gray-800 dark:text-gray-200"
+        >
           <ol className="flex space-x-2">
             <li>
               <Link to="/gvhome">

@@ -2,11 +2,9 @@
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
-// import draftToMarkdown from "draftjs-to-markdown";
+
 import { useEffect, useState } from "react";
-// import Markdown from "react-markdown";
-// import rehypeRaw from "rehype-raw";
+
 import { useParams } from "react-router-dom";
 
 import { createLessonContent } from "~/services/courseServices";

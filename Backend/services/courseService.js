@@ -7,22 +7,38 @@ const Questions = require("../models/questionModel");
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
-
+const upload = require("../utils/multerStore");
 const courseService = {
+  getAllCourses: async () => {
+    try {
+      const courses = await Courses.find().populate("userId");
+      return courses;
+    } catch (error) {
+      throw error;
+    }
+  },
   getCourseDetail: async (id) => {
     try {
       const courseDetails = await Courses.findOne({ _id: id }).populate(
         "categoryId"
       );
-      console.log(courseDetails);
+      // console.log(courseDetails);
       return courseDetails;
+    } catch (error) {
+      throw error;
+    }
+  },
+  createCourseImage: async (data) => {
+    try {
+      console.log(data);
+
+      return { message: "Tải ảnh lên thành công" };
     } catch (error) {
       throw error;
     }
   },
   createCourseDetail: async (id, data) => {
     try {
-      console.log(id, data);
       const res = await Courses.findOneAndUpdate(
         { _id: id },
         {
@@ -37,7 +53,7 @@ const courseService = {
           returnDocument: "after",
         }
       );
-      console.log(res);
+      // console.log(res);
       return {
         message: "Chỉnh sửa thông tin khóa học thành công",
         data: res,
@@ -235,6 +251,14 @@ const courseService = {
             localField: "_id",
             foreignField: "courseId",
             as: "lessons",
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "Users",
           },
         },
       ]);

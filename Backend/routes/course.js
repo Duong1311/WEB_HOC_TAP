@@ -2,15 +2,36 @@ const express = require("express");
 const router = express.Router();
 const courseValidation = require("../validations/courseValidation");
 const courseController = require("../controllers/courseControllers");
+const multer = require("multer");
+// const upload = require("../utils/multerStore");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    return cb(null, "./public/Images");
+  },
+  filename: function (req, file, cb) {
+    return cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
 router.post(
   "/createCourse",
   // courseValidation.createNewCourse,
   courseController.createNewCourse
 );
+//get all courses
+router.get("/getAllCourses", courseController.getAllCourses);
 //get course detail
 router.get("/getCourseDetail/:id", courseController.getCourseDetail);
 //update course detail
 router.post("/createCourseDetail/:id", courseController.createCourseDetail);
+//create course image
+router.post(
+  "/createCourseImage",
+  upload.single("file"),
+  courseController.createCourseImage
+);
 //update course public
 router.put("/publicCourse/:id", courseController.publicCourse);
 

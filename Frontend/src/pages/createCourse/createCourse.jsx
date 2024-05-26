@@ -75,8 +75,15 @@ export default function CreateCourse() {
             </div>
           </div>
           <div>
-            <FormControl className="w-full" size="medium">
+            <FormControl
+              // disableScrollLock={true}
+              className="w-full"
+              size="medium"
+            >
               <Select
+                MenuProps={{
+                  disableScrollLock: true,
+                }}
                 defaultValue=""
                 // value={categories.map((category) => category._id) || ""}
                 onChange={(event) => setCourseCategory(event.target.value)}

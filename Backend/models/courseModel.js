@@ -4,7 +4,7 @@ const courseSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "users",
+      ref: "Users",
       require: true,
     },
     chapterOrderIds: [{ type: mongoose.SchemaTypes.ObjectId }],
