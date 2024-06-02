@@ -2,19 +2,24 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getLessonContent } from "~/services/courseServices";
-import EditorLesson from "./Editor/EditorLesson";
-import QuestionList from "./QuestionList/QuestionList";
+import draftToHtml from "draftjs-to-html";
+
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import UserLessonContent from "./UserLessonContent/UserLessonContent";
+import UserQuestionList from "./UserQuestionList/UserQuestionList";
+import { useSelector } from "react-redux";
+import { addCourseToHistoryApi } from "~/services/userServices";
 
-export default function CourseLesson() {
+export default function UserLessonDetail() {
   // const [nextId, setNextId] = useState("");
+  const user = useSelector((state) => state.root.auth.login.currentUser);
+  const userId = user?._id;
   const { id } = useParams();
   const [lesson, setLesson] = useState({});
-  const [old, setOld] = useState({});
+  const [markdown, setMarkdown] = useState();
   const [displayEditor, setDisplayEditor] = useState(true);
   const [toggle, setToggle] = useState(true);
-  const [text, setText] = useState("");
   const navigate = useNavigate();
 
   const toggleDisplayEditor = () => {
@@ -25,10 +30,7 @@ export default function CourseLesson() {
   const toggleInput = () => {
     setToggle(!toggle);
   };
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
-  console.log("text", text);
+
   const [displayQuestion, setDisplayQuestion] = useState(false);
   const [displayPreButton, setDisplayPreButton] = useState(true);
   const [displayNextButton, setDisplayNextButton] = useState(true);
@@ -41,9 +43,9 @@ export default function CourseLesson() {
     try {
       const res = await getLessonContent(id);
       console.log("getLessonContent", res.data);
+
       setLesson(res.data);
       checkButton(res.data);
-      setText(res.data.title);
 
       // Convert data to EditorState
       let a = {
@@ -62,7 +64,10 @@ export default function CourseLesson() {
               },
             ],
       };
-      setOld(a);
+
+      setMarkdown(draftToHtml(a));
+
+      addCourseToHistory(userId, res?.data?.courseId?._id);
     } catch (error) {
       console.log("error", error);
     }
@@ -77,7 +82,7 @@ export default function CourseLesson() {
     //get next lesson id
     const nextLessonId = lessonArray[index + 1];
 
-    navigate(`/CourseLesson/${nextLessonId}`);
+    navigate(`/userlessondetail/${nextLessonId}`);
     window.location.reload();
   };
   const handlePreviousLesson = () => {
@@ -87,25 +92,35 @@ export default function CourseLesson() {
     //get previous lesson id
     const previousLessonId = lessonArray[index - 1];
 
-    navigate(`/CourseLesson/${previousLessonId}`);
+    navigate(`/userlessondetail/${previousLessonId}`);
     window.location.reload();
   };
   const checkButton = (lesson) => {
     const lessonArray = lesson?.chapterId?.lessonOrderIds;
     const index = lessonArray.indexOf(id);
     console.log("index", index);
+    if (lessonArray.length === 1) {
+      setDisplayNextButton(false);
+      setDisplayPreButton(false);
+    }
     if (index === 0) return setDisplayPreButton(false);
     if (index === lessonArray.length - 1) return setDisplayNextButton(false);
+  };
+  const addCourseToHistory = async (userId, courseId) => {
+    try {
+      const res = await addCourseToHistoryApi(userId, courseId);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getLessonContentApi(id);
-  }, []);
-
-  if (!lesson) return <div>Loading...</div>;
+  }, [id]);
   return (
     <div className="min-h-[960px] flex justify-center">
-      <div className="w-4/6  ">
+      <div className="w-10/12  ">
         {/* <div className="flex font-medium text-lg mt-10">
           <div className=" inline-block align-middle ">Khóa học</div>
           <AiOutlineRight className="self-center" />
@@ -115,24 +130,24 @@ export default function CourseLesson() {
         </div> */}
         <nav
           aria-label="breadcrumb"
-          className="mt-10 bg-white px-2 py-2 rounded shadow-md dark:bg-gray-800 dark:text-gray-200"
+          className="my-8 bg-white px-2 py-2  dark:bg-gray-800 dark:text-gray-200"
         >
           <ol className="flex space-x-2">
             <li>
-              <Link to="/gvhome">
-                <div className="after:content-['/'] after:ml-2 text-gray-600 hover:text-blue-700">
+              <Link to={`/usercoursedetail/${lesson?.courseId?._id}`}>
+                <div className="after:content-['/'] after:ml-2 text-xl text-black hover:text-blue-700">
                   {lesson?.courseId?.title}
                 </div>
               </Link>
             </li>
             <li>
-              <Link to={`/CourseChapter/${lesson?.courseId?._id}`}>
-                <div className="after:content-['/'] after:ml-2 text-gray-600 hover:text-blue-700">
+              <Link to={`/usercoursedetail/${lesson?.courseId?._id}`}>
+                <div className="after:content-['/'] after:ml-2 text-xl text-black hover:text-blue-700">
                   {lesson?.chapterId?.title}
                 </div>
               </Link>
             </li>
-            <li className="text-blue-700" aria-current="page">
+            <li className="text-blue-700 text-xl" aria-current="page">
               {lesson?.title}
             </li>
           </ol>
@@ -149,23 +164,13 @@ export default function CourseLesson() {
               </button>
             )}
           </div>
-          {toggle ? (
-            <div
-              onDoubleClick={toggleInput}
-              className="font-semibold text-2xl mt-4 "
-            >
-              {lesson?.title}
-            </div>
-          ) : (
-            <input
-              autoFocus
-              type="text"
-              className="w-full mx-3 px-4 py-3 text-gray-800 font-semibold text-2xl bg-slate-100 rounded-md   focus:outline-none"
-              value={text}
-              onChange={handleChange}
-              // on={console.log("onBeforeInput")}
-            />
-          )}
+
+          <div
+            onDoubleClick={toggleInput}
+            className="font-semibold text-2xl mt-4 "
+          >
+            {lesson?.title}
+          </div>
 
           <div>
             {displayNextButton && (
@@ -180,7 +185,7 @@ export default function CourseLesson() {
           </div>
         </div>
 
-        <div className="flex flex-row justify-between mb-3 ">
+        <div className="flex flex-row justify-between mb-3 pb-2 border-b border-black">
           <div></div>
           <div className="flex flex-row">
             <button
@@ -191,14 +196,14 @@ export default function CourseLesson() {
             </button>
             <button
               onClick={toggleDisplayQuestion}
-              className=" ml-4 max-w-[7rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+              className=" ml-4 max-w-[7rem] h-10 rounded-lg   border border-black focus:ring-4 focus:outline-none   px-4 font-sans text-black text-xs font-bold uppercase hover:shadow-lg "
             >
               Câu hỏi
             </button>
           </div>
         </div>
-        {displayEditor && <EditorLesson old={old} />}
-        {displayQuestion && <QuestionList />}
+        {displayEditor && <UserLessonContent markdown={markdown} />}
+        {displayQuestion && <UserQuestionList />}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import axios from "~/utils/CustomizeAxios";
-
+//course cua rieng giang vien
 const getAllCourseCreate = (id) => {
   return axios.get(`/course/AllCourseDetails/${id}`);
 };
@@ -72,6 +72,15 @@ const courseImage = (data) => {
 const getCourseDetail = (id) => {
   return axios.get(`/course/getCourseDetail/${id}`);
 };
+const createRating = (data) => {
+  return axios.post("/course/createRating", data);
+};
+const getRatingByCourseId = (id) => {
+  return axios.get(`/course/getRatingByCourseId/${id}`);
+};
+const deleteCourse = (id) => {
+  return axios.delete(`/course/deleteCourse/${id}`);
+};
 
 export {
   getAllCourseCreate,
@@ -96,4 +105,7 @@ export {
   getCourseDetail,
   courseImage,
   getAllcourses,
+  createRating,
+  getRatingByCourseId,
+  deleteCourse,
 };

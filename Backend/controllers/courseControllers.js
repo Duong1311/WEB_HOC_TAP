@@ -1,6 +1,30 @@
 const { StatusCodes } = require("http-status-codes");
 const courseService = require("../services/courseService");
 const courseController = {
+  deleteCourse: async (req, res, next) => {
+    try {
+      const deleteCourse = await courseService.deleteCourse(req.params.id);
+      res.status(StatusCodes.OK).json(deleteCourse);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  getRatingByCourseId: async (req, res, next) => {
+    try {
+      const rating = await courseService.getRatingByCourseId(req.params.id);
+      res.status(StatusCodes.OK).json(rating);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  createRating: async (req, res, next) => {
+    try {
+      const createRating = await courseService.createRating(req.body);
+      res.status(StatusCodes.CREATED).json(createRating);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   getAllCourses: async (req, res, next) => {
     try {
       const courses = await courseService.getAllCourses();
@@ -19,9 +43,10 @@ const courseController = {
   },
   createCourseImage: async (req, res, next) => {
     try {
-      console.log(req.body);
-      const createCourseImage = await courseService.createCourseImage(req.body);
-      res.status(StatusCodes.CREATED).json(createCourseImage);
+      console.log(req.file);
+      // const createCourseImage = await courseService.createCourseImage(req.file);
+      // res.status(StatusCodes.CREATED).json(createCourseImage);
+      res.status(StatusCodes.CREATED).json("thanh cong");
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }

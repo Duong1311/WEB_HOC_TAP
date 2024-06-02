@@ -43,6 +43,11 @@ export default function GvHome() {
     setCourses(newCourse);
     publicCourseApi(courseId);
   };
+  const deleteCourseUi = (courseId) => {
+    const newCourse = courses.filter((course) => course._id !== courseId);
+    setCourses(newCourse);
+  };
+
   useEffect(() => {
     getAllCourses(id);
   }, [id]);
@@ -117,6 +122,7 @@ export default function GvHome() {
                   key={course._id}
                   course={course}
                   handlePublic={handlePublic}
+                  deleteCourseUi={deleteCourseUi}
                 />
               );
             })}

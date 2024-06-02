@@ -35,11 +35,13 @@ export default function EditorLesson({ old }) {
     setDataUpdate(convertToRaw(e.getCurrentContent()));
   };
   const embedVideoCallBack = (link) => {
+    console.log("link1", link);
     if (link.indexOf("youtube") >= 0) {
       link = link.replace("watch?v=", "embed/");
       link = link.replace("/watch/", "/embed/");
       link = link.replace("youtu.be/", "youtube.com/embed/");
     }
+    console.log("link", link);
     return link;
   };
 

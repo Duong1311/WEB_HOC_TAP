@@ -4,11 +4,66 @@ const Chapters = require("../models/chapterModel");
 const Lessons = require("../models/lessonModel");
 const Category = require("../models/categoryModel");
 const Questions = require("../models/questionModel");
+const Ratings = require("../models/ratingModel");
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
-const upload = require("../utils/multerStore");
+// const upload = require("../utils/multerStore");
 const courseService = {
+  deleteCourse: async (id) => {
+    try {
+      //delete course
+      await Courses.deleteOne({ _id: id });
+      return { message: "Xóa khóa học thành công" };
+    } catch (error) {
+      throw error;
+    }
+  },
+  getRatingByCourseId: async (id) => {
+    try {
+      const rating = await Ratings.find({ courseId: id }).populate("userId");
+      return rating;
+    } catch (error) {
+      throw error;
+    }
+  },
+  createRating: async (data) => {
+    try {
+      const newRating = await new Ratings({
+        userId: data.userId,
+        courseId: data.courseId,
+        rating: data.rating,
+        comment: data.comment,
+      });
+      //save to database
+      await newRating.save();
+      // update totalRating, ratingCount in course
+      const course = await Courses.findOne({ _id: data.courseId });
+      if (course) {
+        const newRatingCount = course.ratingCount + 1;
+        const newTotalRating =
+          (course.totalRating * course.ratingCount + data.rating) /
+          newRatingCount;
+        const res = await Courses.findOneAndUpdate(
+          { _id: data.courseId },
+          {
+            $set: {
+              totalRating: newTotalRating,
+              ratingCount: newRatingCount,
+            },
+          },
+          {
+            returnDocument: "after",
+          }
+        );
+        return res;
+      } else {
+        return { message: "Không tìm thấy khóa học" };
+      }
+    } catch (error) {
+      throw error;
+    }
+  },
   getAllCourses: async () => {
     try {
       const courses = await Courses.find().populate("userId");

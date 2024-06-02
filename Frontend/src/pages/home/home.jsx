@@ -42,7 +42,7 @@ export default function Home() {
     getAllcoursesData();
   }, []);
   return (
-    <div className=" w-screen">
+    <div className=" w-full flex flex-col  items-center ">
       <div className="relative ">
         {/* <img
           className="object-cover h-[560px] w-screen"
@@ -108,38 +108,56 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="ml-5 mt-5 font-semibold text-2xl">Khoá học nổi bật</div>
-      <div className="flex justify-center w-screen">
-        <div className="grid gap-4 grid-cols-4 mt-7 w-5/6">
-          {courses &&
-            courses?.map((data) => {
-              return (
-                <div className="flex flex-col justify-center" key={data._id}>
-                  <Link to={`/usercoursedetail/${data?._id}`}>
-                    <div>
-                      <img
-                        className="object-cover w-[306px] h-[161px] rounded-lg"
-                        src={data?.image}
-                        alt=""
-                      />
-                    </div>
-                    <div className="font-medium">{data?.title}</div>
-                    <div className="font-light">{data?.userId?.username}</div>
-                    <div className="flex flex-row ">
-                      <Rating
-                        disableFillHover={true}
-                        initialValue={data?.rating || 5}
-                        size={20}
-                        SVGstyle={{ display: "inline" }}
-                        allowFraction={true}
-                        className="float-left"
-                      />
-                      <div className="items-center">{data?.rating || 5}</div>
-                    </div>
-                  </Link>
-                </div>
-              );
-            })}
+
+      <div className="flex justify-center items-center w-full ">
+        <div className="w-5/6">
+          <div className="w-full flex justify-between mt-7">
+            <div className="w-auto  font-semibold text-2xl">
+              Khoá học nổi bật
+            </div>
+            <div className="w-auto font-semibold text-sm text-gray-500 pt-2">
+              xem thêm {">>"}
+            </div>
+          </div>
+          <div className="grid gap-4 grid-cols-4 my-7 w-full">
+            {courses &&
+              courses?.map((data) => {
+                return (
+                  <div
+                    className="flex flex-col justify-center bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
+                    key={data._id}
+                  >
+                    <Link to={`/usercoursedetail/${data?._id}`}>
+                      <div>
+                        <img
+                          className="object-cover w-[306px] h-[161px] rounded-lg"
+                          src={
+                            data?.image ||
+                            "https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
+                          }
+                          alt=""
+                        />
+                      </div>
+                      <div className="font-semibold">{data?.title}</div>
+                      <div className="font-light">{data?.userId?.username}</div>
+                      <div className="flex flex-row gap-2 ">
+                        <Rating
+                          disableFillHover={true}
+                          initialValue={data?.totalRating || 5}
+                          size={20}
+                          SVGstyle={{ display: "inline" }}
+                          allowFraction={true}
+                          className="float-left"
+                        />
+                        <div className="text-yellow-600">
+                          {data?.totalRating.toFixed(1) || 5}
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
     </div>

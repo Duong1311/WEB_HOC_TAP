@@ -1,14 +1,26 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { deleteCourse } from "~/services/courseServices";
 
-export default function Course({ course, handlePublic }) {
+export default function Course({ course, handlePublic, deleteCourseUi }) {
   const handlePublicClick = () => {
     handlePublic(course._id);
+  };
+  const handleDeleteCourse = async () => {
+    console.log("delete course", course._id);
+    try {
+      const res = await deleteCourse(course._id);
+      deleteCourseUi(course._id);
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   return (
     <div
       key={course._id}
-      className="mt-3 border flex flex-row justify-between items-center"
+      className="mb-3 border flex flex-row justify-between items-center"
     >
       <div className="flex flex-row">
         <div>
@@ -55,6 +67,12 @@ export default function Course({ course, handlePublic }) {
             Hủy xuất bản
           </button>
         )}
+        <button
+          onClick={handleDeleteCourse}
+          className=" mr-4 rounded-lg text-white bg-red-500 border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-500 dark:focus:ring-red-600 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg "
+        >
+          Xóa khóa học
+        </button>
       </div>
     </div>
   );

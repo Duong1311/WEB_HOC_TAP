@@ -6,7 +6,7 @@ function DefaultLayout({ children }) {
   return (
     <div className="">
       <Header />
-      <div className="mt-[60px] mb-10 min-h-[100vh]">{children}</div>
+      <div className="mt-[60px] bg-gray-100 min-h-[100vh]">{children}</div>
       <Footer />
     </div>
   );

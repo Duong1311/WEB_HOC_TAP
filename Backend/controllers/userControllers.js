@@ -1,20 +1,55 @@
-const User = require("../models/user");
+const userService = require("../services/userService");
+const { StatusCodes } = require("http-status-codes");
 
 const userControllers = {
-  getAllUsers: async (req, res) => {
+  addCourseToHistory: async (req, res, next) => {
     try {
-      const users = await User.find();
-      res.status(200).json(users);
+      const addCourseToHistory = await userService.addCourseToHistory(
+        req.body.userId,
+        req.body.courseId
+      );
+      res.status(StatusCodes.OK).json(addCourseToHistory);
     } catch (error) {
-      return res.status(500).json({ msg: error.message });
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
-  deleteUser: async (req, res) => {
+  getAllCourseStudys: async (req, res, next) => {
     try {
-      await User.findByIdAndDelete(req.params.id);
-      res.status(200).json({ msg: "User deleted" });
+      console.log(req.params.id);
+      const courseStudys = await userService.getAllCourseStudys(req.params.id);
+      res.status(StatusCodes.OK).json(courseStudys);
     } catch (error) {
-      return res.status(500).json({ msg: error.message });
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  updateUserPassword: async (req, res, next) => {
+    try {
+      const updateUserPassword = await userService.updateUserPassword(
+        req.params.id,
+        req.body
+      );
+      res.status(StatusCodes.OK).json(updateUserPassword);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  getUserInfor: async (req, res, next) => {
+    try {
+      const user = await userService.getUserInfor(req.params.id);
+      res.status(StatusCodes.OK).json(user);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  updateUserInfor: async (req, res, next) => {
+    try {
+      const updateUserInfor = await userService.updateUserInfor(
+        req.params.id,
+        req.body
+      );
+      res.status(StatusCodes.OK).json(updateUserInfor);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },
 };

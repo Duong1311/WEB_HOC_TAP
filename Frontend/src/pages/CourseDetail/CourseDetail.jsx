@@ -14,6 +14,7 @@ import {
   courseImage,
 } from "~/services/courseServices";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -27,12 +28,20 @@ export default function CourseDetail() {
   const avatarUrl = useRef(
     "https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
   );
-  // const handleUpload = () => {
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   console.log(file);
-  //   const res = courseImage(file);
-  //   console.log(res.data);
+  const handleUpload = async () => {
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log(file);
+    const res = await courseImage(formData);
+    console.log(res);
+  };
+  // const courseImageApi = async (file) => {
+  //   try {
+  //     const res = await courseImage(file);
+  //     console.log(res.data);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
   // };
   const getCategories = async () => {
     try {
@@ -49,22 +58,25 @@ export default function CourseDetail() {
     // setDataUpdate(draftToMarkdown(convertToRaw(e.getCurrentContent())));
     setDataUpdate(convertToRaw(e.getCurrentContent()));
   };
-  const createCourseDetailApi = (id, data) => {
+  const createCourseDetailApi = async (id, data) => {
     try {
-      const res = courseDetail(id, data);
+      const res = await courseDetail(id, data);
       console.log(res.data);
+      toast.success(res.data.message);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const createCourseDetail = () => {
-    const formData = new FormData();
-    formData.append("file", file);
-    console.log(file);
-    const res = courseImage(file);
-    console.log(res.data);
-    createCourseDetailApi(id, { courseName, dataUpdate, courseCategory });
+  const createCourseDetail = async () => {
+    // const formData = new FormData();
+    // formData.append("file", file);
+    // console.log(file);
+    // const res = courseImage(file);
+    // console.log(res.data);
+    await handleUpload();
+
+    await createCourseDetailApi(id, { courseName, dataUpdate, courseCategory });
   };
   const getCourseDetailApi = async (id) => {
     try {
@@ -103,14 +115,14 @@ export default function CourseDetail() {
   }, [id]);
 
   return (
-    <div className="flex flex-col bg-neutral-100">
+    <div className="flex flex-col bg-neutral-100 pb-10">
       <div className="w-full flex justify-center ">
         <div className="w-9/12 flex flex-col mt-3 gap-5 bg-white px-3 py-3 rounded-lg shadow-lg">
           <div>
-            <form action="/profile" method="post" encType="multipart/form-data">
+            {/* <form action="/profile" method="post" encType="multipart/form-data">
               <input type="file" name="avatar" />
               <input type="submit" value="Upload" />
-            </form>
+            </form> */}
             <div className="flex flex-row justify-between mb-3">
               <div className="text-2xl font-bold mb-3">Tên khóa học</div>
               <button

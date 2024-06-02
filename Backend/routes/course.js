@@ -3,7 +3,7 @@ const router = express.Router();
 const courseValidation = require("../validations/courseValidation");
 const courseController = require("../controllers/courseControllers");
 const multer = require("multer");
-// const upload = require("../utils/multerStore");
+// const { upload } = require("../utils/multerStore");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     return cb(null, "./public/Images");
@@ -20,6 +20,8 @@ router.post(
   // courseValidation.createNewCourse,
   courseController.createNewCourse
 );
+//delete course by id
+router.delete("/deleteCourse/:id", courseController.deleteCourse);
 //get all courses
 router.get("/getAllCourses", courseController.getAllCourses);
 //get course detail
@@ -34,8 +36,9 @@ router.post(
 );
 //update course public
 router.put("/publicCourse/:id", courseController.publicCourse);
-
+//get all course created by user
 router.get("/AllCourseDetails/:id", courseController.getAllCourseCreate);
+//get course created by id
 router.get("/CourseDetails/:id", courseController.getCourseCreateById);
 
 //move chapter, lesson
@@ -73,5 +76,9 @@ router.put("/updateChapter/:id", courseController.updateChapter);
 //add category
 router.post("/createCategory", courseController.createCategory);
 router.get("/getAllCategory", courseController.getAllCategory);
+
+//rating
+router.post("/createRating", courseController.createRating);
+router.get("/getRatingByCourseId/:id", courseController.getRatingByCourseId);
 
 module.exports = router;

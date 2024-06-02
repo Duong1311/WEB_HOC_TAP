@@ -8,7 +8,7 @@ export default function GvLayout({ children }) {
       <div className="z-[999]">
         <GvHeader />
       </div>
-      <div className="mt-[60px] mb-10 min-h-[100vh] z-0 ">{children}</div>
+      <div className="mt-[60px] min-h-[100vh] z-0 ">{children}</div>
       <Footer />
     </div>
   );

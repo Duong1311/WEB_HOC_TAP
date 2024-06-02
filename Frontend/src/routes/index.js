@@ -8,7 +8,9 @@ import Login from "../pages/login/Login.jsx";
 import Register from "../pages/register/Register.jsx";
 import CourseDetail from "~/pages/CourseDetail/CourseDetail.jsx";
 import UserCourseDetail from "~/pages/UserCourseDetail/UserCourseDetail.jsx";
-import CourseLayout from "../components/Layout/CourseLayout/CourseLayout.jsx";
+import UserLessonDetail from "~/pages/UserLessonDetail/UserLessonDetail.jsx";
+import UserProfile from "~/pages/UserProfile/UserProfile.jsx";
+import UserCourseStudys from "~/pages/UserCourseStudys/UserCourseStudys.jsx";
 const publicRoutes = [
   {
     path: "/",
@@ -49,10 +51,22 @@ const publicRoutes = [
     component: CreateCourse,
     layout: GvLayout,
   },
+  // user routes
   {
     path: "/usercoursedetail/:id",
     component: UserCourseDetail,
-    layout: CourseLayout,
+  },
+  {
+    path: "/userlessondetail/:id",
+    component: UserLessonDetail,
+  },
+  {
+    path: "/userprofile/:id",
+    component: UserProfile,
+  },
+  {
+    path: "/usercoursestudys/:id",
+    component: UserCourseStudys,
   },
 ];
 const privateRoutes = [];

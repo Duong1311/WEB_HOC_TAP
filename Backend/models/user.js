@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       minLength: 6,
     },
+    description: {
+      type: String,
+      maxLength: 100,
+    },
     admin: {
       type: Boolean,
       default: false,
