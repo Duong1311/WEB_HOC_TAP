@@ -10,6 +10,17 @@ const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
 // const upload = require("../utils/multerStore");
 const courseService = {
+  searchCourse: async (query) => {
+    try {
+      const searchCourse = await Courses.find({
+        // title: { $regex: query.title, $options: "i" },
+        $text: { $search: query.title },
+      }).populate("userId");
+      return searchCourse;
+    } catch (error) {
+      throw error;
+    }
+  },
   deleteCourse: async (id) => {
     try {
       //delete course

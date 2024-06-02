@@ -80,5 +80,6 @@ router.get("/getAllCategory", courseController.getAllCategory);
 //rating
 router.post("/createRating", courseController.createRating);
 router.get("/getRatingByCourseId/:id", courseController.getRatingByCourseId);
-
+// search by course title
+router.get("/searchCourse", courseController.searchCourse);
 module.exports = router;

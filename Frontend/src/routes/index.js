@@ -11,6 +11,8 @@ import UserCourseDetail from "~/pages/UserCourseDetail/UserCourseDetail.jsx";
 import UserLessonDetail from "~/pages/UserLessonDetail/UserLessonDetail.jsx";
 import UserProfile from "~/pages/UserProfile/UserProfile.jsx";
 import UserCourseStudys from "~/pages/UserCourseStudys/UserCourseStudys.jsx";
+import SearchLayout from "~/components/Layout/SearchLayout/SearchLayout.jsx";
+import Search from "~/pages/Search/Search.jsx";
 const publicRoutes = [
   {
     path: "/",
@@ -67,6 +69,11 @@ const publicRoutes = [
   {
     path: "/usercoursestudys/:id",
     component: UserCourseStudys,
+  },
+  {
+    path: "/course/search",
+    component: Search,
+    layout: SearchLayout,
   },
 ];
 const privateRoutes = [];

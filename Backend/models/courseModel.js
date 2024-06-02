@@ -10,7 +10,7 @@ const courseSchema = new mongoose.Schema(
     chapterOrderIds: [{ type: mongoose.SchemaTypes.ObjectId }],
     title: {
       type: String,
-      // required: true,
+      required: true,
     },
     entityMap: {
       type: mongoose.SchemaTypes.Mixed,
@@ -42,6 +42,7 @@ const courseSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+courseSchema.index({ title: "text", "blocks.text": "text" });
 
 // const UserModel = mongoose.model("User", userSchema);
 

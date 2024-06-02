@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import { getAllcourses } from "~/services/courseServices";
 
 export default function Home() {
   const [message, setMessage] = useState("");
   const [courses, setCourses] = useState([]);
-
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setMessage(event.target.value);
   };
@@ -16,6 +16,7 @@ export default function Home() {
       // 👇 Get input value
       // setUpdated(message);
       console.log(message);
+      navigate(`/course/search/?search=${message}`);
     }
   };
   const catagories = [
