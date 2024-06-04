@@ -1,26 +1,15 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { deleteCourse } from "~/services/courseServices";
 
-export default function Course({ course, handlePublic, deleteCourseUi }) {
+export default function Course({ course, handlePublic }) {
   const handlePublicClick = () => {
     handlePublic(course._id);
   };
-  const handleDeleteCourse = async () => {
-    console.log("delete course", course._id);
-    try {
-      const res = await deleteCourse(course._id);
-      deleteCourseUi(course._id);
-      toast.success(res.data.message);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+
   return (
     <div
       key={course._id}
-      className="mb-3 border flex flex-row justify-between items-center"
+      className="mb-3 border flex flex-row justify-between items-center "
     >
       <div className="flex flex-row">
         <div>
@@ -42,16 +31,12 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
         </div>
       </div>
       <div className="">
-        <Link to={`/CourseChapter/${course._id}`}>
+        <Link to={`/usercoursedetail/${course._id}`}>
           <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-            Chỉnh sửa nội dung
+            Xem chi tiết
           </button>
         </Link>
-        <Link to={`/coursedetail/${course._id}`}>
-          <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
-            Chỉnh sửa mô tả
-          </button>
-        </Link>
+
         {!course?.public ? (
           <button
             onClick={handlePublicClick}
@@ -67,12 +52,6 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
             Hủy xuất bản
           </button>
         )}
-        <button
-          onClick={handleDeleteCourse}
-          className=" mr-4 rounded-lg text-white bg-red-500 border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-500 dark:focus:ring-red-600 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg "
-        >
-          Xóa khóa học
-        </button>
       </div>
     </div>
   );

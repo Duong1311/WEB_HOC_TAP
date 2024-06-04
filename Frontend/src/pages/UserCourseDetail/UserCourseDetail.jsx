@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import {
   getCourseCreatedById,
   getRatingByCourseId,
+  publicCourse,
 } from "~/services/courseServices";
 import { useParams } from "react-router-dom";
 import { mapOrder } from "~/utils/sorts";
@@ -12,6 +13,8 @@ import draftToHtml from "draftjs-to-html";
 import HeaderCourse from "./FixedOnScroll/HeaderCourse";
 import RatingCourse from "./RatingCourse/RatingCourse";
 import WriteRating from "./WriteRating/WriteRating";
+import PublicButton from "~/components/PublicButton/PublicButton";
+import { toast } from "react-toastify";
 
 export default function UserCourseDetail() {
   const [orderedchapters, setOrderedchapters] = useState([]);
@@ -19,6 +22,7 @@ export default function UserCourseDetail() {
   const [course, setCourse] = useState();
   const [markdown, setMarkdown] = useState();
   const [allRating, setAllRating] = useState([]);
+
   const fetchData = async (id) => {
     try {
       const res = await getCourseCreatedById(id);
@@ -39,6 +43,22 @@ export default function UserCourseDetail() {
   };
   const addRating = (newRating) => {
     setAllRating([...allRating, newRating]);
+  };
+  const handlePublic = async (courseId) => {
+    try {
+      //update public status
+      let courseUpdate = course;
+      courseUpdate = {
+        ...courseUpdate,
+        public: !courseUpdate.public,
+      };
+      setCourse(courseUpdate);
+
+      await publicCourse(courseId);
+      toast.success("Cập nhật trạng thái thành công");
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     fetchData(id).then((course) => {
@@ -68,7 +88,7 @@ export default function UserCourseDetail() {
     });
     getRatingData(id);
   }, []);
-  console.log(orderedchapters);
+  // console.log(orderedchapters);
 
   return (
     <div className="flex flex-col">
@@ -100,7 +120,7 @@ export default function UserCourseDetail() {
                 ({course?.ratingCount} ratings)
               </div>
               <div className="text-white text-sm">
-                {course?.studyCount} học sinh
+                {course?.studyCount || 0} học sinh
               </div>
             </div>
             <div className="flex flex-row items-center">
@@ -149,6 +169,11 @@ export default function UserCourseDetail() {
         </div>
       </div>
       <HeaderCourse course={course} />
+      <PublicButton
+        courseId={course?._id}
+        isPublic={course?.public}
+        handlePublic={handlePublic}
+      />
     </div>
   );
 }

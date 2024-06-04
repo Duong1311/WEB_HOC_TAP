@@ -14,3 +14,9 @@ export const getAllCourseStudys = (id) => {
 export const addCourseToHistoryApi = (userId, courseId) => {
   return axios.post(`/user/addCourseToHistory`, { userId, courseId });
 };
+export const getAllUser = () => {
+  return axios.get(`/user/getAllUser`);
+};
+export const blockUser = (userId) => {
+  return axios.put(`/user/blockUser/${userId}`);
+};

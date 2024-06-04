@@ -1,7 +1,7 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { getLessonContent } from "~/services/courseServices";
+import { getLessonContent, publicCourse } from "~/services/courseServices";
 import draftToHtml from "draftjs-to-html";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -10,6 +10,8 @@ import UserLessonContent from "./UserLessonContent/UserLessonContent";
 import UserQuestionList from "./UserQuestionList/UserQuestionList";
 import { useSelector } from "react-redux";
 import { addCourseToHistoryApi } from "~/services/userServices";
+import PublicButton from "~/components/PublicButton/PublicButton";
+import { toast } from "react-toastify";
 
 export default function UserLessonDetail() {
   // const [nextId, setNextId] = useState("");
@@ -114,6 +116,27 @@ export default function UserLessonDetail() {
       console.log(error);
     }
   };
+  const handlePublic = async (courseId) => {
+    try {
+      // update public status
+      let updatedLesson = lesson;
+      if (updatedLesson && updatedLesson.courseId) {
+        updatedLesson = {
+          ...updatedLesson,
+          courseId: {
+            ...updatedLesson.courseId,
+            public: !updatedLesson.courseId.public,
+          },
+        };
+        setLesson(updatedLesson);
+      }
+
+      await publicCourse(courseId);
+      toast.success("Thay đổi trạng thái thành công");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getLessonContentApi(id);
@@ -205,6 +228,11 @@ export default function UserLessonDetail() {
         {displayEditor && <UserLessonContent markdown={markdown} />}
         {displayQuestion && <UserQuestionList />}
       </div>
+      <PublicButton
+        isPublic={lesson?.courseId?.public}
+        courseId={lesson?.courseId?._id}
+        handlePublic={handlePublic}
+      />
     </div>
   );
 }

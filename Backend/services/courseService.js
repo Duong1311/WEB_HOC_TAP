@@ -12,11 +12,32 @@ const { cloneDeep } = require("lodash");
 const courseService = {
   searchCourse: async (query) => {
     try {
-      const searchCourse = await Courses.find({
-        // title: { $regex: query.title, $options: "i" },
-        $text: { $search: query.title },
-      }).populate("userId");
-      return searchCourse;
+      console.log(query);
+      const page = parseInt(query.page) || 1;
+      const limit = parseInt(query.limit) || 10;
+      const sortParam = query.sort || "studyCount";
+      const matchQuery = {
+        public: true,
+      };
+
+      if (query.title) {
+        matchQuery.$text = { $search: query.title };
+      }
+
+      if (query.categoryId) {
+        matchQuery.categoryId = query.categoryId;
+      }
+      console.log(matchQuery);
+      const totalCourses = await Courses.countDocuments(matchQuery);
+      const totalPage = Math.ceil(totalCourses / limit);
+
+      const courses = await Courses.find(matchQuery)
+        .sort({ [sortParam]: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .populate("userId");
+      // console.log("course", courses);
+      return { courses, totalPage, totalCourses };
     } catch (error) {
       throw error;
     }
@@ -77,7 +98,7 @@ const courseService = {
   },
   getAllCourses: async () => {
     try {
-      const courses = await Courses.find().populate("userId");
+      const courses = await Courses.find({ public: true }).populate("userId");
       return courses;
     } catch (error) {
       throw error;

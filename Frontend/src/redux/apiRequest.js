@@ -10,13 +10,29 @@ import {
   logOutSuccess,
   logOutFailed,
 } from "./authSlice";
+import { toast } from "react-toastify";
 
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
     const res = await axios.post("http://localhost:3000/api/auth/login", user);
-    dispatch(loginSuccess(res.data));
-    navigate("/");
+    if (res.data.status === false) {
+      toast.error("Tài khoản của bạn đã bị khóa");
+      dispatch(loginFailure());
+      return;
+    }
+
+    if (res.data.admin === true) {
+      // alert("Admin Login");
+      dispatch(loginSuccess(res.data));
+
+      navigate("/admin");
+    } else {
+      alert("User Login");
+      dispatch(loginSuccess(res.data));
+
+      navigate("/");
+    }
   } catch (err) {
     dispatch(loginFailure());
   }

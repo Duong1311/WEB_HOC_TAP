@@ -81,8 +81,10 @@ const getRatingByCourseId = (id) => {
 const deleteCourse = (id) => {
   return axios.delete(`/course/deleteCourse/${id}`);
 };
-const searchCourse = (title) => {
-  return axios.get(`/course/searchCourse?title=${title}`);
+const searchCourse = (title, selectedCategory, sort, page) => {
+  return axios.get(
+    `/course/searchCourse?title=${title}&categoryId=${selectedCategory}&sort=${sort}&page=${page}`
+  );
 };
 
 export {

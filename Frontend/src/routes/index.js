@@ -13,6 +13,8 @@ import UserProfile from "~/pages/UserProfile/UserProfile.jsx";
 import UserCourseStudys from "~/pages/UserCourseStudys/UserCourseStudys.jsx";
 import SearchLayout from "~/components/Layout/SearchLayout/SearchLayout.jsx";
 import Search from "~/pages/Search/Search.jsx";
+import Admin from "~/pages/Admin/Admin.jsx";
+import UserBan from "~/pages/Admin/UserBan.jsx";
 const publicRoutes = [
   {
     path: "/",
@@ -74,6 +76,15 @@ const publicRoutes = [
     path: "/course/search",
     component: Search,
     layout: SearchLayout,
+  },
+  // admin routes
+  {
+    path: "/admin",
+    component: Admin,
+  },
+  {
+    path: "/admin/user",
+    component: UserBan,
   },
 ];
 const privateRoutes = [];

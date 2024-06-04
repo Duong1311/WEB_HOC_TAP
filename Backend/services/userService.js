@@ -2,11 +2,41 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const courseStudy = require("../models/courseStudy");
 const Courses = require("../models/courseModel");
+const user = require("../models/user");
 
 const userService = {
+  blockUser: async (id) => {
+    const user = await User.findById(id);
+    if (!user) {
+      return {
+        status: 404,
+        message: "Người dùng không tồn tại",
+      };
+    }
+    const blockUser = await User.findOneAndUpdate(
+      { _id: id },
+      { $set: { status: !user.status } },
+      {
+        returnDocument: "after",
+      }
+    );
+    return {
+      status: 200,
+      message: "Khóa tài khoản thành công",
+      data: blockUser,
+    };
+  },
+  getAllUser: async () => {
+    const allUser = await User.find({ admin: false }).select({
+      username: 1,
+      email: 1,
+      status: 1,
+    });
+    return allUser;
+  },
   addCourseToHistory: async (userId, courseId) => {
     try {
-      console.log(userId, courseId);
+      // console.log(userId, courseId);
       const user = await User.findById(userId);
       if (!user) {
         return {
@@ -36,6 +66,15 @@ const userService = {
         courseId: courseId,
       });
       await newCourseStudy.save();
+      // increase course study count
+      const res = await Courses.findOneAndUpdate(
+        { _id: courseId },
+        { $inc: { studyCount: 1 } },
+        {
+          returnDocument: "after",
+        }
+      );
+      console.log(res);
       return {
         status: 200,
         message: "Thêm khóa học vào lịch sử học tập thành công",

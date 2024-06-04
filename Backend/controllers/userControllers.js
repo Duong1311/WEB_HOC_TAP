@@ -2,6 +2,22 @@ const userService = require("../services/userService");
 const { StatusCodes } = require("http-status-codes");
 
 const userControllers = {
+  blockUser: async (req, res, next) => {
+    try {
+      const blockUser = await userService.blockUser(req.params.id);
+      res.status(StatusCodes.OK).json(blockUser);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  getAllUser: async (req, res, next) => {
+    try {
+      const allUser = await userService.getAllUser();
+      res.status(StatusCodes.OK).json(allUser);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   addCourseToHistory: async (req, res, next) => {
     try {
       const addCourseToHistory = await userService.addCourseToHistory(

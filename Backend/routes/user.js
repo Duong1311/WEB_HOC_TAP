@@ -14,5 +14,8 @@ router.put("/updateUserPassword/:id", userControllers.updateUserPassword);
 router.get("/getAllCourseStudys/:id", userControllers.getAllCourseStudys);
 //add course to history
 router.post("/addCourseToHistory", userControllers.addCourseToHistory);
-
+//get all user
+router.get("/getAllUser", userControllers.getAllUser);
+//block user
+router.put("/blockUser/:id", userControllers.blockUser);
 module.exports = router;

@@ -21,13 +21,17 @@ export default function Header() {
   const [categories, setCategory] = useState([]);
 
   const user = useSelector((state) => state.root.auth.login.currentUser);
+
   const accessToken = user?.accessToken;
   const id = user?._id;
+  const isAdmin = user?.admin;
+  console.log(isAdmin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let axiosJWT = createAxios(user, dispatch, logOutSuccess);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const getCategories = async () => {
     try {
       const res = await getAllCategory();
@@ -57,28 +61,34 @@ export default function Header() {
     <div className="w-full h-[60px] flex justify-center items-center fixed top-0 z-10 shadow-md bg-white ">
       <div className="w-full flex flex-row justify-between px-5">
         <div className="flex space-x-8 justify-center items-center text-sm ">
-          <Link to="/">
+          <Link to={`${isAdmin ? "/admin" : "/"}`}>
             <div>
               <img
                 className="object-cover max-w-14 max-h-14"
-                src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=qvwBDTOIWEMQ7kNvgHmoJiQ&_nc_ht=scontent.fhan14-3.fna&oh=00_AYA9cb794t4FNrzwIgwwn4r6xL7aQb8NANE1c32MmBprog&oe=6659EAEE"
-                alt="ádas"
+                src="https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeH2OtK1H65keE-gTLInGaaXokn0hgX4pq2iSfSGBfimrY04OeKyoG7mHV6Z-s9RYOJTQdOsjhpsI7LD5KBkZtL0&_nc_ohc=mbEyvDKlVqMQ7kNvgHJiWWE&_nc_ht=scontent-hkg4-2.xx&oh=00_AYAZlR1b2Z8J5QM0Oy3l4OoEeUuBk8l3GrMfhndx1LlNIA&oe=6664AF2E"
+                alt="Logo"
               />
             </div>
           </Link>
 
-          <div className="relative hover-trigger h-full items-center flex justify-center">
-            Thể loại
-            <div className="absolute min-w-[200px] top-14 left-0 bg-white border border-grey-100 px-4 py-2 hover-target">
-              {categories.map((category) => (
-                // <Link to={`/category/${category._id}`} key={category._id}>
-                <div key={category._id} className="hover:bg-gray-100 py-2">
-                  {category.categoryName}
-                </div>
-                // {/* </Link> */}
-              ))}
+          {isAdmin ? (
+            <Link to="/admin">
+              <div>Quản lý khóa học</div>
+            </Link>
+          ) : (
+            <div className="relative hover-trigger hover:bg-gray-100 h-full items-center flex justify-center">
+              Thể loại
+              <div className="absolute min-w-[200px] top-14 left-0 bg-white border border-grey-100 px-4 py-2 hover-target">
+                {categories.map((category) => (
+                  // <Link to={`/category/${category._id}`} key={category._id}>
+                  <div key={category._id} className="hover:bg-gray-100 py-2">
+                    {category.categoryName}
+                  </div>
+                  // {/* </Link> */}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           <style>
             {`
             .hover-trigger .hover-target {
@@ -91,13 +101,17 @@ export default function Header() {
           `}
           </style>
 
-          <Link to="/gvhome">
-            <div>Giáo viên</div>
-          </Link>
+          {isAdmin ? (
+            <Link to="/admin/user">
+              <div>Quản lý người dùng</div>
+            </Link>
+          ) : (
+            <div>Làm bài tập</div>
+          )}
         </div>
 
         {user ? (
-          <>
+          <div className="flex justify-center items-center">
             <div
               className="flex items-center text-center mr-5"
               // sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
@@ -152,19 +166,40 @@ export default function Header() {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <Link to={`/userprofile/${id}`}>
-                <MenuItem onClick={handleClose}>
-                  <Avatar /> Profile
-                </MenuItem>
-              </Link>
-              <Link to={`/usercoursestudys/${id}`}>
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <PersonAdd fontSize="small" />
-                  </ListItemIcon>
-                  Khóa học của tôi
-                </MenuItem>
-              </Link>
+              {isAdmin ? (
+                <Link to="/admin">
+                  <MenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <PersonAdd fontSize="small" />
+                    </ListItemIcon>
+                    Admin
+                  </MenuItem>
+                </Link>
+              ) : (
+                <div className="w-full h-full">
+                  <Link to={`/userprofile/${id}`}>
+                    <MenuItem onClick={handleClose}>
+                      <Avatar /> Profile
+                    </MenuItem>
+                  </Link>
+                  <Link to={`/usercoursestudys/${id}`}>
+                    <MenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <PersonAdd fontSize="small" />
+                      </ListItemIcon>
+                      Khóa học của tôi
+                    </MenuItem>
+                  </Link>
+                  <Link to="/gvhome">
+                    <MenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <PersonAdd fontSize="small" />
+                      </ListItemIcon>
+                      Giáo viên
+                    </MenuItem>
+                  </Link>
+                </div>
+              )}
               <Divider />
 
               <MenuItem onClick={handleLogout}>
@@ -174,9 +209,9 @@ export default function Header() {
                 Logout
               </MenuItem>
             </Menu>
-          </>
+          </div>
         ) : (
-          <>
+          <div className="flex justify-center items-center">
             <div className="flex space-x-8 mr-8">
               <Link to="/login">
                 <button className="middle none center mr-4 rounded-lg text-black bg-[#F8F7F4] py-3 px-6 font-sans text-xs font-bold uppercase shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-slate-400 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
@@ -189,7 +224,7 @@ export default function Header() {
                 </button>
               </Link>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

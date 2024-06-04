@@ -35,7 +35,9 @@ export default function SearchHeader() {
   const open = Boolean(anchorEl);
   const [searchParams, setSearchParams] = useSearchParams();
   const title = new URLSearchParams(location.search).get("search");
-
+  if (!user) {
+    navigate("/login");
+  }
   const [message, setMessage] = useState(title || "");
   const handleChange = (event) => {
     setMessage(event.target.value);
@@ -82,8 +84,8 @@ export default function SearchHeader() {
             <div>
               <img
                 className="object-cover max-w-14 max-h-14"
-                src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=qvwBDTOIWEMQ7kNvgHmoJiQ&_nc_ht=scontent.fhan14-3.fna&oh=00_AYA9cb794t4FNrzwIgwwn4r6xL7aQb8NANE1c32MmBprog&oe=6659EAEE"
-                alt="ádas"
+                src="https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeH2OtK1H65keE-gTLInGaaXokn0hgX4pq2iSfSGBfimrY04OeKyoG7mHV6Z-s9RYOJTQdOsjhpsI7LD5KBkZtL0&_nc_ohc=mbEyvDKlVqMQ7kNvgHJiWWE&_nc_ht=scontent-hkg4-2.xx&oh=00_AYAZlR1b2Z8J5QM0Oy3l4OoEeUuBk8l3GrMfhndx1LlNIA&oe=6664AF2E"
+                alt="Logo"
               />
             </div>
           </Link>

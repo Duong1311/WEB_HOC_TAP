@@ -26,6 +26,9 @@ export default function GvHeader() {
   let axiosJWT = createAxios(user, dispatch, logOutSuccess);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  if (!user) {
+    navigate("/login");
+  }
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
