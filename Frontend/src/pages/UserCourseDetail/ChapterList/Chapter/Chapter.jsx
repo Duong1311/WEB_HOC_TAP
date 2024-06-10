@@ -1,10 +1,14 @@
 /* eslint-disable react/prop-types */
 import Lesson from "./Lesson/Lesson";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+import { mapOrder } from "~/utils/sorts";
 export default function Chapter({ chapter }) {
   const [openLessons, setOpenLessons] = useState(false);
-
+  const [orderLesson, setOrderLesson] = useState([]);
+  useEffect(() => {
+    setOrderLesson(mapOrder(chapter?.lessons, chapter?.lessonOrderIds, "_id"));
+  }, []);
   return (
     <div>
       <div
@@ -21,7 +25,7 @@ export default function Chapter({ chapter }) {
           <AiOutlineDown className="self-center" />
         )}
       </div>
-      {openLessons && <Lesson lessons={chapter?.lessons} />}
+      {openLessons && <Lesson lessons={orderLesson} />}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const courseService = require("../services/courseService");
+
 const courseController = {
   searchCourse: async (req, res, next) => {
     try {
@@ -51,10 +52,9 @@ const courseController = {
   },
   createCourseImage: async (req, res, next) => {
     try {
-      console.log(req.file);
-      // const createCourseImage = await courseService.createCourseImage(req.file);
-      // res.status(StatusCodes.CREATED).json(createCourseImage);
-      res.status(StatusCodes.CREATED).json("thanh cong");
+      const createCourseImage = await courseService.createCourseImage(req.file);
+      res.status(StatusCodes.CREATED).json(createCourseImage);
+      // res.status(StatusCodes.CREATED).json("thanh cong");
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }

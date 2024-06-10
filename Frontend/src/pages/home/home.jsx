@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
-import { getAllcourses } from "~/services/courseServices";
+import { getAllCategory, getAllcourses } from "~/services/courseServices";
 
 export default function Home() {
   const [message, setMessage] = useState("");
   const [courses, setCourses] = useState([]);
+  const [categories, setCategory] = useState([]);
+
   const navigate = useNavigate();
   const handleChange = (event) => {
     setMessage(event.target.value);
@@ -19,16 +21,15 @@ export default function Home() {
       navigate(`/course/search/?search=${message}`);
     }
   };
-  const catagories = [
-    "CNTT",
-    "Kinh tế",
-    "Ngoại ngữ",
-    "Toán học",
-    "Thể thao",
-    "Âm nhạc",
-    "Nghệ thuật",
-    "Khoa học",
-  ];
+  const getCategories = async () => {
+    try {
+      const res = await getAllCategory();
+      console.log(res.data);
+      setCategory(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const getAllcoursesData = async () => {
     try {
@@ -39,8 +40,10 @@ export default function Home() {
       console.log("error", error);
     }
   };
+
   useEffect(() => {
     getAllcoursesData();
+    getCategories();
   }, []);
   return (
     <div className=" w-full flex flex-col  items-center ">
@@ -61,15 +64,17 @@ export default function Home() {
         <div className="absolute mx-auto my-auto top-11 left-0 right-0 text-center  text-white">
           <div className="flex flex-col space-y-10 justify-center items-center">
             <div>
-              {catagories &&
-                catagories?.map((catagorie) => {
+              {categories &&
+                categories?.map((categorie) => {
                   return (
-                    <button
-                      key={catagorie}
-                      className=" ml-4 rounded-full text-black bg-[#F8F7F4] py-3 px-6 font-sans text-xs font-bold uppercase shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-slate-400 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    <Link
+                      key={categorie?._id}
+                      to={`/course/search/?search=&filter=${categorie?._id}`}
                     >
-                      {catagorie}
-                    </button>
+                      <button className=" ml-4 rounded-full text-black bg-[#F8F7F4] py-3 px-6 font-sans text-xs font-bold uppercase shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-slate-400 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        {categorie?.categoryName}
+                      </button>
+                    </Link>
                   );
                 })}
             </div>
@@ -129,9 +134,9 @@ export default function Home() {
                     key={data._id}
                   >
                     <Link to={`/usercoursedetail/${data?._id}`}>
-                      <div>
+                      <div className="overflow-hidden">
                         <img
-                          className="object-cover w-[306px] h-[161px] rounded-lg"
+                          className="object-cover w-[306px] h-[161px] rounded-lg  hover:scale-125 transition duration-300 ease-in-out"
                           src={
                             data?.image ||
                             "https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
@@ -140,7 +145,9 @@ export default function Home() {
                         />
                       </div>
                       <div className="font-semibold">{data?.title}</div>
-                      <div className="font-light">{data?.userId?.username}</div>
+                      <div className="font-light">
+                        {data?.userId?.username || "tac gia"}
+                      </div>
                       <div className="flex flex-row gap-2 ">
                         <Rating
                           disableFillHover={true}

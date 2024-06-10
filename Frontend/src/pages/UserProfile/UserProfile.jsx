@@ -3,6 +3,7 @@ import UserAvatar from "./Avatar/Avatar";
 import { useEffect, useState } from "react";
 import { getUserInfor, updateUserInfor } from "~/services/userServices";
 import ChangePass from "./ChangePass/ChangePass";
+import { toast } from "react-toastify";
 
 export default function UserProfile() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
@@ -28,7 +29,7 @@ export default function UserProfile() {
         email: email,
         description: description,
       });
-      console.log(res);
+      toast.success(res.data.message);
     } catch (error) {
       console.log(error);
     }

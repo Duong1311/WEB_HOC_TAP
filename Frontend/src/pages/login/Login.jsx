@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { loginUser } from "../../redux/apiRequest";
+import { loginUser, loginUserGoogle } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -17,6 +18,14 @@ export default function Login() {
     };
     loginUser(newUser, dispatch, navigate);
     // console.log(res.);
+  };
+  const handleLoginGoogle = (credentialResponse) => {
+    const newUser = {
+      credential: credentialResponse.credential,
+      client_id: credentialResponse.clientId,
+      select_by: credentialResponse.select_by,
+    };
+    loginUserGoogle(newUser, dispatch, navigate);
   };
   return (
     <section className="h-screen">
@@ -35,20 +44,28 @@ export default function Login() {
           <div className="md:w-8/12 lg:ms-6 lg:w-1/2 w-full">
             <div className="w-full">
               <div className="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
-                <div className="bg-white px-8 py-6 max-w-md">
-                  <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">
+                <div className="w-full bg-white px-8 py-6 max-w-md">
+                  <h1 className=" text-2xl font-bold text-center mb-4 dark:text-gray-200">
                     Welcome Back!
                   </h1>
-                  <div className="mt-5">
-                    <button className="w-full text-center py-2 my-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
-                      <img
-                        src="https://www.svgrepo.com/show/355037/google.svg"
-                        className="w-6 h-6"
-                        alt=""
-                      />
-                      <span>Login with Google</span>
-                    </button>
+                  <div className="mt-5 w-full flex justify-center">
+                    <GoogleLogin
+                      className="w-full"
+                      onSuccess={(credentialResponse) => {
+                        console.log(credentialResponse);
+                        handleLoginGoogle(credentialResponse);
+                        // const newUser = {
+                        //   credential: credentialResponse.credential,
+                        //   client_id: credentialResponse.clientId,
+                        //   select_by: credentialResponse.select_by,
+                        // };
+                      }}
+                      onError={() => {
+                        console.log("Login Failed");
+                      }}
+                    />
                   </div>
+
                   <div className="w-full flex items-center justify-between py-5">
                     <hr className="w-full bg-gray-400" />
                     <p className="text-base font-medium leading-4 px-2.5 text-gray-400">

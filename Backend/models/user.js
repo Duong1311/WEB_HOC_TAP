@@ -16,9 +16,13 @@ const userSchema = new mongoose.Schema(
       maxLength: 50,
       unique: true,
     },
+    picture: {
+      type: String,
+      default: "",
+    },
     password: {
       type: String,
-      required: true,
+      // required: true,
       minLength: 6,
     },
     description: {
@@ -32,6 +36,11 @@ const userSchema = new mongoose.Schema(
     status: {
       type: Boolean,
       default: true,
+    },
+    authSource: {
+      type: String,
+      enum: ["self", "google"],
+      default: "self",
     },
   },
   { timestamps: true }

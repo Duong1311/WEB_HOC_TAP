@@ -54,7 +54,7 @@ export default function CreateCourse() {
     <div className="w-full flex flex-col items-center min-h-[90vh]">
       <div className="w-1/3 mt-20 ">
         <div className="w-full flex flex-col justify-center items-center  mb-7">
-          <div className="font-medium text-2xl mb-4">Tên nội dung bài học</div>
+          <div className="font-medium text-2xl mb-4">Tên khóa học</div>
           <div>
             Đừng lo nếu bạn không nghĩ ra được một tiêu đề hay ngay bây giờ.
           </div>

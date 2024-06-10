@@ -89,6 +89,7 @@ const userService = {
       const courseStudys = await courseStudy
         .find({ userId: id })
         .populate("courseId");
+
       console.log(courseStudys);
       return courseStudys;
     } catch (error) {

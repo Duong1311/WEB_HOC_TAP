@@ -3,17 +3,19 @@ const router = express.Router();
 const courseValidation = require("../validations/courseValidation");
 const courseController = require("../controllers/courseControllers");
 const multer = require("multer");
-// const { upload } = require("../utils/multerStore");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    return cb(null, "./public/Images");
-  },
-  filename: function (req, file, cb) {
-    return cb(null, `${Date.now()}_${file.originalname}`);
-  },
-});
+const upload = multer({ storage: multer.memoryStorage() });
+// const firebaseConfig = require("../utils/firebaseConfig");
+// const { initializeApp } = require("firebase/app");
+// const {
+//   getStorage,
+//   ref,
+//   getDownloadURL,
+//   uploadBytesResumable,
+// } = require("firebase/storage");
 
-const upload = multer({ storage });
+// // initializeApp(firebaseConfig);
+
+// const storage = getStorage();
 
 router.post(
   "/createCourse",
@@ -28,12 +30,13 @@ router.get("/getAllCourses", courseController.getAllCourses);
 router.get("/getCourseDetail/:id", courseController.getCourseDetail);
 //update course detail
 router.post("/createCourseDetail/:id", courseController.createCourseDetail);
-//create course image
+// create course image
 router.post(
   "/createCourseImage",
   upload.single("file"),
   courseController.createCourseImage
 );
+
 //update course public
 router.put("/publicCourse/:id", courseController.publicCourse);
 //get all course created by user

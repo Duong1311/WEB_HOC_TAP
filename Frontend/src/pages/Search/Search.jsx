@@ -3,12 +3,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Course from "./Course/Course";
 import { getAllCategory, searchCourse } from "~/services/courseServices";
 import {
+  Box,
+  CircularProgress,
   FormControl,
   MenuItem,
   Pagination,
   Select,
   Stack,
+  Typography,
 } from "@mui/material";
+import { set } from "lodash";
 
 export default function Search() {
   const location = useLocation();
@@ -19,6 +23,7 @@ export default function Search() {
   //--------------------State--------------------
   const [courseSearch, setCourseSearch] = useState([]);
   const [categories, setCategory] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(
     queryParams.get("filter") || ""
   );
@@ -37,9 +42,11 @@ export default function Search() {
   };
   const getCategories = async () => {
     try {
+      setIsLoading(true);
       const res = await getAllCategory();
       // console.log(res.data);
       setCategory(res.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -62,11 +69,13 @@ export default function Search() {
   };
   const fetchDataSearch = async (title, selectedCategory, sort, page) => {
     try {
+      setIsLoading(true);
       const res = await searchCourse(title, selectedCategory, sort, page);
       if (res.status === 200) {
         setCourseSearch(res.data.courses);
         setTotalPage(res.data.totalPage);
       }
+      setIsLoading(false);
     } catch (error) {
       console.log("error", error);
     }
@@ -76,15 +85,34 @@ export default function Search() {
     getCategories();
   }, [title, selectedCategory, sort, page]);
 
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+        <Typography>Loading Board...</Typography>
+      </Box>
+    );
+  }
   return (
     <div className="flex justify-center items-center">
       <div className="w-5/6 my-5 p-3">
-        <div className=" w-full text-3xl font-semibold mb-5">
-          Kết quả tìm kiếm cho &quot; {title} &quot;
-        </div>
+        {title && (
+          <div className=" w-full text-3xl font-semibold mb-5">
+            Kết quả tìm kiếm cho &quot; {title} &quot;
+          </div>
+        )}
         <div className="w-full flex flex-row">
           <div className="w-[400px] h-auto bg-white rounded-sm p-4 mr-5">
-            <div className=" w-full flex flex-row justify-between">
+            {/* <div className=" w-full flex flex-row justify-between">
               <div className=" text-2xl font-semibold ">Sắp xếp theo</div>
               <div
                 className=" text-blue-600 hover:text-blue-800 mt-1"
@@ -120,7 +148,7 @@ export default function Search() {
                   ))}
                 </Select>
               </FormControl>
-            </div>
+            </div> */}
             <div className=" w-full flex flex-row justify-between">
               <div className=" text-2xl font-semibold ">Thể loại</div>
               <div

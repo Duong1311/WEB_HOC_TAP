@@ -23,9 +23,10 @@ export default function Header() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
 
   const accessToken = user?.accessToken;
+  console.log(accessToken);
   const id = user?._id;
   const isAdmin = user?.admin;
-  console.log(isAdmin);
+  // console.log(isAdmin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let axiosJWT = createAxios(user, dispatch, logOutSuccess);
@@ -35,7 +36,7 @@ export default function Header() {
   const getCategories = async () => {
     try {
       const res = await getAllCategory();
-      console.log(res.data);
+      // console.log(res.data);
       setCategory(res.data);
     } catch (error) {
       console.log(error.message);
@@ -80,11 +81,14 @@ export default function Header() {
               Thể loại
               <div className="absolute min-w-[200px] top-14 left-0 bg-white border border-grey-100 px-4 py-2 hover-target">
                 {categories.map((category) => (
-                  // <Link to={`/category/${category._id}`} key={category._id}>
-                  <div key={category._id} className="hover:bg-gray-100 py-2">
-                    {category.categoryName}
-                  </div>
-                  // {/* </Link> */}
+                  <Link
+                    to={`/course/search/?search=&filter=${category?._id}`}
+                    key={category._id}
+                  >
+                    <div className="hover:bg-gray-100 py-2">
+                      {category.categoryName}
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>

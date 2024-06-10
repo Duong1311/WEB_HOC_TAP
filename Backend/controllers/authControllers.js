@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client();
 
 // thu viện lodash
 
@@ -64,12 +66,16 @@ const authControllers = {
     try {
       console.log("login");
       const user = await User.findOne({ username: req.body.username });
-      if (!user) return res.status(404).json("Wrong username");
+      if (!user)
+        return res.status(201).json({
+          error: "Không tìm thấy tài khoản",
+        });
       const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
       );
-      if (!validPassword) return res.status(404).json("Wrong password");
+      if (!validPassword)
+        return res.status(201).json({ error: "Sai mật khẩu" });
 
       const { password, ...others } = user._doc;
 
@@ -87,6 +93,61 @@ const authControllers = {
       }
     } catch (err) {
       res.status(500).json(err);
+    }
+  },
+  loginUserGoogle: async (req, res) => {
+    const { credential, client_id } = req.body;
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: credential,
+        audience: client_id,
+      });
+      const payload = ticket.getPayload();
+      const user = await User.findOne({ email: payload.email });
+      // console.log(user);
+      if (!user) {
+        console.log("User does not exist");
+        // Create a user if they do not exist
+        const newUser = new User({
+          email: payload.email,
+          username: payload.name,
+          // picture: payload.picture,
+          authSource: "google",
+        });
+        const result = await newUser.save();
+
+        const { picture, ...others } = result._doc;
+        const accessToken = authControllers.generateAccessToken(result);
+        const refreshToken = authControllers.generateRefreshToken(result);
+        refreshTokens.push(refreshToken);
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          path: "/",
+          secure: false,
+          sameSite: "strict",
+        });
+        return res
+          .status(200)
+          .json({ ...others, picture: payload.picture, accessToken });
+      }
+      const { picture, ...others } = user._doc;
+
+      if (user) {
+        const accessToken = authControllers.generateAccessToken(user);
+        const refreshToken = authControllers.generateRefreshToken(user);
+        refreshTokens.push(refreshToken);
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          path: "/",
+          secure: false,
+          sameSite: "strict",
+        });
+        res
+          .status(200)
+          .json({ ...others, picture: payload.picture, accessToken });
+      }
+    } catch (err) {
+      res.status(400).json({ err });
     }
   },
   refreshToken: async (req, res) => {

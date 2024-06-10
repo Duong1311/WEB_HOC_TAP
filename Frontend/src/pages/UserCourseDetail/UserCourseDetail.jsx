@@ -60,6 +60,7 @@ export default function UserCourseDetail() {
       console.log(error);
     }
   };
+  const [firstLessonId, setFirstLessonId] = useState();
   useEffect(() => {
     fetchData(id).then((course) => {
       setCourse(course);
@@ -82,10 +83,24 @@ export default function UserCourseDetail() {
       };
 
       setMarkdown(draftToHtml(a));
+
+      const firstChapterId = course?.chapterOrderIds[0];
+      //find first chapter
+      const firstChapter = course?.chapters.find((chapter) => {
+        return chapter._id === firstChapterId;
+      });
+      //get first lesson id
+      const firstLessonId = firstChapter?.lessonOrderIds[0];
+      // find first lesson
+      const firstLesson = firstChapter?.lessons.find((lesson) => {
+        return lesson._id === firstLessonId;
+      });
+      setFirstLessonId(firstLesson?._id);
       setOrderedchapters(
         mapOrder(course?.chapters, course?.chapterOrderIds, "_id")
       );
     });
+
     getRatingData(id);
   }, []);
   // console.log(orderedchapters);
@@ -111,13 +126,14 @@ export default function UserCourseDetail() {
                 size={15}
                 SVGstyle={{ display: "inline", verticalAlign: "text-top" }}
                 allowFraction={true}
+                readonly={true}
                 className="float-left"
               />
               <div className=" text-yellow-500">
-                {course?.totalRating?.toFixed(1)}
+                {course?.totalRating?.toFixed(1) || 0}
               </div>
               <div className="text-white text-sm">
-                ({course?.ratingCount} ratings)
+                ({course?.ratingCount || 0} ratings)
               </div>
               <div className="text-white text-sm">
                 {course?.studyCount || 0} học sinh
@@ -126,7 +142,7 @@ export default function UserCourseDetail() {
             <div className="flex flex-row items-center">
               <div className="text-white text-sm">Giáo viên: </div>
               <div className="text-blue-300 text-lg ml-2">
-                {course?.Users[0]?.username}
+                {course?.Users[0]?.username || "tác giả"}
               </div>
             </div>
             <div className="flex flex-row gap-2">
@@ -139,7 +155,7 @@ export default function UserCourseDetail() {
           </div>
         </div>
         {/* anh khoa hoc */}
-        <FixedOnScroll />
+        <FixedOnScroll firstLesson={firstLessonId} />
       </div>
       <div className="w-full flex justify-center ">
         <div className="w-10/12 flex flex-col my-7 ">

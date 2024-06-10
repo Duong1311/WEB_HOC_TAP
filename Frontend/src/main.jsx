@@ -10,17 +10,20 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ConfirmProvider } from "material-ui-confirm";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <CssVarsProvider theme={theme}>
-        <ConfirmProvider>
-          <CssBaseline />
-          <App />
-          <ToastContainer />
-        </ConfirmProvider>
-      </CssVarsProvider>
-    </PersistGate>
-  </Provider>
+  <GoogleOAuthProvider clientId="945480411700-p12qqi6t9n1md62dv7m39ojevm4mnek0.apps.googleusercontent.com">
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <CssVarsProvider theme={theme}>
+          <ConfirmProvider>
+            <CssBaseline />
+            <App />
+            <ToastContainer />
+          </ConfirmProvider>
+        </CssVarsProvider>
+      </PersistGate>
+    </Provider>
+  </GoogleOAuthProvider>
 );

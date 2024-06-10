@@ -83,7 +83,7 @@ const deleteCourse = (id) => {
 };
 const searchCourse = (title, selectedCategory, sort, page) => {
   return axios.get(
-    `/course/searchCourse?title=${title}&categoryId=${selectedCategory}&sort=${sort}&page=${page}`
+    `/course/searchCourse?title=${title}&categoryId=${selectedCategory}&sort=${sort}&page=${page}&limit=5`
   );
 };
 

@@ -1,4 +1,4 @@
-const middleware = require("../middleware");
+// const middleware = require("../middleware");
 const userControllers = require("../controllers/userControllers");
 // const user = require("../model/user");
 

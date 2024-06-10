@@ -42,7 +42,8 @@ const courseSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-courseSchema.index({ title: "text", "blocks.text": "text" });
+// courseSchema.index({ title: "text", "blocks.text": "text" });
+courseSchema.index({ title: "text" });
 
 // const UserModel = mongoose.model("User", userSchema);
 

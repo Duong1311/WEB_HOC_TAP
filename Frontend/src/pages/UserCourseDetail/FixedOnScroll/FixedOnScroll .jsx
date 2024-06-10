@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
-const FixedOnScroll = () => {
+const FixedOnScroll = ({ firstLesson }) => {
   const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
@@ -35,10 +37,12 @@ const FixedOnScroll = () => {
         alt=""
       />
       <div className="w-3/4 flex flex-col gap-2 mb-5">
-        <button className="w-full mt-3 h-12  text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg">
-          Bắt đầu học
-        </button>
-        <div className="w-full ">
+        <Link to={`/userlessondetail/${firstLesson}`}>
+          <button className="w-full mt-3 h-12  text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg">
+            Bắt đầu học
+          </button>
+        </Link>
+        <div className="w-full hidden ">
           <div className="text-lg font-semibold">Khóa học gồm: </div>
           <div className="flex flex-row ">
             <AiOutlineEdit className="self-center" />

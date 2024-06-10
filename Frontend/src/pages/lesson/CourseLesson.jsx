@@ -113,10 +113,7 @@ export default function CourseLesson() {
           <AiOutlineRight className="self-center" />
           <div className="inline-block align-middle">{lesson?.title}</div>
         </div> */}
-        <nav
-          aria-label="breadcrumb"
-          className="mt-10 bg-white px-2 py-2 rounded shadow-md dark:bg-gray-800 dark:text-gray-200"
-        >
+        <nav aria-label="breadcrumb" className="mt-10 bg-white px-2 py-2 ">
           <ol className="flex space-x-2">
             <li>
               <Link to="/gvhome">

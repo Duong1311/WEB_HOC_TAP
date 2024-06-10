@@ -28,6 +28,8 @@ export default function SearchHeader() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
   const accessToken = user?.accessToken;
   const id = user?._id;
+  const isAdmin = user?.admin;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let axiosJWT = createAxios(user, dispatch, logOutSuccess);
@@ -115,7 +117,7 @@ export default function SearchHeader() {
           </style>
 
           <Link to="/gvhome">
-            <div>Giáo viên</div>
+            <div>Làm bài tập</div>
           </Link>
         </div>
         {/* Search */}
@@ -145,9 +147,8 @@ export default function SearchHeader() {
             onKeyDown={handleKeyDown}
           />
         </div>
-
         {user ? (
-          <>
+          <div className="flex justify-center items-center">
             <div
               className="flex items-center text-center mr-5"
               // sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
@@ -202,19 +203,40 @@ export default function SearchHeader() {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <Link to={`/userprofile/${id}`}>
-                <MenuItem onClick={handleClose}>
-                  <Avatar /> Profile
-                </MenuItem>
-              </Link>
-              <Link to={`/usercoursestudys/${id}`}>
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <PersonAdd fontSize="small" />
-                  </ListItemIcon>
-                  Khóa học của tôi
-                </MenuItem>
-              </Link>
+              {isAdmin ? (
+                <Link to="/admin">
+                  <MenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <PersonAdd fontSize="small" />
+                    </ListItemIcon>
+                    Admin
+                  </MenuItem>
+                </Link>
+              ) : (
+                <div className="w-full h-full">
+                  <Link to={`/userprofile/${id}`}>
+                    <MenuItem onClick={handleClose}>
+                      <Avatar /> Profile
+                    </MenuItem>
+                  </Link>
+                  <Link to={`/usercoursestudys/${id}`}>
+                    <MenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <PersonAdd fontSize="small" />
+                      </ListItemIcon>
+                      Khóa học của tôi
+                    </MenuItem>
+                  </Link>
+                  <Link to="/gvhome">
+                    <MenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <PersonAdd fontSize="small" />
+                      </ListItemIcon>
+                      Giáo viên
+                    </MenuItem>
+                  </Link>
+                </div>
+              )}
               <Divider />
 
               <MenuItem onClick={handleLogout}>
@@ -224,9 +246,9 @@ export default function SearchHeader() {
                 Logout
               </MenuItem>
             </Menu>
-          </>
+          </div>
         ) : (
-          <>
+          <div className="flex justify-center items-center">
             <div className="flex space-x-8 mr-8">
               <Link to="/login">
                 <button className="middle none center mr-4 rounded-lg text-black bg-[#F8F7F4] py-3 px-6 font-sans text-xs font-bold uppercase shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-slate-400 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
@@ -239,7 +261,7 @@ export default function SearchHeader() {
                 </button>
               </Link>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

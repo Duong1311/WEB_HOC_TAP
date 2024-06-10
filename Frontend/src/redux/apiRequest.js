@@ -12,10 +12,14 @@ import {
 } from "./authSlice";
 import { toast } from "react-toastify";
 
-export const loginUser = async (user, dispatch, navigate) => {
+export const loginUserGoogle = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
-    const res = await axios.post("http://localhost:3000/api/auth/login", user);
+    const res = await axios.post(
+      "http://localhost:3000/api/auth/google-auth",
+      user
+    );
+
     if (res.data.status === false) {
       toast.error("Tài khoản của bạn đã bị khóa");
       dispatch(loginFailure());
@@ -28,7 +32,40 @@ export const loginUser = async (user, dispatch, navigate) => {
 
       navigate("/admin");
     } else {
-      alert("User Login");
+      toast.success("Đăng nhập thành công");
+      dispatch(loginSuccess(res.data));
+
+      navigate("/");
+    }
+  } catch (err) {
+    dispatch(loginFailure());
+  }
+};
+
+export const loginUser = async (user, dispatch, navigate) => {
+  dispatch(loginStart());
+  try {
+    const res = await axios.post("http://localhost:3000/api/auth/login", user);
+
+    if (res.data.error) {
+      toast.error(res.data.error);
+      dispatch(loginFailure());
+      return;
+    }
+
+    if (res.data.status === false) {
+      toast.error("Tài khoản của bạn đã bị khóa");
+      dispatch(loginFailure());
+      return;
+    }
+
+    if (res.data.admin === true) {
+      // alert("Admin Login");
+      dispatch(loginSuccess(res.data));
+
+      navigate("/admin");
+    } else {
+      toast.success("Đăng nhập thành công");
       dispatch(loginSuccess(res.data));
 
       navigate("/");

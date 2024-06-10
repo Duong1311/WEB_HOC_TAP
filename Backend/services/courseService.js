@@ -8,7 +8,16 @@ const Ratings = require("../models/ratingModel");
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
-// const upload = require("../utils/multerStore");
+const app = require("../utils/firebaseConfig");
+const {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+} = require("firebase/storage");
+app;
+const storage = getStorage();
+
 const courseService = {
   searchCourse: async (query) => {
     try {
@@ -35,7 +44,8 @@ const courseService = {
         .sort({ [sortParam]: -1 })
         .skip((page - 1) * limit)
         .limit(limit)
-        .populate("userId");
+        .populate("userId")
+        .populate("categoryId");
       // console.log("course", courses);
       return { courses, totalPage, totalCourses };
     } catch (error) {
@@ -116,13 +126,36 @@ const courseService = {
     }
   },
   createCourseImage: async (data) => {
-    try {
-      console.log(data);
+    console.log(data);
+    const dateTime = giveCurrentDateTime();
+    const storageRef = ref(
+      storage,
+      `files/${data.originalname + "       " + dateTime}`
+    );
+    // Create file metadata including the content type
+    const metadata = {
+      contentType: data.mimetype,
+    };
 
-      return { message: "Tải ảnh lên thành công" };
-    } catch (error) {
-      throw error;
-    }
+    // Upload the file in the bucket storage
+    const snapshot = await uploadBytesResumable(
+      storageRef,
+      data.buffer,
+      metadata
+    );
+    //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
+
+    // Grab the public url
+    const downloadURL = await getDownloadURL(snapshot.ref);
+
+    console.log("File successfully uploaded.");
+
+    return {
+      message: "file uploaded to firebase storage",
+      name: data.originalname,
+      type: data.mimetype,
+      downloadURL: downloadURL,
+    };
   },
   createCourseDetail: async (id, data) => {
     try {

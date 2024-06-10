@@ -21,16 +21,11 @@ export default function UserLessonDetail() {
   const [lesson, setLesson] = useState({});
   const [markdown, setMarkdown] = useState();
   const [displayEditor, setDisplayEditor] = useState(true);
-  const [toggle, setToggle] = useState(true);
   const navigate = useNavigate();
 
   const toggleDisplayEditor = () => {
     setDisplayEditor(true);
     setDisplayQuestion(false);
-  };
-
-  const toggleInput = () => {
-    setToggle(!toggle);
   };
 
   const [displayQuestion, setDisplayQuestion] = useState(false);
@@ -142,7 +137,7 @@ export default function UserLessonDetail() {
     getLessonContentApi(id);
   }, [id]);
   return (
-    <div className="min-h-[960px] flex justify-center">
+    <div className="min-h-[960px] flex justify-center bg-white">
       <div className="w-10/12  ">
         {/* <div className="flex font-medium text-lg mt-10">
           <div className=" inline-block align-middle ">Khóa học</div>
@@ -151,10 +146,7 @@ export default function UserLessonDetail() {
           <AiOutlineRight className="self-center" />
           <div className="inline-block align-middle">{lesson?.title}</div>
         </div> */}
-        <nav
-          aria-label="breadcrumb"
-          className="my-8 bg-white px-2 py-2  dark:bg-gray-800 dark:text-gray-200"
-        >
+        <nav aria-label="breadcrumb" className="my-8 bg-white px-2 py-2 ">
           <ol className="flex space-x-2">
             <li>
               <Link to={`/usercoursedetail/${lesson?.courseId?._id}`}>
@@ -188,12 +180,7 @@ export default function UserLessonDetail() {
             )}
           </div>
 
-          <div
-            onDoubleClick={toggleInput}
-            className="font-semibold text-2xl mt-4 "
-          >
-            {lesson?.title}
-          </div>
+          <div className="font-semibold text-3xl mt-4 ">{lesson?.title}</div>
 
           <div>
             {displayNextButton && (
