@@ -110,7 +110,9 @@ export default function Header() {
               <div>Quản lý người dùng</div>
             </Link>
           ) : (
-            <div>Làm bài tập</div>
+            <Link to="/userdoquestion">
+              <div>Làm bài tập</div>
+            </Link>
           )}
         </div>
 

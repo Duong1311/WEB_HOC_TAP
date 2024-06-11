@@ -81,9 +81,14 @@ const getRatingByCourseId = (id) => {
 const deleteCourse = (id) => {
   return axios.delete(`/course/deleteCourse/${id}`);
 };
-const searchCourse = (title, selectedCategory, sort, page) => {
+const searchCourse = (title, selectedCategory, sort, page, limit) => {
   return axios.get(
-    `/course/searchCourse?title=${title}&categoryId=${selectedCategory}&sort=${sort}&page=${page}&limit=5`
+    `/course/searchCourse?title=${title}&categoryId=${selectedCategory}&sort=${sort}&page=${page}&limit=${limit}`
+  );
+};
+const searchGv = (id, title, page) => {
+  return axios.get(
+    `/course/searchGv?id=${id}&title=${title}&page=${page}&limit=10`
   );
 };
 
@@ -114,4 +119,5 @@ export {
   createRating,
   getRatingByCourseId,
   deleteCourse,
+  searchGv,
 };

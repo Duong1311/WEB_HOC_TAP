@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
-import lessonDataReducer from "./lessonSlice";
+import loginDataReducer from "./loginSlice";
 import {
   persistStore,
   persistReducer,
@@ -22,7 +22,7 @@ const rootReducer = combineReducers({ auth: authReducer });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: { root: persistedReducer, lessonData: lessonDataReducer },
+  reducer: { root: persistedReducer, loginData: loginDataReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

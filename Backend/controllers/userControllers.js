@@ -2,6 +2,24 @@ const userService = require("../services/userService");
 const { StatusCodes } = require("http-status-codes");
 
 const userControllers = {
+  recover_password: async (req, res, next) => {
+    try {
+      const recover_password = await userService.recover_password(req.body);
+      res.status(StatusCodes.OK).json(recover_password);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
+  send_recovery_email: async (req, res, next) => {
+    try {
+      const send_recovery_email = await userService.send_recovery_email(
+        req.body
+      );
+      res.status(StatusCodes.OK).json(send_recovery_email);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   blockUser: async (req, res, next) => {
     try {
       const blockUser = await userService.blockUser(req.params.id);
@@ -12,7 +30,7 @@ const userControllers = {
   },
   getAllUser: async (req, res, next) => {
     try {
-      const allUser = await userService.getAllUser();
+      const allUser = await userService.getAllUser(req.query);
       res.status(StatusCodes.OK).json(allUser);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);

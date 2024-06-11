@@ -3,19 +3,17 @@ const router = express.Router();
 const courseValidation = require("../validations/courseValidation");
 const courseController = require("../controllers/courseControllers");
 const multer = require("multer");
-const upload = multer({ storage: multer.memoryStorage() });
-// const firebaseConfig = require("../utils/firebaseConfig");
-// const { initializeApp } = require("firebase/app");
-// const {
-//   getStorage,
-//   ref,
-//   getDownloadURL,
-//   uploadBytesResumable,
-// } = require("firebase/storage");
+// const { upload } = require("../utils/multerStore");
+const storage1 = multer.diskStorage({
+  destination: function (req, file, cb) {
+    return cb(null, "./public/Images");
+  },
+  filename: function (req, file, cb) {
+    return cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
 
-// // initializeApp(firebaseConfig);
-
-// const storage = getStorage();
+const upload1 = multer({ storage1 });
 
 router.post(
   "/createCourse",
@@ -33,7 +31,7 @@ router.post("/createCourseDetail/:id", courseController.createCourseDetail);
 // create course image
 router.post(
   "/createCourseImage",
-  upload.single("file"),
+  upload1.single("file"),
   courseController.createCourseImage
 );
 
@@ -85,4 +83,6 @@ router.post("/createRating", courseController.createRating);
 router.get("/getRatingByCourseId/:id", courseController.getRatingByCourseId);
 // search by course title
 router.get("/searchCourse", courseController.searchCourse);
+//search course gvhome by title
+router.get("/searchGv", courseController.searchGv);
 module.exports = router;

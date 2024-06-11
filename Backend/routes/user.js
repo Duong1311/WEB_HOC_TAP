@@ -18,4 +18,8 @@ router.post("/addCourseToHistory", userControllers.addCourseToHistory);
 router.get("/getAllUser", userControllers.getAllUser);
 //block user
 router.put("/blockUser/:id", userControllers.blockUser);
+//send recovery email
+router.post("/send_recovery_email", userControllers.send_recovery_email);
+//recover password
+router.put("/recover_password", userControllers.recover_password);
 module.exports = router;

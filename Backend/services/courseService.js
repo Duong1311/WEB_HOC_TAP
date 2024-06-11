@@ -8,17 +8,28 @@ const Ratings = require("../models/ratingModel");
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
-const app = require("../utils/firebaseConfig");
-const {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadBytesResumable,
-} = require("firebase/storage");
-app;
-const storage = getStorage();
 
 const courseService = {
+  searchGv: async (query) => {
+    //search course have userId by title
+
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const matchQuery = {
+      userId: query.id,
+    };
+    if (query.title) {
+      matchQuery.$text = { $search: query.title };
+    }
+    const totalCourses = await Courses.countDocuments(matchQuery);
+    const totalPage = Math.ceil(totalCourses / limit);
+
+    const courses = await Courses.find(matchQuery)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate("categoryId");
+    return { courses, totalPage, totalCourses };
+  },
   searchCourse: async (query) => {
     try {
       console.log(query);
@@ -107,12 +118,10 @@ const courseService = {
     }
   },
   getAllCourses: async () => {
-    try {
-      const courses = await Courses.find({ public: true }).populate("userId");
-      return courses;
-    } catch (error) {
-      throw error;
-    }
+    const courses = await Courses.find({ public: true })
+      .populate("userId")
+      .populate("categoryId");
+    return courses;
   },
   getCourseDetail: async (id) => {
     try {
@@ -127,35 +136,7 @@ const courseService = {
   },
   createCourseImage: async (data) => {
     console.log(data);
-    const dateTime = giveCurrentDateTime();
-    const storageRef = ref(
-      storage,
-      `files/${data.originalname + "       " + dateTime}`
-    );
-    // Create file metadata including the content type
-    const metadata = {
-      contentType: data.mimetype,
-    };
-
-    // Upload the file in the bucket storage
-    const snapshot = await uploadBytesResumable(
-      storageRef,
-      data.buffer,
-      metadata
-    );
-    //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
-
-    // Grab the public url
-    const downloadURL = await getDownloadURL(snapshot.ref);
-
-    console.log("File successfully uploaded.");
-
-    return {
-      message: "file uploaded to firebase storage",
-      name: data.originalname,
-      type: data.mimetype,
-      downloadURL: downloadURL,
-    };
+    return 1;
   },
   createCourseDetail: async (id, data) => {
     try {

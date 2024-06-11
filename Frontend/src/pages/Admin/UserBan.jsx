@@ -4,6 +4,13 @@ import UserDetail from "./UserDetail/UserDetail";
 import { blockUser, getAllUser } from "~/services/userServices";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  CircularProgress,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 export default function Admin() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
@@ -16,8 +23,16 @@ export default function Admin() {
 
   //   const [courses, setCourses] = useState([]);
   const [userInfors, setUserInfors] = useState([]);
-  // const id = "66110bbe6da80b59f28b6689";
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [title, setTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
+  // const id = "66110bbe6da80b59f28b6689";
+  const setCurPage = (e, p) => {
+    setPage(p);
+    // console.log("page", p);
+  };
   const handleBlock = async (userId) => {
     console.log(userId);
     //find course by id
@@ -41,18 +56,22 @@ export default function Admin() {
     }
   };
 
-  const getAllUserData = async () => {
+  const getAllUserData = async (title, page, limit) => {
     try {
-      const res = await getAllUser();
+      setIsLoading(true);
+      const res = await getAllUser(title, page, limit);
       console.log(res.data);
-      setUserInfors(res.data);
+      setUserInfors(res?.data?.allUser);
+
+      setTotalPage(res.data.totalPage);
+      setIsLoading(false);
     } catch (error) {
       console.log("error", error);
     }
   };
   useEffect(() => {
-    getAllUserData();
-  }, []);
+    getAllUserData(title, page, 10);
+  }, [page]);
 
   return (
     <div className=" min-h-[1000px] bg-white">
@@ -61,7 +80,7 @@ export default function Admin() {
           <div className="flex flex-row justify-between mb-3">
             <div>
               <div className="max-w-xl mx-auto">
-                <form className="flex items-center">
+                <div className="flex items-center">
                   <label className="sr-only">Search</label>
                   <div className="relative w-full">
                     <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -81,13 +100,14 @@ export default function Admin() {
                     <input
                       type="text"
                       id="simple-search"
+                      onChange={(e) => setTitle(e.target.value)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Search"
                       required
                     />
                   </div>
                   <button
-                    type="submit"
+                    onClick={() => getAllUserData(title, page, 10)}
                     className="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     <svg
@@ -105,12 +125,12 @@ export default function Admin() {
                       ></path>
                     </svg>
                   </button>
-                </form>
+                </div>
               </div>
             </div>
           </div>
 
-          {userInfors &&
+          {!isLoading ? (
             userInfors?.map((userInfor) => {
               return (
                 <UserDetail
@@ -119,7 +139,41 @@ export default function Admin() {
                   handleBlock={handleBlock}
                 />
               );
-            })}
+            })
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 2,
+                width: "100%",
+                height: "100vh",
+                // alignItems: "center",
+              }}
+            >
+              <CircularProgress />
+              <Typography>Loading Board...</Typography>
+            </Box>
+          )}
+          {userInfors.length === 0 && !isLoading && (
+            <div className="w-full flex justify-center mt-3">
+              <p>Không có người dùng nào</p>
+            </div>
+          )}
+
+          {userInfors.length === 0 || (
+            <div className="w-full flex justify-center mt-3 mb-10">
+              <Stack spacing={2}>
+                <Pagination
+                  count={totalPage}
+                  page={parseInt(page, 10)}
+                  onChange={setCurPage}
+                  color="primary"
+                />
+              </Stack>
+            </div>
+          )}
         </div>
       </div>
     </div>

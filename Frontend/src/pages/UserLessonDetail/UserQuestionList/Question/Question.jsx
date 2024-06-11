@@ -8,7 +8,7 @@ export default function Question({ question, index }) {
 
   //   console.log("question", index);
   return (
-    <div className="bg-neutral-100 rounded-md p-5 w-full">
+    <div className="bg-white rounded-md p-5 w-full">
       <div className="flex flex-col gap-2">
         <div className="font-semibold text-xl">Câu hỏi {index + 1}:</div>
         <div>{question?.question}</div>

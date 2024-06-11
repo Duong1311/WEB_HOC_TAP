@@ -119,20 +119,6 @@ export default function Login() {
                       </Link>
                     </div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center">
-                        <input
-                          type="checkbox"
-                          id="remember"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:outline-none"
-                          // checked
-                        />
-                        <label
-                          // for="remember"
-                          className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
-                        >
-                          Remember me
-                        </label>
-                      </div>
                       <Link to="/register">
                         <div
                           href="#"

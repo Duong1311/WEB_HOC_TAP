@@ -67,10 +67,22 @@ export default function Search() {
     queryParams.set("sort", event.target.value);
     // console.log("sort", event.target.value);
   };
-  const fetchDataSearch = async (title, selectedCategory, sort, page) => {
+  const fetchDataSearch = async (
+    title,
+    selectedCategory,
+    sort,
+    page,
+    limit
+  ) => {
     try {
       setIsLoading(true);
-      const res = await searchCourse(title, selectedCategory, sort, page);
+      const res = await searchCourse(
+        title,
+        selectedCategory,
+        sort,
+        page,
+        limit
+      );
       if (res.status === 200) {
         setCourseSearch(res.data.courses);
         setTotalPage(res.data.totalPage);
@@ -81,7 +93,7 @@ export default function Search() {
     }
   };
   useEffect(() => {
-    fetchDataSearch(title, selectedCategory, sort, page);
+    fetchDataSearch(title, selectedCategory, sort, page, 5);
     getCategories();
   }, [title, selectedCategory, sort, page]);
 

@@ -87,13 +87,22 @@ export default function QuestionList() {
     const question = newQuestionsData.find((q) => q._id === questionId);
 
     if (question) {
+      // const newArray = [
+      //   ...question.answers.slice(0, index), // Elements before the one to delete
+      //   ...question.answers.slice(index + 1), // Elements after the one to delete
+      // ];
+
+      // newQuestionsData[questionIndex].answers = newArray;
+
       //delete choice
       question.answers.splice(index, 1);
     }
-    console.log(question.answers);
+
+    // console.log(question.answers);
     setQuestionsData(newQuestionsData);
-    console.log(questionsData);
+    console.log("questionsData", questionsData);
   };
+
   const deleteQuestion = async (questionId) => {
     console.log("delete question", questionId);
     const newQuestionsData = [...questionsData];

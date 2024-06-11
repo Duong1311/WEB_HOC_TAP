@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllCourseCreate, publicCourse } from "~/services/courseServices";
+import { publicCourse, searchGv } from "~/services/courseServices";
 import { useSelector } from "react-redux";
 import Course from "./Course/Course";
+import {
+  Box,
+  CircularProgress,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 export default function GvHome() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
@@ -10,16 +17,43 @@ export default function GvHome() {
   // console.log(id);
 
   const [courses, setCourses] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [title, setTitle] = useState("");
+
+  const setCurPage = (e, p) => {
+    setPage(p);
+    // console.log("page", p);
+  };
   // const id = "66110bbe6da80b59f28b6689";
-  const getAllCourses = async (id) => {
+  // const getAllCourses = async (id) => {
+  //   try {
+  //     const res = await getAllCourseCreate(id);
+  //     setCourses(res.data);
+  //     console.log(res.data);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+  const fetchDataSearch = async (id, title, page) => {
     try {
-      const res = await getAllCourseCreate(id);
-      setCourses(res.data);
-      console.log(res.data);
+      setIsLoading(true);
+      const res = await searchGv(id, title, page);
+      if (res.status === 200) {
+        setCourses(res.data.courses);
+        setTotalPage(res.data.totalPage);
+      }
+      // console.log(courses);
+      setIsLoading(false);
     } catch (error) {
-      console.log(error.message);
+      console.log("error", error);
     }
   };
+  const handleSearch = async () => {
+    await fetchDataSearch(id, title, page);
+  };
+
   const publicCourseApi = async (courseId) => {
     try {
       const res = await publicCourse(courseId);
@@ -49,17 +83,18 @@ export default function GvHome() {
   };
 
   useEffect(() => {
-    getAllCourses(id);
+    // getAllCourses(id);
+    fetchDataSearch(id, "", "");
   }, [id]);
 
   return (
     <div className=" min-h-[1000px]">
       <div className="flex justify-center items-center ">
-        <div className="flex flex-col justify-between w-5/6 mt-10">
+        <div className="flex flex-col justify-center w-5/6 mt-10">
           <div className="flex flex-row justify-between mb-3">
             <div>
               <div className="max-w-xl mx-auto">
-                <form className="flex items-center">
+                <div className="flex items-center">
                   <label className="sr-only">Search</label>
                   <div className="relative w-full">
                     <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -77,6 +112,7 @@ export default function GvHome() {
                       </svg>
                     </div>
                     <input
+                      onChange={(e) => setTitle(e.target.value)}
                       type="text"
                       id="simple-search"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -85,7 +121,7 @@ export default function GvHome() {
                     />
                   </div>
                   <button
-                    type="submit"
+                    onClick={handleSearch}
                     className="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     <svg
@@ -103,7 +139,7 @@ export default function GvHome() {
                       ></path>
                     </svg>
                   </button>
-                </form>
+                </div>
               </div>
             </div>
             <div>
@@ -115,7 +151,7 @@ export default function GvHome() {
             </div>
           </div>
 
-          {courses &&
+          {!isLoading ? (
             courses?.map((course) => {
               return (
                 <Course
@@ -125,7 +161,40 @@ export default function GvHome() {
                   deleteCourseUi={deleteCourseUi}
                 />
               );
-            })}
+            })
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 2,
+                width: "100%",
+                height: "100vh",
+                // alignItems: "center",
+              }}
+            >
+              <CircularProgress />
+              <Typography>Loading Board...</Typography>
+            </Box>
+          )}
+          {courses.length === 0 && (
+            <div className="w-full flex justify-center mt-3">
+              <p>Không có khóa học nào</p>
+            </div>
+          )}
+          {courses.length > 9 && isLoading && (
+            <div className="w-full flex justify-center mt-3">
+              <Stack spacing={2}>
+                <Pagination
+                  count={totalPage}
+                  page={parseInt(page, 10)}
+                  onChange={setCurPage}
+                  color="primary"
+                />
+              </Stack>
+            </div>
+          )}
         </div>
       </div>
     </div>

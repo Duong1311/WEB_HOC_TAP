@@ -15,10 +15,18 @@ import SearchLayout from "~/components/Layout/SearchLayout/SearchLayout.jsx";
 import Search from "~/pages/Search/Search.jsx";
 import Admin from "~/pages/Admin/Admin.jsx";
 import UserBan from "~/pages/Admin/UserBan.jsx";
+import EmailInput from "~/pages/login/ForgotPassword/EmailInput.jsx";
+import OtpInput from "~/pages/login/ForgotPassword/OtpInput.jsx";
+import Reset from "~/pages/login/ForgotPassword/Reset.jsx";
+import UserDoQuestion from "~/pages/UserDoQuestion/UserDoQuestion.jsx";
 const publicRoutes = [
   {
     path: "/",
     component: Home,
+  },
+  {
+    path: "/userdoquestion",
+    component: UserDoQuestion,
   },
   {
     path: "/login",
@@ -30,6 +38,22 @@ const publicRoutes = [
     component: Register,
     layout: null,
   },
+  {
+    path: "/forgot-password",
+    component: EmailInput,
+    layout: null,
+  },
+  {
+    path: "/forgot-password/otp",
+    component: OtpInput,
+    layout: null,
+  },
+  {
+    path: "/forgot-password/reset",
+    component: Reset,
+    layout: null,
+  },
+
   {
     path: "/gvhome",
     component: GvHome,
