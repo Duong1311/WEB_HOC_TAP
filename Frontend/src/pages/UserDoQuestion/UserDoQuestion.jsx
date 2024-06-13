@@ -3,11 +3,13 @@ import { toast } from "react-toastify";
 import { createLessonQuestionByOpenAi } from "~/services/courseServices";
 import { v4 as uuidv4 } from "uuid";
 import Question from "../UserLessonDetail/UserQuestionList/Question/Question";
+import Warning from "./Warning/Warning";
 
 export default function UserDoQuestion() {
   const [questionsData, setQuestionsData] = useState([]);
   const [questionAi, setQuestionAi] = useState("");
   const [number, setNumber] = useState(1);
+  const [showModal, setShowModal] = useState(false);
 
   const handleCreateLessonQuestionsByOpenAi = () => {
     if (!questionAi && number) {
@@ -31,6 +33,7 @@ export default function UserDoQuestion() {
       console.log("newQuestionsData", newQuestionsData);
       setQuestionsData(newQuestionsData);
       toast.success("Tạo câu hỏi thành công");
+      setShowModal(true);
     } catch (error) {
       console.log("error", error);
     }
@@ -78,6 +81,7 @@ export default function UserDoQuestion() {
           ))}
         </div>
       </div>
+      {showModal && <Warning setShowModal={setShowModal} />}
     </div>
   );
 }

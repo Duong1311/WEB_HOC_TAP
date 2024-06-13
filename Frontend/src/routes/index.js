@@ -19,6 +19,7 @@ import EmailInput from "~/pages/login/ForgotPassword/EmailInput.jsx";
 import OtpInput from "~/pages/login/ForgotPassword/OtpInput.jsx";
 import Reset from "~/pages/login/ForgotPassword/Reset.jsx";
 import UserDoQuestion from "~/pages/UserDoQuestion/UserDoQuestion.jsx";
+import GvDetail from "~/pages/GvDetail/GvDetail.jsx";
 const publicRoutes = [
   {
     path: "/",
@@ -59,6 +60,11 @@ const publicRoutes = [
     component: GvHome,
     layout: GvLayout,
   },
+  {
+    path: "/gvdetail/:id",
+    component: GvDetail,
+  },
+
   {
     path: "/coursedetail/:id",
     component: CourseDetail,

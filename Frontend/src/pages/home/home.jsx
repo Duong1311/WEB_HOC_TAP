@@ -121,7 +121,7 @@ export default function Home() {
             <div className="w-auto  font-semibold text-2xl">
               Khoá học nổi bật
             </div>
-            <div className="w-auto font-semibold text-sm text-gray-500 pt-2">
+            <div className="hidden w-auto font-semibold text-sm text-gray-500 pt-2">
               xem thêm {">>"}
             </div>
           </div>

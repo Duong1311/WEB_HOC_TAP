@@ -11,8 +11,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
+
 import Logout from "@mui/icons-material/Logout";
 
 export default function GvHeader() {
@@ -45,8 +44,14 @@ export default function GvHeader() {
   return (
     <div className="w-full z-10 h-[60px] flex justify-between items-center border fixed top-0 bg-white">
       <div className="flex space-x-8 justify-center items-center ml-8 font-medium ">
-        <Link to="/gvhome">
-          <div>Logo</div>
+        <Link to={"/gvhome"}>
+          <div>
+            <img
+              className="object-cover max-w-14 max-h-14"
+              src="https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=dKrF_4aq89kQ7kNvgEwnFyr&_nc_ht=scontent-hkg4-2.xx&oh=00_AYCz70lqnsrUqsB1N4USh-3KLblK1KhN3Vurh0Eze46HrQ&oe=666F02EE"
+              alt="Logo"
+            />
+          </div>
         </Link>
         <Link to="/gvhome">
           <div>Tạo khóa học</div>
@@ -113,22 +118,9 @@ export default function GvHeader() {
           <MenuItem onClick={handleClose}>
             <Avatar /> Profile
           </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Avatar /> My account
-          </MenuItem>
+
           <Divider />
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <PersonAdd fontSize="small" />
-            </ListItemIcon>
-            Add another account
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            Settings
-          </MenuItem>
+
           <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <Logout fontSize="small" />

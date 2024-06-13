@@ -210,11 +210,10 @@ const userService = {
   },
   updateUserPassword: async (id, data) => {
     console.log(data);
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedNewPass = await bcrypt.hash(data.password, salt);
+
     //get old password and compare with new password
     const user = await User.findById(id);
-    const isMatch = bcrypt.compare(data.password, user.password);
+    const isMatch = await bcrypt.compare(data.password, user.password);
 
     console.log("ismath", isMatch);
     console.log("user pass", user.password);
@@ -226,22 +225,27 @@ const userService = {
       };
     }
     //update new password
-    const salt = await bcrypt.genSalt(10);
-    const hashed = await bcrypt.hash(data.newPassword, salt);
-    console.log(hashed);
-    const updateUserPassword = await User.findOneAndUpdate(
-      { _id: id },
-      { $set: { password: hashed } },
-      {
-        returnDocument: "after",
-      }
-    );
-    // console.log(updateUserPassword.password);
-    return {
-      status: 200,
-      message: "Cập nhật mật khẩu thành công",
+    if (isMatch) {
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(data.newPassword, salt);
+      console.log(hashed);
+      const updateUserPassword = await User.findOneAndUpdate(
+        { _id: id },
+        { $set: { password: hashed } },
+        {
+          returnDocument: "after",
+        }
+      );
+      return {
+        status: 200,
+        message: "Cập nhật mật khẩu thành công",
 
-      data: updateUserPassword,
+        data: updateUserPassword,
+      };
+    }
+    return {
+      status: 201,
+      message: "Có lỗi xảy ra",
     };
   },
   getUserInfor: async (id) => {

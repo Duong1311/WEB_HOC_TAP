@@ -10,6 +10,10 @@ export default function Reset() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const email = useSelector((state) => state.loginData.email);
   const changePassword = async () => {
+    if (!newPassword || !confirmPassword) {
+      toast.error("Vui lòng nhập mật khẩu mới và xác nhận mật khẩu");
+      return;
+    }
     if (newPassword !== confirmPassword) {
       toast.error("Mật khẩu không khớp");
       return;

@@ -83,13 +83,11 @@ export default function SearchHeader() {
       <div className="w-full flex flex-row justify-between px-5">
         <div className="flex space-x-8 justify-center items-center text-sm ">
           <Link to="/">
-            <div>
-              <img
-                className="object-cover max-w-14 max-h-14"
-                src="https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeH2OtK1H65keE-gTLInGaaXokn0hgX4pq2iSfSGBfimrY04OeKyoG7mHV6Z-s9RYOJTQdOsjhpsI7LD5KBkZtL0&_nc_ohc=mbEyvDKlVqMQ7kNvgHJiWWE&_nc_ht=scontent-hkg4-2.xx&oh=00_AYAZlR1b2Z8J5QM0Oy3l4OoEeUuBk8l3GrMfhndx1LlNIA&oe=6664AF2E"
-                alt="Logo"
-              />
-            </div>
+            <img
+              className="object-cover max-w-14 max-h-14"
+              src="https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=dKrF_4aq89kQ7kNvgEwnFyr&_nc_ht=scontent-hkg4-2.xx&oh=00_AYCz70lqnsrUqsB1N4USh-3KLblK1KhN3Vurh0Eze46HrQ&oe=666F02EE"
+              alt="Logo"
+            />
           </Link>
 
           <div className="relative hover-trigger h-full items-center flex justify-center">
