@@ -7,7 +7,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const courseRoutes = require("./routes/course");
 const openaiRoutes = require("./routes/openAi");
-const errorHandlingMiddleware = require("./middleware/errorHandlingMiddleware");
+// const errorHandlingMiddleware = require("./middleware/errorHandlingMiddleware");
 // const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
@@ -31,7 +31,7 @@ app.use("/api/course", courseRoutes);
 app.use("/api/openai", openaiRoutes);
 
 // xu ly loi tap trung
-app.use(errorHandlingMiddleware);
+// app.use(errorHandlingMiddleware);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
