@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const courseValidation = require("../validations/courseValidation");
+// const courseValidation = require("../validations/courseValidation");
 const courseController = require("../controllers/courseControllers");
 const multer = require("multer");
 // const { upload } = require("../utils/multerStore");
