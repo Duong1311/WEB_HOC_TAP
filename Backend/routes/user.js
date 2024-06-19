@@ -1,6 +1,17 @@
 // const middleware = require("../middleware");
 const userControllers = require("../controllers/userControllers");
 // const user = require("../model/user");
+const multer = require("multer");
+const storage1 = multer.diskStorage({
+  destination: function (req, file, cb) {
+    return cb(null, "./public/Images");
+  },
+  filename: function (req, file, cb) {
+    return cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+
+const upload1 = multer({ storage1 });
 
 const router = require("express").Router();
 
@@ -22,4 +33,6 @@ router.put("/blockUser/:id", userControllers.blockUser);
 router.post("/send_recovery_email", userControllers.send_recovery_email);
 //recover password
 router.put("/recover_password", userControllers.recover_password);
+//update avatar
+router.post("/avatar", upload1.single("file"), userControllers.avatar);
 module.exports = router;

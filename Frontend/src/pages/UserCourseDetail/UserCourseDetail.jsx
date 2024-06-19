@@ -155,7 +155,7 @@ export default function UserCourseDetail() {
           </div>
         </div>
         {/* anh khoa hoc */}
-        <FixedOnScroll firstLesson={firstLessonId} />
+        <FixedOnScroll firstLesson={firstLessonId} course={course} />
       </div>
       <div className="w-full flex justify-center ">
         <div className="w-10/12 flex flex-col my-7 ">

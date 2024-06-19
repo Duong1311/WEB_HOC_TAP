@@ -9,10 +9,15 @@ export default function ChangePass({ setShowModal, id }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const updateUser = async () => {
     try {
-      if (newPassword !== confirmPassword) {
-        alert("Mật khẩu không khớp");
+      if (password === "" || newPassword === "" || confirmPassword === "") {
+        toast.error("Vui lòng điền đầy đủ thông tin");
         return;
       }
+      if (newPassword !== confirmPassword) {
+        toast.error("Mật khẩu không khớp");
+        return;
+      }
+      setShowModal(false);
       const res = await updateUserPassword(id, {
         password: password,
         newPassword: newPassword,
@@ -48,7 +53,7 @@ export default function ChangePass({ setShowModal, id }) {
                 <div className="font-semibold">Mật khẩu cũ</div>
                 <input
                   className="  border border-gray-400 leading-normal  w-full  py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                  type="text"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -58,7 +63,7 @@ export default function ChangePass({ setShowModal, id }) {
                 <div className="font-semibold">Mật khẩu mới</div>
                 <input
                   className="  border border-gray-400 leading-normal  w-full  py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                  type="text"
+                  type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
@@ -68,7 +73,7 @@ export default function ChangePass({ setShowModal, id }) {
                 <div className="font-semibold">Xác nhận mật khẩu</div>
                 <input
                   className="  border border-gray-400 leading-normal  w-full  py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                  type="text"
+                  type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -88,7 +93,6 @@ export default function ChangePass({ setShowModal, id }) {
                 className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
                 onClick={() => {
-                  setShowModal(false);
                   updateUser();
                 }}
               >

@@ -8,7 +8,8 @@ export default function HeaderCourse({ course }) {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 200) {
-        setIsFixed(true);
+        // setIsFixed(true);
+        setIsFixed(false);
       } else {
         setIsFixed(false);
       }

@@ -8,8 +8,28 @@ const Ratings = require("../models/ratingModel");
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const { cloneDeep } = require("lodash");
+const { uploadFile, deleteFile } = require("../models/uploadModel");
 
 const courseService = {
+  updateLessonTitle: async (id, data) => {
+    console.log(data);
+    console.log(id);
+    const res = await Lessons.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          title: data.title,
+        },
+      },
+      {
+        returnDocument: "after",
+      }
+    );
+    return {
+      data: res,
+      message: "Cập nhật tiêu đề bài học thành công",
+    };
+  },
   searchGv: async (query) => {
     //search course have userId by title
 
@@ -136,7 +156,27 @@ const courseService = {
   },
   createCourseImage: async (data) => {
     console.log(data);
-    return 1;
+    const res = await uploadFile({ shared: true }, data);
+    console.log(res);
+    // delete old course image
+    const courseOld = await Courses.findOne({ _id: data.originalname });
+    if (courseOld.imageId) {
+      const resDelete = await deleteFile(courseOld.imageId);
+      console.log("delete", resDelete);
+    }
+    // update course image
+    const course = await Courses.findOneAndUpdate(
+      { _id: data.originalname },
+      {
+        $set: {
+          imageId: res.fileId,
+        },
+      },
+      {
+        returnDocument: "after",
+      }
+    );
+    return course;
   },
   createCourseDetail: async (id, data) => {
     try {

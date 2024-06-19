@@ -30,8 +30,8 @@ export default function CourseDetail() {
   );
   const handleUpload = async () => {
     const formData = new FormData();
-    formData.append("file", file);
-    console.log(file);
+    formData.append("file", file, id);
+    console.log(formData);
     const res = await courseImage(formData);
     console.log(res);
   };
@@ -84,6 +84,9 @@ export default function CourseDetail() {
       // console.log(res.data);
       setCourseName(res.data.title);
       setCourseCategory(res.data.categoryId._id);
+      avatarUrl.current =
+        "https://drive.google.com/thumbnail?id=" + res.data.imageId;
+      console.log(avatarUrl.current);
       let a = {
         entityMap: res.data?.entityMap ? res.data.entityMap : {},
         blocks: res.data?.blocks

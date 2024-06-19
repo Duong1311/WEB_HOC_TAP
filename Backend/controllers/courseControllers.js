@@ -2,6 +2,17 @@ const { StatusCodes } = require("http-status-codes");
 const courseService = require("../services/courseService");
 
 const courseController = {
+  updateLessonTitle: async (req, res, next) => {
+    try {
+      const updateLessonTitle = await courseService.updateLessonTitle(
+        req.params.id,
+        req.body
+      );
+      res.status(StatusCodes.OK).json(updateLessonTitle);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   searchGv: async (req, res, next) => {
     try {
       const searchGv = await courseService.searchGv(req.query);

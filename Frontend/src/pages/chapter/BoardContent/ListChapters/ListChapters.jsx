@@ -31,7 +31,11 @@ function ListChapters({
 
   const addNewChapter = () => {
     if (!chapterTitle) {
-      toast.error("Chapter title is required");
+      toast.error("Cần nhập tên chương");
+      return;
+    }
+    if (chapterTitle.length > 100) {
+      toast.error("Tên chương quá dài");
       return;
     }
     // Call API to add new chapter
@@ -39,6 +43,7 @@ function ListChapters({
       title: chapterTitle,
       courseId: id,
     };
+
     addNewChapterApi(newChapter);
     //reset data
     toggleNewChapter();

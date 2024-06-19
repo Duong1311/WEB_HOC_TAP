@@ -31,3 +31,10 @@ export const sendEmailOtp = (email, OTP) => {
 export const recoverPassword = (email, newPassword) => {
   return axios.put("/user/recover_password", { email, newPassword });
 };
+export const userAvatar = (data) => {
+  return axios.post("/user/avatar", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

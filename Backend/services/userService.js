@@ -3,10 +3,39 @@ const bcrypt = require("bcrypt");
 const courseStudy = require("../models/courseStudy");
 const Courses = require("../models/courseModel");
 const nodemailer = require("nodemailer");
+const { uploadFile, deleteFile } = require("../models/uploadModel");
 // const user = require("../models/user");
 require("dotenv").config();
 
 const userService = {
+  avatar: async (data) => {
+    console.log(data);
+    const res = await uploadFile({ shared: true }, data);
+    console.log(res);
+    // delete old course image
+    const courseOld = await User.findOne({ _id: data.originalname });
+    if (courseOld.imageId) {
+      const resDelete = await deleteFile(courseOld.imageId);
+      console.log("delete", resDelete);
+    }
+    // update course image
+    const user = await User.findOneAndUpdate(
+      { _id: data.originalname },
+      {
+        $set: {
+          imageId: res.fileId,
+        },
+      },
+      {
+        returnDocument: "after",
+      }
+    );
+    console.log(user);
+    return {
+      status: 200,
+      message: "Upload avatar thành công",
+    };
+  },
   recover_password: async (data) => {
     const user = await User.findOne({ email: data.email });
     if (!user) {

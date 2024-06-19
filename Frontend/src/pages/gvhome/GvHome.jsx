@@ -178,12 +178,12 @@ export default function GvHome() {
               <Typography>Loading Board...</Typography>
             </Box>
           )}
-          {courses.length === 0 && (
+          {courses.length === 0 && !isLoading && (
             <div className="w-full flex justify-center mt-3">
               <p>Không có khóa học nào</p>
             </div>
           )}
-          {courses.length > 9 && isLoading && (
+          {courses.length > 9 && !isLoading && (
             <div className="w-full flex justify-center mt-3">
               <Stack spacing={2}>
                 <Pagination

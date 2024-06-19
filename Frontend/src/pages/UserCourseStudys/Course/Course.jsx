@@ -5,11 +5,16 @@ import { Rating } from "react-simple-star-rating";
 export default function Course({ data }) {
   console.log("data", data);
   return (
-    <div className="bg-white rounded-lg w-full  flex flex-row">
+    <div className="bg-white rounded-lg w-full  flex flex-row border border-gray-100 p-3 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out">
       <div>
         <img
           className="w-72 h-40 object-cover rounded-l-lg"
-          src="https://soict.daotao.ai/asset-v1:SoICT+IT4152+2023-1-143523+type@asset+block@IT4152.jpg"
+          src={
+            data?.courseId?.imageId
+              ? "https://drive.google.com/thumbnail?id=" +
+                data?.courseId?.imageId
+              : "https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
+          }
           alt=""
         />
       </div>

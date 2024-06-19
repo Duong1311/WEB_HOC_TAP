@@ -42,7 +42,7 @@ export default function UserDoQuestion() {
   return (
     <div className="w-full min-h-screen flex justify-center">
       <div className="w-5/6 ">
-        <div className="w-full rounded-lg bg-white px-3 py-3 my-10">
+        <div className="w-full rounded-lg bg-gray-50 px-3 py-3 my-10 border border-gray-100  shadow-md hover:shadow-lg transition-all duration-300 ease-in-out">
           <h1 className="text-3xl mb-3 font-bold">Tạo câu hỏi</h1>
           <div className="w-full flex flex-row items-center mb-3">
             <div className="min-w-[100px] font-bold text-xl">Chủ đề:</div>

@@ -167,36 +167,9 @@ export default function UserLessonDetail() {
             </li>
           </ol>
         </nav>
+        <div className="font-semibold text-3xl my-4 ">{lesson?.title}</div>
 
-        <div className="flex flex-row justify-between items-center my-3">
-          <div>
-            {displayPreButton && (
-              <button
-                onClick={handlePreviousLesson}
-                className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
-              >
-                <ArrowBackIcon />
-              </button>
-            )}
-          </div>
-
-          <div className="font-semibold text-3xl mt-4 ">{lesson?.title}</div>
-
-          <div>
-            {displayNextButton && (
-              <button
-                onClick={handleNextLesson}
-                className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
-              >
-                {/* <div>Chương tiếp</div> */}
-                <ArrowForwardIcon className="" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="flex flex-row justify-between mb-3 pb-2 border-b border-black">
-          <div></div>
+        <div className="flex flex-row justify-between items-center pb-2 border-b">
           <div className="flex flex-row">
             <button
               onClick={toggleDisplayEditor}
@@ -211,7 +184,32 @@ export default function UserLessonDetail() {
               Câu hỏi
             </button>
           </div>
+          <div className="flex flex-row items-center gap-2 ">
+            <div>
+              {displayPreButton && (
+                <button
+                  onClick={handlePreviousLesson}
+                  className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+                >
+                  <ArrowBackIcon />
+                </button>
+              )}
+            </div>
+
+            <div>
+              {displayNextButton && (
+                <button
+                  onClick={handleNextLesson}
+                  className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+                >
+                  {/* <div>Chương tiếp</div> */}
+                  <ArrowForwardIcon className="" />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
+
         {displayEditor && <UserLessonContent markdown={markdown} />}
         {displayQuestion && <UserQuestionList />}
       </div>

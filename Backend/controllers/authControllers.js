@@ -34,8 +34,22 @@ const authControllers = {
 
   registerUser: async (req, res) => {
     try {
+      console.log("register");
+      console.log(req.body);
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(req.body.password, salt);
+      const user1 = await User.findOne({ email: req.body.email });
+      if (user1) {
+        return res.status(201).json({
+          error: "Email đã tồn tại",
+        });
+      }
+      const user2 = await User.findOne({ username: req.body.username });
+      if (user2) {
+        return res.status(201).json({
+          error: "Tên đăng nhập đã tồn tại",
+        });
+      }
 
       //create new user
       const newUser = await new User({
@@ -46,17 +60,7 @@ const authControllers = {
 
       //save to database
       const user = await newUser.save();
-      // const user = await UserModel.create({
-      //   username: req.body.username,
-      //   email: req.body.email,
-      //   password: hashed,
-      // });
-      // if (!user) {
-      // }
-      // res.json({
-      //   user: user,
-      //   message: "aaaaa",
-      // });
+      console.log(user);
       res.status(200).json(user);
     } catch (err) {
       res.status(500).json(err);
@@ -65,6 +69,7 @@ const authControllers = {
   loginUser: async (req, res) => {
     try {
       console.log("login");
+      console.log(req.body);
       const user = await User.findOne({ username: req.body.username });
       if (!user)
         return res.status(201).json({

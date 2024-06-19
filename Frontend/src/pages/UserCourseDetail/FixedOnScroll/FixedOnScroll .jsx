@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-const FixedOnScroll = ({ firstLesson }) => {
+const FixedOnScroll = ({ firstLesson, course }) => {
   const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,11 @@ const FixedOnScroll = ({ firstLesson }) => {
     >
       <img
         className="w-[400px] object-cover h-[200px] "
-        src="https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
+        src={
+          course?.imageId
+            ? "https://drive.google.com/thumbnail?id=" + course?.imageId
+            : "https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
+        }
         alt=""
       />
       <div className="w-3/4 flex flex-col gap-2 mb-5">

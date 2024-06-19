@@ -16,9 +16,8 @@ const userSchema = new mongoose.Schema(
       maxLength: 50,
       unique: true,
     },
-    picture: {
+    imageId: {
       type: String,
-      default: "",
     },
     password: {
       type: String,

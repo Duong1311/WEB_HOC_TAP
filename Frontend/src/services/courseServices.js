@@ -40,6 +40,9 @@ const updateMoveChapter = (courseId, updateData) => {
 const updateMoveLessonInOneChapter = (chapterId, updateData) => {
   return axios.put(`/course/moveLessonOne/${chapterId}`, updateData);
 };
+const updateLessonTitle = (lessonId, data) => {
+  return axios.post(`/course/updateLessonTitle/${lessonId}`, data);
+};
 
 const updateChapter = (chapterId, data) => {
   return axios.put(`/course/updateChapter/${chapterId}`, data);
@@ -63,7 +66,7 @@ const courseDetail = (id, data) => {
   return axios.post(`/course/createCourseDetail/${id}`, data);
 };
 const courseImage = (data) => {
-  return axios.post("/course/createCourseImage", data, {
+  return axios.post(`/course/createCourseImage`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -120,4 +123,5 @@ export {
   getRatingByCourseId,
   deleteCourse,
   searchGv,
+  updateLessonTitle,
 };

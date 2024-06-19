@@ -9,8 +9,12 @@ export default function Course({ data }) {
       <div className="bg-white rounded-md w-full  flex flex-row">
         <div className="overflow-hidden">
           <img
-            className="w-auto h-40 object-cover rounded-l-md  hover:scale-125 transition duration-300 ease-in-out overflow-hidden"
-            src="https://soict.daotao.ai/asset-v1:SoICT+IT4152+2023-1-143523+type@asset+block@IT4152.jpg"
+            className="w-80 h-40 object-cover rounded-l-md  hover:scale-125 transition duration-300 ease-in-out overflow-hidden"
+            src={
+              data?.imageId
+                ? "https://drive.google.com/thumbnail?id=" + data?.imageId
+                : "https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
+            }
             alt=""
           />
         </div>

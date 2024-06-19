@@ -12,6 +12,9 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    imageId: {
+      type: String,
+    },
     entityMap: {
       type: mongoose.SchemaTypes.Mixed,
     },

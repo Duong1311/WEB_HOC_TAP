@@ -66,7 +66,7 @@ export default function Header() {
             <div>
               <img
                 className="object-cover max-w-14 max-h-14"
-                src="https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=dKrF_4aq89kQ7kNvgEwnFyr&_nc_ht=scontent-hkg4-2.xx&oh=00_AYCz70lqnsrUqsB1N4USh-3KLblK1KhN3Vurh0Eze46HrQ&oe=666F02EE"
+                src="https://drive.google.com/thumbnail?id=1HRXvEoC1qJqBIsWVWgXcjFAeU-wIvxoJ"
                 alt="Logo"
               />
             </div>
@@ -134,7 +134,7 @@ export default function Header() {
                   <Avatar sx={{ width: 38, height: 38 }}>M</Avatar>
                 </IconButton>
               </Tooltip>
-              <div>{user?.username}</div>
+              {/* <div>{user?.username}</div> */}
             </div>
             <Menu
               anchorEl={anchorEl}

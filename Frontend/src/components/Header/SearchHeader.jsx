@@ -23,7 +23,7 @@ import { getAllCategory } from "~/services/courseServices";
 import { useEffect, useState } from "react";
 
 export default function SearchHeader() {
-  const [categories, setCategory] = useState([]);
+  // const [categories, setCategory] = useState([]);
   const location = useLocation();
   const user = useSelector((state) => state.root.auth.login.currentUser);
   const accessToken = user?.accessToken;
@@ -53,15 +53,15 @@ export default function SearchHeader() {
       setSearchParams({ search: message });
     }
   };
-  const getCategories = async () => {
-    try {
-      const res = await getAllCategory();
-      console.log(res.data);
-      setCategory(res.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const getCategories = async () => {
+  //   try {
+  //     const res = await getAllCategory();
+  //     console.log(res.data);
+  //     setCategory(res.data);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -76,7 +76,7 @@ export default function SearchHeader() {
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   useEffect(() => {
-    getCategories();
+    // getCategories();
   }, []);
   return (
     <div className="w-full h-[60px] flex justify-center items-center fixed top-0 z-10 shadow-md bg-white ">
@@ -85,12 +85,11 @@ export default function SearchHeader() {
           <Link to="/">
             <img
               className="object-cover max-w-14 max-h-14"
-              src="https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/444469790_438593725459566_6608098911307273135_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=dKrF_4aq89kQ7kNvgEwnFyr&_nc_ht=scontent-hkg4-2.xx&oh=00_AYCz70lqnsrUqsB1N4USh-3KLblK1KhN3Vurh0Eze46HrQ&oe=666F02EE"
+              src="https://drive.google.com/thumbnail?id=1HRXvEoC1qJqBIsWVWgXcjFAeU-wIvxoJ"
               alt="Logo"
             />
           </Link>
-
-          <div className="relative hover-trigger h-full items-center flex justify-center">
+          {/* <div className="relative hover-trigger h-full items-center flex justify-center">
             Thể loại
             <div className="absolute min-w-[200px] top-14 left-0 bg-white border border-grey-100 px-4 py-2 hover-target">
               {categories.map((category) => (
@@ -99,7 +98,7 @@ export default function SearchHeader() {
                   {category.categoryName}
                 </div>
                 // {/* </Link> */}
-              ))}
+          {/* ))}
             </div>
           </div>
           <style>
@@ -112,9 +111,8 @@ export default function SearchHeader() {
               display: block;
             }
           `}
-          </style>
-
-          <Link to="/gvhome">
+          </style> */}{" "}
+          <Link to="/userdoquestion">
             <div>Làm bài tập</div>
           </Link>
         </div>
@@ -163,7 +161,7 @@ export default function SearchHeader() {
                   <Avatar sx={{ width: 38, height: 38 }}>M</Avatar>
                 </IconButton>
               </Tooltip>
-              <div>{user?.username}</div>
+              {/* <div>{user?.username}</div> */}
             </div>
             <Menu
               anchorEl={anchorEl}

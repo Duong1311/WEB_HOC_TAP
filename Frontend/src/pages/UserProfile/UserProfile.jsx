@@ -10,20 +10,27 @@ export default function UserProfile() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+  const [avatar, setAvatar] = useState("1");
   const [showModal, setShowModal] = useState(false);
   const id = user?._id;
   const getUserData = async (id) => {
     try {
       const res = await getUserInfor(id);
-      setUserName(res.data.username);
-      setEmail(res.data.email);
-      setDescription(res.data.description);
+      setUserName(res?.data?.username);
+      setEmail(res?.data?.email);
+      setDescription(res?.data?.description);
+      setAvatar(res?.data?.imageId);
+      console.log(res.data.imageId);
     } catch (error) {
       console.log(error);
     }
   };
   const updateUser = async () => {
     try {
+      if (!userName || !email) {
+        toast.error("Hãy điền đầy đủ thông tin");
+        return;
+      }
       const res = await updateUserInfor(id, {
         username: userName,
         email: email,
@@ -55,17 +62,21 @@ export default function UserProfile() {
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                   required
+                  maxLength={20}
                 />
               </div>
               <div className="flex flex-col w-full gap-2">
                 <div className="font-semibold">Email</div>
                 <input
-                  className=" border border-gray-400 leading-normal  w-full  py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                  type="text"
+                  className="peer border border-gray-400 leading-normal  w-full  py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                  type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-xs">
+                  Hãy nhập đúng định dạng email
+                </p>
               </div>
               {/* <div>
               <div className="font-semibold">Công việc</div>
@@ -85,7 +96,7 @@ export default function UserProfile() {
               </div>
             </div>
             <div className="w-full ">
-              <UserAvatar />
+              <UserAvatar avatar={avatar} />
             </div>
           </div>
           <div className="flex flex-row gap-5">

@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Box, Modal, Slider, Button } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 import { FcAddImage } from "react-icons/fc";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { userAvatar } from "~/services/userServices";
 
 const boxStyle = {
   width: "300px",
@@ -22,15 +25,26 @@ const modalStyle = {
 const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
   const [slideValue, setSlideValue] = useState(10);
   const cropRef = useRef(null);
+  const { id } = useParams();
 
   //handle save
   const handleSave = async () => {
     if (cropRef) {
       const dataUrl = cropRef.current.getImage().toDataURL();
+
       const result = await fetch(dataUrl);
       const blob = await result.blob();
       setPreview(URL.createObjectURL(blob));
       setModalOpen(false);
+      // console.log("blob", blob);
+      const formData = new FormData();
+      formData.append("file", blob, id);
+      const res = await userAvatar(formData);
+      if (res.data.success) {
+        toast.success(res.data.message);
+      } else {
+        toast.error("Thay đổi ảnh đại diện thất bại");
+      }
     }
   };
 
@@ -93,7 +107,8 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
 };
 
 // Container
-const Cropper = () => {
+const Cropper = ({ avatar }) => {
+  console.log("sdas", avatar);
   // image src
   const [src, setSrc] = useState(null);
 
@@ -105,7 +120,10 @@ const Cropper = () => {
 
   // ref to control input element
   const inputRef = useRef(null);
-
+  const [url, setUrl] = useState("");
+  const avatarUrl = useRef(
+    " https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
+  );
   // handle Click
   const handleInputClick = (e) => {
     e.preventDefault();
@@ -128,16 +146,16 @@ const Cropper = () => {
         />
 
         <div className="img-container rounded-full border border-black">
-          <img
-            src={
-              preview ||
-              " https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
-            }
-            alt=""
-            width="200"
-            height="200"
-            className="object-cover rounded-full"
-          />
+          {avatar && (
+            <img
+              src={preview || "https://drive.google.com/thumbnail?id=" + avatar}
+              // src={"https://drive.google.com/thumbnail?id=" + avatar}
+              alt=""
+              width="200"
+              height="200"
+              className="object-cover rounded-full"
+            />
+          )}
         </div>
         <a href="/" onClick={handleInputClick}>
           <FcAddImage className="add-icon w-[50px] h-[50px]" />

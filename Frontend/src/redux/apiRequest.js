@@ -82,9 +82,16 @@ export const registerUser = async (user, dispatch, navigate) => {
       "http://localhost:3000/api/auth/register",
       user
     );
-    dispatch(registerSuccess(res.data));
+    if (res.data.error) {
+      toast.error(res.data.error);
+      dispatch(registerFailure());
+      return;
+    }
 
-    navigate("/");
+    if (res.status === 200) {
+      dispatch(registerSuccess(res.data));
+      navigate("/");
+    }
   } catch (err) {
     dispatch(registerFailure());
   }

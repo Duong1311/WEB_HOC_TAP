@@ -2,6 +2,14 @@ const userService = require("../services/userService");
 const { StatusCodes } = require("http-status-codes");
 
 const userControllers = {
+  avatar: async (req, res, next) => {
+    try {
+      const avatar = await userService.avatar(req.file);
+      res.status(StatusCodes.OK).json(avatar);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   recover_password: async (req, res, next) => {
     try {
       const recover_password = await userService.recover_password(req.body);

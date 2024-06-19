@@ -34,6 +34,11 @@ export default function CreateCourse() {
         toast.error("Vui lòng điền đầy đủ thông tin");
         return;
       }
+      //check lenght of course title
+      if (courseTitle.length > 200) {
+        toast.error("Tên khóa học quá dài");
+        return;
+      }
 
       const res = await createNewCourse({
         userId: id,

@@ -130,7 +130,7 @@ export default function Home() {
               courses?.map((data) => {
                 return (
                   <div
-                    className="flex flex-col justify-center bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
+                    className="flex flex-col justify-center border border-gray-100 bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
                     key={data._id}
                   >
                     <Link to={`/usercoursedetail/${data?._id}`}>
@@ -138,10 +138,12 @@ export default function Home() {
                         <img
                           className="object-cover w-[306px] h-[161px] rounded-lg  hover:scale-125 transition duration-300 ease-in-out"
                           src={
-                            data?.image ||
-                            "https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
+                            data?.imageId
+                              ? "https://drive.google.com/thumbnail?id=" +
+                                data?.imageId
+                              : "https://soict.daotao.ai/asset-v1:SoICT+IT4210+2020-2+type@asset+block@banner-10.jpg"
                           }
-                          alt=""
+                          alt="anh khoa hoc"
                         />
                       </div>
                       <div className="font-semibold">{data?.title}</div>

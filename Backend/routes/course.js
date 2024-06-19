@@ -67,7 +67,8 @@ router.delete("/deleteQuestion/:id", courseController.deleteQuestion);
 router.delete("/deleteLesson/:id", courseController.deleteLesson);
 //update lesson content
 router.post("/createLessonContent/:id", courseController.createLessonContent);
-
+//update leson title
+router.post("/updateLessonTitle/:id", courseController.updateLessonTitle);
 //delete chapter
 router.delete("/deleteChapter/:id", courseController.deleteChapter);
 

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 export default function UserLessonContent({ markdown }) {
   return (
-    <div className="center mb-36">
+    <div className="center min-h-screen">
       <style>
         {`.center img {
               display: block;

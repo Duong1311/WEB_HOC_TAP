@@ -2,15 +2,25 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleRegister = (e) => {
     e.preventDefault();
+    if (!username || !email || !password) {
+      toast.error("Vui lòng điền đầy đủ thông tin");
+      return;
+    }
+    if (password !== confirmPassword) {
+      toast.error("Mật khẩu không khớp");
+      return;
+    }
     const newUser = {
       username: username,
       email: email,
@@ -62,7 +72,7 @@ export default function Register() {
                         // for="email"
                         className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                       >
-                        User Name
+                        Tên đăng nhập
                       </label>
                       <input
                         onChange={(e) => {
@@ -73,6 +83,7 @@ export default function Register() {
                         className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Tên đăng nhập"
                         required
+                        maxLength={20}
                       />
                     </div>
                     <div className="mb-4">
@@ -98,7 +109,7 @@ export default function Register() {
                         // for="password"
                         className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                       >
-                        Password
+                        Mật khẩu
                       </label>
                       <input
                         onChange={(e) => {
@@ -107,8 +118,30 @@ export default function Register() {
                         type="password"
                         id="password"
                         className="shadow-sm rounded-md w-[308px] px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Enter your password"
+                        placeholder="Mật khẩu"
                         required
+                        minLength={6}
+                        maxLength={20}
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label
+                        // for="password"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                      >
+                        Xác nhận mật khẩu
+                      </label>
+                      <input
+                        onChange={(e) => {
+                          setConfirmPassword(e.target.value);
+                        }}
+                        type="password"
+                        id="password"
+                        className="shadow-sm rounded-md w-[308px] px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Xác nhận mật khẩu"
+                        required
+                        minLength={6}
+                        maxLength={20}
                       />
                     </div>
 
@@ -116,7 +149,7 @@ export default function Register() {
                       type="submit"
                       className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                      Create account
+                      Tạo tài khoản
                     </button>
                   </form>
                 </div>
