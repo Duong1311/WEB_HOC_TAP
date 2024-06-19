@@ -42,8 +42,6 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
       const res = await userAvatar(formData);
       if (res.data.success) {
         toast.success(res.data.message);
-      } else {
-        toast.error("Thay đổi ảnh đại diện thất bại");
       }
     }
   };
