@@ -14,8 +14,12 @@ const port = 3000;
 
 dotenv.config();
 
+// const corsOptions = {
+//   origin: "http://localhost:5173",
+//   credentials: true,
+// };
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://datn-web-hoc-tap.vercel.app",
   credentials: true,
 };
 
