@@ -16,7 +16,7 @@ export const loginUserGoogle = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/auth/google-auth",
+      "http://api.gptacademy.io.vn/api/auth/google-auth",
       user
     );
 
@@ -45,7 +45,10 @@ export const loginUserGoogle = async (user, dispatch, navigate) => {
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
-    const res = await axios.post("http://localhost:3000/api/auth/login", user);
+    const res = await axios.post(
+      "http://api.gptacademy.io.vn/api/auth/login",
+      user
+    );
 
     if (res.data.error) {
       toast.error(res.data.error);
@@ -79,7 +82,7 @@ export const registerUser = async (user, dispatch, navigate) => {
   dispatch(registerStart());
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/auth/register",
+      "http://api.gptacademy.io.vn/api/auth/register",
       user
     );
     if (res.data.error) {
@@ -101,7 +104,7 @@ export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
   dispatch(logOutStart());
   try {
     console.log("logout api");
-    await axiosJWT.post("http://localhost:3000/api/auth/logout", id, {
+    await axiosJWT.post("http://api.gptacademy.io.vn/api/auth/logout", id, {
       headers: { token: `Bearer ${accessToken}` },
     });
     dispatch(logOutSuccess());
