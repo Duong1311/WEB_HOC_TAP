@@ -7,10 +7,7 @@ axios.defaults.withCredentials = true;
 const refreshToken = async () => {
   try {
     console.log("refresh token");
-    const res = await axios.post(
-      "http://api.gptacademy.io.vn/api/auth/refresh",
-      {}
-    );
+    const res = await axios.post("http://localhost:3000/api/auth/refresh", {});
     return res.data;
   } catch (err) {
     console.log(err);

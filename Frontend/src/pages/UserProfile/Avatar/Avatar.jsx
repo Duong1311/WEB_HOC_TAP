@@ -118,10 +118,7 @@ const Cropper = ({ avatar }) => {
 
   // ref to control input element
   const inputRef = useRef(null);
-  const [url, setUrl] = useState("");
-  const avatarUrl = useRef(
-    " https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
-  );
+
   // handle Click
   const handleInputClick = (e) => {
     e.preventDefault();
