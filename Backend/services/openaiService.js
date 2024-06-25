@@ -34,7 +34,8 @@ const openaiService = {
       // Please answer in Vietnamese
       // `;
       const prompt = `
-    tạo một mảng JSON có tên là questions cho ${number} câu hỏi trong lĩnh vực ${field}, trong đó liệt kê một tập hợp các đối tượng con có cấu trúc JSON:
+    tạo một mảng JSON có tên là questions cho ${number} câu hỏi trong lĩnh vực ${field}, 
+    trong đó liệt kê một tập hợp các đối tượng con có cấu trúc JSON:
     {
       "question": "câu hỏi",
       "answers": ["câu trả lời 1", "câu trả lời 2", "câu trả lời 3", "câu trả lời 4"],
@@ -44,7 +45,6 @@ const openaiService = {
      Trả về kết quả dưới dạng JSON.
      Hãy trả lời bằng tiếng Việt
     `;
-
       const completion = await openai.chat.completions.create({
         messages: [
           {
@@ -55,7 +55,6 @@ const openaiService = {
         ],
         model: "gpt-3.5-turbo-0125",
         response_format: { type: "json_object" },
-        // prompt: prompt,
       });
       const parsableJSONresponse = completion.choices[0].message.content;
       const parsedResponse = JSON.parse(parsableJSONresponse);

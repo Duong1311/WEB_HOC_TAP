@@ -14,14 +14,14 @@ const port = 3000;
 
 dotenv.config();
 
-// const corsOptions = {
-//   origin: "http://localhost:5173",
-//   credentials: true,
-// };
 const corsOptions = {
-  origin: "https://datn-web-hoc-tap.vercel.app",
+  origin: "http://localhost:5173",
   credentials: true,
 };
+// const corsOptions = {
+//   origin: "https://datn-web-hoc-tap.vercel.app",
+//   credentials: true,
+// };
 
 app.use("*", cors(corsOptions));
 app.use(express.json());

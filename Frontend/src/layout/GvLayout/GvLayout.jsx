@@ -1,5 +1,5 @@
-import GvHeader from "../../Header/GvHeader";
-import Footer from "../../Footer/Footer";
+import GvHeader from "~/components/Header/GvHeader";
+import Footer from "~/components/Footer/Footer";
 
 // eslint-disable-next-line react/prop-types
 export default function GvLayout({ children }) {

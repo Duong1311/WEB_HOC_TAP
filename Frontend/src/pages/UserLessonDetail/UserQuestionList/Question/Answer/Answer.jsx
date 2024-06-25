@@ -16,13 +16,13 @@ export default function Answer({
   const [selected, setSelected] = useState(null);
   const [stype, setStype] = useState("");
   const handleItemClick = () => {
-    console.log("Clicked item index:", index);
-    console.log("Correct answer:", correct);
+    console.log("Clicked item index:", index, typeof index);
+    console.log("Correct answer:", correct, typeof correct);
     if (hasClicked) return;
     setSelected(index);
     // onSelect(index);
     setStype(
-      correct === index
+      correct == index
         ? "bg-green-200 border  border-black rounded-sm p-2 cursor-pointer"
         : "bg-red-200 border  border-black rounded-sm p-2 cursor-pointer"
     );

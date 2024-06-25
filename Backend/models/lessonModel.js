@@ -22,9 +22,6 @@ const lessonSchema = new mongoose.Schema(
     blocks: {
       type: mongoose.SchemaTypes.Mixed,
     },
-    pdf: {
-      type: String,
-    },
   },
   { timestamps: true }
 );

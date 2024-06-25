@@ -22,11 +22,25 @@ export default function QuestionList() {
   const getLessonQuestionApi = async (id) => {
     try {
       const res = await getLessonQuestions(id);
-      setQuestionsData(res.data);
+
       console.log("questions", res.data);
+      console.log("fixDataFormat", fixDataFormat(res.data));
+      setQuestionsData(fixDataFormat(res.data));
     } catch (error) {
       console.log("error", error);
     }
+  };
+  const fixDataFormat = (data) => {
+    // add id to each answer
+    const newFormatQuestions = data.map((question) => ({
+      ...question,
+      answers: question.answers.map((answer) => ({
+        id: uuidv4(),
+        answer,
+      })),
+    }));
+
+    return newFormatQuestions;
   };
   const createLesssonQuestionApi = async (id, questionsData) => {
     try {
@@ -40,7 +54,14 @@ export default function QuestionList() {
   };
   const handleCreateLessonQuestions = () => {
     console.log("list questions", questionsData);
-    createLesssonQuestionApi(id, questionsData);
+    // remove id from answers
+    const finalQuestionsData = questionsData.map((question) => ({
+      ...question,
+      answers: question.answers.map((answer) => answer.answer),
+    }));
+    console.log("finalQuestionsData", finalQuestionsData);
+
+    createLesssonQuestionApi(id, finalQuestionsData);
   };
   const addNewQuestion = () => {
     console.log("add new question");
@@ -69,7 +90,7 @@ export default function QuestionList() {
     //find question
     const question = newQuestionsData.find((q) => q._id === questionId);
     if (question) {
-      question.answers.push("new choice");
+      question.answers.push({ id: uuidv4(), answer: "" });
     }
     setQuestionsData(newQuestionsData);
   };
@@ -77,8 +98,9 @@ export default function QuestionList() {
     const newQuestionsData = [...questionsData];
     const question = newQuestionsData.find((q) => q._id === questionId);
     if (question) {
-      question.answers[index] = data;
+      question.answers[index].answer = data;
     }
+
     setQuestionsData(newQuestionsData);
   };
   const deleteChoice = (questionId, index) => {
@@ -87,14 +109,6 @@ export default function QuestionList() {
     const question = newQuestionsData.find((q) => q._id === questionId);
 
     if (question) {
-      // const newArray = [
-      //   ...question.answers.slice(0, index), // Elements before the one to delete
-      //   ...question.answers.slice(index + 1), // Elements after the one to delete
-      // ];
-
-      // newQuestionsData[questionIndex].answers = newArray;
-
-      //delete choice
       question.answers.splice(index, 1);
     }
 
@@ -138,11 +152,14 @@ export default function QuestionList() {
       console.log("questions", res.data.result);
       // setQuestionsData(res.data);
       const newQuestionsData = [...questionsData];
-      res.data.result.questions.forEach((question) => {
+      const fix = fixDataFormat(res.data.result.questions);
+      fix.forEach((question) => {
         question._id = uuidv4();
         newQuestionsData.push(question);
       });
       console.log("newQuestionsData", newQuestionsData);
+      // console.log("fixDataFormat", fixDataFormat(newQuestionsData));
+
       setQuestionsData(newQuestionsData);
       toast.success("Tạo câu hỏi thành công");
     } catch (error) {

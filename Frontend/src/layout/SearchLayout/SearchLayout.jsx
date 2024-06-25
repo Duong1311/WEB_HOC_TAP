@@ -1,5 +1,5 @@
 import SearchHeader from "~/components/Header/SearchHeader";
-import Footer from "../../Footer/Footer";
+import Footer from "~/components/Footer/Footer";
 
 // eslint-disable-next-line react/prop-types
 function SearchLayout({ children }) {

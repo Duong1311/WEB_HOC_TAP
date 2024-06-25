@@ -9,7 +9,7 @@ export default function Choice({
   questionId,
   addNewChoiceData,
 }) {
-  const [choiceDataState, setChoiceDataState] = useState(choice);
+  const [choiceDataState, setChoiceDataState] = useState(choice?.answer);
 
   const handleDeleteChoice = () => {
     deleteChoice(questionId, index);
@@ -23,7 +23,7 @@ export default function Choice({
       <input
         type="text"
         className="w-full px-4 py-3 text-gray-800    focus:outline-none"
-        placeholder="search"
+        placeholder="Nội dung lựa chọn"
         // defaultValue={choice}
         value={choiceDataState}
         onChange={handleChoiseDataChange}

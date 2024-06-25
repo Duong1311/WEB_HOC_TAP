@@ -34,6 +34,7 @@ export default function Question({
     setExplain(e.target.value);
     addExplanation(question._id, e.target.value);
   };
+
   return (
     <div className="border border-black rounded-sm min-h-[100px] mb-5 flex justify-center items-center">
       <div className=" flex flex-col w-full mx-3 my-3">
@@ -56,9 +57,9 @@ export default function Question({
           <div className="w-20">Lựa chọn</div>
           {/* choice list */}
           <div className="w-full border px-4 py-3">
-            {question.answers.map((choice, i) => (
+            {question?.answers?.map((choice, i) => (
               <Choice
-                key={i}
+                key={choice.id}
                 choice={choice}
                 index={i}
                 questionId={question._id}

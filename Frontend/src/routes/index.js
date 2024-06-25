@@ -1,5 +1,5 @@
 import CreateCourse from "~/pages/createCourse/createCourse.jsx";
-import GvLayout from "../components/Layout/GvLayout/GvLayout.jsx";
+import GvLayout from "~/layout/GvLayout/GvLayout.jsx";
 import CourseChapter from "../pages/chapter/CourseChapter.jsx";
 import GvHome from "../pages/gvhome/GvHome.jsx";
 import Home from "../pages/home/home.jsx";
@@ -11,7 +11,7 @@ import UserCourseDetail from "~/pages/UserCourseDetail/UserCourseDetail.jsx";
 import UserLessonDetail from "~/pages/UserLessonDetail/UserLessonDetail.jsx";
 import UserProfile from "~/pages/UserProfile/UserProfile.jsx";
 import UserCourseStudys from "~/pages/UserCourseStudys/UserCourseStudys.jsx";
-import SearchLayout from "~/components/Layout/SearchLayout/SearchLayout.jsx";
+import SearchLayout from "~/layout/SearchLayout/SearchLayout.jsx";
 import Search from "~/pages/Search/Search.jsx";
 import Admin from "~/pages/Admin/Admin.jsx";
 import UserBan from "~/pages/Admin/UserBan.jsx";
