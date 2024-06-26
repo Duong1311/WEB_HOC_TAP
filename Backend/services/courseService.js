@@ -11,6 +11,14 @@ const { cloneDeep } = require("lodash");
 const { uploadFile, deleteFile } = require("../models/uploadModel");
 
 const courseService = {
+  deleteRating: async (id) => {
+    //delete rating by id
+    await Ratings.findByIdAndDelete(id);
+    return {
+      status: 200,
+      message: "Xóa đánh giá thành công",
+    };
+  },
   updateLessonTitle: async (id, data) => {
     console.log(data);
     console.log(id);
@@ -92,13 +100,21 @@ const courseService = {
       throw error;
     }
   },
-  getRatingByCourseId: async (id) => {
-    try {
-      const rating = await Ratings.find({ courseId: id }).populate("userId");
-      return rating;
-    } catch (error) {
-      throw error;
-    }
+  getRatingByCourseId: async (id, query) => {
+    console.log(query);
+    console.log(id);
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+
+    const rating = await Ratings.find({ courseId: id })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate("userId");
+
+    const totalCount = await Ratings.countDocuments({ courseId: id });
+    const totalPages = Math.ceil(totalCount / limit);
+    return { rating, totalPages, totalCount };
   },
   createRating: async (data) => {
     try {

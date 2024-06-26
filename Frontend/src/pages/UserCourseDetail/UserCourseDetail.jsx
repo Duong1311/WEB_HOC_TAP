@@ -15,6 +15,7 @@ import RatingCourse from "./RatingCourse/RatingCourse";
 import WriteRating from "./WriteRating/WriteRating";
 import PublicButton from "~/components/PublicButton/PublicButton";
 import { toast } from "react-toastify";
+import { Pagination, Stack } from "@mui/material";
 
 export default function UserCourseDetail() {
   const [orderedchapters, setOrderedchapters] = useState([]);
@@ -22,7 +23,12 @@ export default function UserCourseDetail() {
   const [course, setCourse] = useState();
   const [markdown, setMarkdown] = useState();
   const [allRating, setAllRating] = useState([]);
-
+  const [page, setPage] = useState(1);
+  const setCurPage = async (e, p) => {
+    setPage(p);
+    console.log(p);
+    await getRatingData(id, p, 4);
+  };
   const fetchData = async (id) => {
     try {
       const res = await getCourseCreatedById(id);
@@ -32,17 +38,17 @@ export default function UserCourseDetail() {
       console.log(error);
     }
   };
-  const getRatingData = async (id) => {
+  const getRatingData = async (id, page, limit) => {
     try {
-      const res = await getRatingByCourseId(id);
+      const res = await getRatingByCourseId(id, page, limit);
       console.log(res.data);
       setAllRating(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-  const addRating = (newRating) => {
-    setAllRating([...allRating, newRating]);
+  const addRating = () => {
+    getRatingData(id, 1, 4);
   };
   const handlePublic = async (courseId) => {
     try {
@@ -101,7 +107,7 @@ export default function UserCourseDetail() {
       );
     });
 
-    getRatingData(id);
+    getRatingData(id, page, 4);
   }, []);
   // console.log(orderedchapters);
 
@@ -173,12 +179,29 @@ export default function UserCourseDetail() {
               <div className="w-full">
                 <div className="text-2xl font-bold mb-3">Đánh giá</div>
                 <WriteRating addRating={addRating} />
-                <div className="grid gap-2 grid-cols-2">
+                <div className="w-full flex flex-col gap-2">
                   {allRating &&
-                    allRating.map((rating) => (
-                      <RatingCourse key={rating._id} data={rating} />
+                    allRating?.rating?.map((rating) => (
+                      <RatingCourse
+                        key={rating._id}
+                        data={rating}
+                        getRatingData={getRatingData}
+                      />
                     ))}
                 </div>
+
+                {allRating?.rating?.length > 3 && (
+                  <div className="w-full flex justify-center mt-3">
+                    <Stack spacing={2}>
+                      <Pagination
+                        count={allRating?.totalPages}
+                        page={parseInt(page, 10)}
+                        onChange={setCurPage}
+                        color="primary"
+                      />
+                    </Stack>
+                  </div>
+                )}
               </div>
             </div>
           </div>

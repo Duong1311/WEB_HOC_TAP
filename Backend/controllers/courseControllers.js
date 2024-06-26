@@ -2,6 +2,14 @@ const { StatusCodes } = require("http-status-codes");
 const courseService = require("../services/courseService");
 
 const courseController = {
+  deleteRating: async (req, res, next) => {
+    try {
+      const deleteRating = await courseService.deleteRating(req.params.id);
+      res.status(StatusCodes.OK).json(deleteRating);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   updateLessonTitle: async (req, res, next) => {
     try {
       const updateLessonTitle = await courseService.updateLessonTitle(
@@ -39,7 +47,10 @@ const courseController = {
   },
   getRatingByCourseId: async (req, res, next) => {
     try {
-      const rating = await courseService.getRatingByCourseId(req.params.id);
+      const rating = await courseService.getRatingByCourseId(
+        req.params.id,
+        req.query
+      );
       res.status(StatusCodes.OK).json(rating);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);

@@ -23,6 +23,8 @@ router.put("/updateUserInfor/:id", userControllers.updateUserInfor);
 router.put("/updateUserPassword/:id", userControllers.updateUserPassword);
 //get all course studys
 router.get("/getAllCourseStudys/:id", userControllers.getAllCourseStudys);
+//delete course history
+router.delete("/deleteCourseHistory/:id", userControllers.deleteCourseHistory);
 //add course to history
 router.post("/addCourseToHistory", userControllers.addCourseToHistory);
 //get all user

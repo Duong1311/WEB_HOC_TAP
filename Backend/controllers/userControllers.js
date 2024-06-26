@@ -2,6 +2,17 @@ const userService = require("../services/userService");
 const { StatusCodes } = require("http-status-codes");
 
 const userControllers = {
+  deleteCourseHistory: async (req, res, next) => {
+    try {
+      const deleteCourseHistory = await userService.deleteCourseHistory(
+        req.params.id
+      );
+      res.status(StatusCodes.OK).json(deleteCourseHistory);
+    } catch (error) {
+      console.log(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   avatar: async (req, res, next) => {
     try {
       const avatar = await userService.avatar(req.file);
@@ -58,9 +69,13 @@ const userControllers = {
   getAllCourseStudys: async (req, res, next) => {
     try {
       console.log(req.params.id);
-      const courseStudys = await userService.getAllCourseStudys(req.params.id);
+      const courseStudys = await userService.getAllCourseStudys(
+        req.params.id,
+        req.query
+      );
       res.status(StatusCodes.OK).json(courseStudys);
     } catch (error) {
+      console.log(error);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   },

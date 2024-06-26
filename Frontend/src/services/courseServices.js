@@ -78,9 +78,15 @@ const getCourseDetail = (id) => {
 const createRating = (data) => {
   return axios.post("/course/createRating", data);
 };
-const getRatingByCourseId = (id) => {
-  return axios.get(`/course/getRatingByCourseId/${id}`);
+const getRatingByCourseId = (id, page, limit) => {
+  return axios.get(
+    `/course/getRatingByCourseId/${id}?page=${page}&limit=${limit}`
+  );
 };
+const deleteRatingById = (id) => {
+  return axios.delete(`/course/deleteRating/${id}`);
+};
+
 const deleteCourse = (id) => {
   return axios.delete(`/course/deleteCourse/${id}`);
 };
@@ -124,4 +130,5 @@ export {
   deleteCourse,
   searchGv,
   updateLessonTitle,
+  deleteRatingById,
 };

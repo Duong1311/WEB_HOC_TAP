@@ -40,6 +40,7 @@ export default function Course({ data }) {
               size={20}
               SVGstyle={{ display: "inline" }}
               allowFraction={true}
+              readonly={true}
               className="float-left"
             />
             <div className="mt[2px]">({data?.ratingCount || 0} đánh giá)</div>

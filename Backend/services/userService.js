@@ -8,12 +8,27 @@ const { uploadFile, deleteFile } = require("../models/uploadModel");
 require("dotenv").config();
 
 const userService = {
+  deleteCourseHistory: async (id) => {
+    const courseStudyExist = await courseStudy.findById(id);
+    if (!courseStudyExist) {
+      return {
+        status: 404,
+        message: "Khóa học không tồn tại trong lịch sử học tập",
+      };
+    }
+    const deleteCourseHistory = await courseStudy.findByIdAndDelete(id);
+    return {
+      status: 200,
+      message: "Xóa khóa học khỏi lịch sử học tập thành công",
+    };
+  },
   avatar: async (data) => {
     console.log(data);
     const res = await uploadFile({ shared: true }, data);
     console.log(res);
     // delete old course image
     const courseOld = await User.findOne({ _id: data.originalname });
+    console.log(courseOld);
     if (courseOld.imageId) {
       const resDelete = await deleteFile(courseOld.imageId);
       console.log("delete", resDelete);
@@ -32,6 +47,7 @@ const userService = {
     );
     console.log(user);
     return {
+      data: user,
       status: 200,
       message: "Upload avatar thành công",
     };
@@ -224,18 +240,31 @@ const userService = {
       return error;
     }
   },
-  getAllCourseStudys: async (id) => {
-    try {
-      console.log("ser", id);
-      const courseStudys = await courseStudy
-        .find({ userId: id })
-        .populate("courseId");
-
-      console.log(courseStudys);
-      return courseStudys;
-    } catch (error) {
-      return error;
+  getAllCourseStudys: async (id, query) => {
+    console.log("id", id);
+    console.log("query", query);
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    let matchQuery = { userId: id.trim() };
+    if (query.title) {
+      matchQuery = {
+        ...matchQuery,
+        "courseId.title": { $regex: query.title, $options: "i" },
+      };
     }
+    const totalCount = await courseStudy.countDocuments(matchQuery);
+    const totalPage = Math.ceil(totalCount / limit);
+
+    console.log(totalCount);
+    const courses = await courseStudy
+      .find(matchQuery)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .populate("courseId");
+
+    console.log(courses);
+    return { courses, totalPage, totalCount };
   },
   updateUserPassword: async (id, data) => {
     console.log(data);

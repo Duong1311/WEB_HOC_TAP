@@ -96,7 +96,7 @@ export default function UserProfile() {
               </div>
             </div>
             <div className="w-full ">
-              <UserAvatar avatar={avatar} />
+              <UserAvatar />
             </div>
           </div>
           <div className="flex flex-row gap-5">

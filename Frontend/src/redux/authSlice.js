@@ -15,6 +15,9 @@ const authSlice = createSlice({
     },
   },
   reducers: {
+    updateUserAvatarID: (state, action) => {
+      state.login.currentUser.imageId = action.payload;
+    },
     loginStart: (state) => {
       state.login.isFetching = true;
       // state.login.error = false;
@@ -69,5 +72,6 @@ export const {
   logOutSuccess,
   logOutFailed,
   logOutStart,
+  updateUserAvatarID,
 } = authSlice.actions;
 export default authSlice.reducer;

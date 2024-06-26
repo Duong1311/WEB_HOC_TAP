@@ -25,14 +25,8 @@ export default function WriteRating({ addRating }) {
         rating: rating,
         comment: ratingComment,
       });
-      console.log(res);
-      const newRating = {
-        userId: userId,
-        courseId: id,
-        rating: rating,
-        comment: ratingComment,
-      };
-      addRating(newRating);
+
+      addRating();
       toast.success("Đánh giá thành công");
     } catch (error) {
       console.log(error);

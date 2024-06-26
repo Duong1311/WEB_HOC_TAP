@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Box, Modal, Slider, Button } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 import { FcAddImage } from "react-icons/fc";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { updateUserAvatarID } from "~/redux/authSlice";
 import { userAvatar } from "~/services/userServices";
 
 const boxStyle = {
@@ -26,6 +28,7 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
   const [slideValue, setSlideValue] = useState(10);
   const cropRef = useRef(null);
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   //handle save
   const handleSave = async () => {
@@ -34,14 +37,23 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
 
       const result = await fetch(dataUrl);
       const blob = await result.blob();
+      // Validate file size (example limit: 2MB)
+      const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+      if (blob.size > maxSize) {
+        toast.error("Kích thước file quá lớn hãy thử lại.");
+        return; // Stop execution if file is too large
+      }
       setPreview(URL.createObjectURL(blob));
       setModalOpen(false);
       // console.log("blob", blob);
       const formData = new FormData();
       formData.append("file", blob, id);
       const res = await userAvatar(formData);
-      if (res.data.success) {
+      // change avatar on redux persist
+
+      if (res.data.status == 200) {
         toast.success(res.data.message);
+        dispatch(updateUserAvatarID(res.data.data.imageId));
       }
     }
   };
@@ -105,8 +117,9 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
 };
 
 // Container
-const Cropper = ({ avatar }) => {
-  console.log("sdas", avatar);
+const Cropper = () => {
+  const user = useSelector((state) => state.root.auth.login.currentUser);
+
   // image src
   const [src, setSrc] = useState(null);
 
@@ -118,10 +131,10 @@ const Cropper = ({ avatar }) => {
 
   // ref to control input element
   const inputRef = useRef(null);
-  const [url, setUrl] = useState("");
-  const avatarUrl = useRef(
-    " https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
-  );
+  // const [url, setUrl] = useState("");
+  // const avatarUrl = useRef(
+  //   "https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
+  // );
   // handle Click
   const handleInputClick = (e) => {
     e.preventDefault();
@@ -144,9 +157,21 @@ const Cropper = ({ avatar }) => {
         />
 
         <div className="img-container rounded-full border border-black">
-          {avatar && (
+          {user?.imageId ? (
             <img
-              src={preview || "https://drive.google.com/thumbnail?id=" + avatar}
+              src={"https://drive.google.com/thumbnail?id=" + user?.imageId}
+              // src={"https://drive.google.com/thumbnail?id=" + avatar}
+              alt=""
+              width="200"
+              height="200"
+              className="object-cover rounded-full"
+            />
+          ) : (
+            <img
+              src={
+                preview ||
+                "https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
+              }
               // src={"https://drive.google.com/thumbnail?id=" + avatar}
               alt=""
               width="200"
@@ -158,7 +183,7 @@ const Cropper = ({ avatar }) => {
         <a href="/" onClick={handleInputClick}>
           <FcAddImage className="add-icon w-[50px] h-[50px]" />
         </a>
-        <small>Click to select image</small>
+        {/* <small>Click to select image</small> */}
         <input
           type="file"
           accept="image/*"

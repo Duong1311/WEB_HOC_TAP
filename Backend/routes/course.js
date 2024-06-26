@@ -82,6 +82,8 @@ router.get("/getAllCategory", courseController.getAllCategory);
 //rating
 router.post("/createRating", courseController.createRating);
 router.get("/getRatingByCourseId/:id", courseController.getRatingByCourseId);
+//delete rating
+router.delete("/deleteRating/:id", courseController.deleteRating);
 // search by course title
 router.get("/searchCourse", courseController.searchCourse);
 //search course gvhome by title

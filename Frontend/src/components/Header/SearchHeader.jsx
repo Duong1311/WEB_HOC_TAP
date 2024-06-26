@@ -158,7 +158,19 @@ export default function SearchHeader() {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                 >
-                  <Avatar sx={{ width: 38, height: 38 }}>M</Avatar>
+                  {!user?.imageId ? (
+                    <Avatar sx={{ width: 38, height: 38 }}>
+                      {user?.username.charAt(0).toUpperCase()}
+                    </Avatar>
+                  ) : (
+                    <img
+                      className="object-cover max-w-10 max-h-10 rounded-full"
+                      src={
+                        "https://drive.google.com/thumbnail?id=" + user?.imageId
+                      }
+                      alt=""
+                    />
+                  )}
                 </IconButton>
               </Tooltip>
               {/* <div>{user?.username}</div> */}

@@ -8,8 +8,13 @@ export const updateUserInfor = (id, data) => {
 export const updateUserPassword = (id, data) => {
   return axios.put(`/user/updateUserPassword/${id}`, data);
 };
-export const getAllCourseStudys = (id) => {
-  return axios.get(`/user/getAllCourseStudys/${id}`);
+export const getAllCourseStudys = (id, page, limit, title) => {
+  return axios.get(
+    `/user/getAllCourseStudys/${id} ?page=${page}&limit=${limit} &title=${title}`
+  );
+};
+export const deleteCourseHistory = (id) => {
+  return axios.delete(`/user/deleteCourseHistory/${id}`);
 };
 export const addCourseToHistoryApi = (userId, courseId) => {
   return axios.post(`/user/addCourseToHistory`, { userId, courseId });
