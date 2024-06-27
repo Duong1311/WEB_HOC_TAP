@@ -2,6 +2,14 @@ const { StatusCodes } = require("http-status-codes");
 const courseService = require("../services/courseService");
 
 const courseController = {
+  getChapterData: async (req, res, next) => {
+    try {
+      const chapterData = await courseService.getChapterData(req.params.id);
+      res.status(StatusCodes.OK).json(chapterData);
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  },
   deleteRating: async (req, res, next) => {
     try {
       const deleteRating = await courseService.deleteRating(req.params.id);

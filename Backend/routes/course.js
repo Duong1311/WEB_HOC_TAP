@@ -88,4 +88,6 @@ router.delete("/deleteRating/:id", courseController.deleteRating);
 router.get("/searchCourse", courseController.searchCourse);
 //search course gvhome by title
 router.get("/searchGv", courseController.searchGv);
+//get chapter data by id
+router.get("/getChapterData/:id", courseController.getChapterData);
 module.exports = router;

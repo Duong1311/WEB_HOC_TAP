@@ -199,7 +199,7 @@ export default function CourseChapter() {
         }}
       >
         <CircularProgress />
-        <Typography>Loading Board...</Typography>
+        <Typography>Đang tải...</Typography>
       </Box>
     );
   }

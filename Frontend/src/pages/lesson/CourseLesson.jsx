@@ -1,7 +1,11 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { getLessonContent, updateLessonTitle } from "~/services/courseServices";
+import {
+  getChapterData,
+  getLessonContent,
+  updateLessonTitle,
+} from "~/services/courseServices";
 import EditorLesson from "./Editor/EditorLesson";
 import QuestionList from "./QuestionList/QuestionList";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -37,6 +41,10 @@ export default function CourseLesson() {
   const [displayQuestion, setDisplayQuestion] = useState(false);
   const [displayPreButton, setDisplayPreButton] = useState(true);
   const [displayNextButton, setDisplayNextButton] = useState(true);
+  const [displayPreButtonChapter, setDisplayPreButtonChapter] = useState(false);
+  const [displayNextButtonChapter, setDisplayNextButtonChapter] =
+    useState(false);
+
   const toggleDisplayQuestion = () => {
     setDisplayQuestion(true);
     setDisplayEditor(false);
@@ -85,6 +93,7 @@ export default function CourseLesson() {
     navigate(`/CourseLesson/${nextLessonId}`);
     window.location.reload();
   };
+
   const handlePreviousLesson = () => {
     //find index of lesson in chapter
     const lessonArray = lesson?.chapterId?.lessonOrderIds;
@@ -95,12 +104,54 @@ export default function CourseLesson() {
     navigate(`/CourseLesson/${previousLessonId}`);
     window.location.reload();
   };
+  const handleNextChapter = async () => {
+    //get next chapter id
+    const currentChapterId = lesson?.chapterId?._id;
+    const chapterArray = lesson?.courseId?.chapterOrderIds;
+    const index = chapterArray.indexOf(currentChapterId);
+    const nextChapterId = chapterArray[index + 1];
+    // return if it is the last chapter
+    if (!nextChapterId) return;
+    console.log("nextChapterId", nextChapterId);
+    //get first lesson id of next chapter
+    //get chapter data api
+    const res = await getChapterData(nextChapterId);
+    const lessonOrderIds = res?.data?.lessonOrderIds;
+    const firstLessonId = lessonOrderIds[0];
+    navigate(`/CourseLesson/${firstLessonId}`);
+    window.location.reload();
+  };
+  const handlePreviousChapter = async () => {
+    //get next chapter id
+    const currentChapterId = lesson?.chapterId?._id;
+    const chapterArray = lesson?.courseId?.chapterOrderIds;
+    const index = chapterArray.indexOf(currentChapterId);
+    const prevChapterId = chapterArray[index - 1];
+    // return if it is the last chapter
+    if (!prevChapterId) return;
+    console.log("prevChapterId", prevChapterId);
+    //get last lesson id of prev chapter
+    //get chapter data api
+    const res = await getChapterData(prevChapterId);
+    const lessonOrderIds = res?.data?.lessonOrderIds;
+    const lastLessonId = lessonOrderIds.pop();
+    navigate(`/CourseLesson/${lastLessonId}`);
+    window.location.reload();
+  };
   const checkButton = (lesson) => {
     const lessonArray = lesson?.chapterId?.lessonOrderIds;
     const index = lessonArray.indexOf(id);
     console.log("index", index);
-    if (index === 0) return setDisplayPreButton(false);
-    if (index === lessonArray.length - 1) return setDisplayNextButton(false);
+    if (index === 0) {
+      setDisplayPreButton(false);
+      setDisplayPreButtonChapter(true);
+      return;
+    }
+    if (index === lessonArray.length - 1) {
+      setDisplayNextButton(false);
+      setDisplayNextButtonChapter(true);
+      return;
+    }
   };
 
   useEffect(() => {
@@ -141,16 +192,24 @@ export default function CourseLesson() {
         </nav>
 
         <div className="flex flex-row justify-between items-center my-3">
-          <div>
-            {displayPreButton && (
-              <button
-                onClick={handlePreviousLesson}
-                className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
-              >
-                <ArrowBackIcon />
-              </button>
-            )}
-          </div>
+          {displayPreButton && (
+            <button
+              onClick={handlePreviousLesson}
+              className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+            >
+              <ArrowBackIcon />
+            </button>
+          )}
+
+          {displayPreButtonChapter && (
+            <button
+              onClick={handlePreviousChapter}
+              className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+            >
+              <ArrowBackIcon />
+            </button>
+          )}
+
           {toggle ? (
             <div
               onDoubleClick={toggleInput}
@@ -177,17 +236,25 @@ export default function CourseLesson() {
             </div>
           )}
 
-          <div>
-            {displayNextButton && (
-              <button
-                onClick={handleNextLesson}
-                className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
-              >
-                {/* <div>Chương tiếp</div> */}
-                <ArrowForwardIcon className="" />
-              </button>
-            )}
-          </div>
+          {displayNextButton && (
+            <button
+              onClick={handleNextLesson}
+              className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+            >
+              {/* <div>Chương tiếp</div> */}
+              <ArrowForwardIcon className="" />
+            </button>
+          )}
+
+          {displayNextButtonChapter && (
+            <button
+              onClick={handleNextChapter}
+              className=" flex flex-row items-center max-w-[10rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+            >
+              {/* <div>Chương tiếp</div> */}
+              <ArrowForwardIcon className="" />
+            </button>
+          )}
         </div>
 
         <div className="flex flex-row justify-between mb-3 ">

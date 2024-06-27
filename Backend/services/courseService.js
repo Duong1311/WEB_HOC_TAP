@@ -11,6 +11,13 @@ const { cloneDeep } = require("lodash");
 const { uploadFile, deleteFile } = require("../models/uploadModel");
 
 const courseService = {
+  getChapterData: async (id) => {
+    const chapterData = await Chapters.findOne(
+      { _id: id },
+      { lessonOrderIds: 1 }
+    );
+    return chapterData;
+  },
   deleteRating: async (id) => {
     //delete rating by id
     await Ratings.findByIdAndDelete(id);

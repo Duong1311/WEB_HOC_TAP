@@ -101,7 +101,12 @@ const searchGv = (id, title, page) => {
   );
 };
 
+const getChapterData = (id) => {
+  return axios.get(`/course/getChapterData/${id}`);
+};
+
 export {
+  getChapterData,
   searchCourse,
   getAllCourseCreate,
   getAllCategory,

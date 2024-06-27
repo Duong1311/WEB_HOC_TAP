@@ -1,5 +1,20 @@
+import { useEffect, useRef } from "react";
+
 /* eslint-disable react/prop-types */
 export default function UserLessonContent({ markdown }) {
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      // Select all iframes within the contentRef and add the allowfullscreen attribute
+      const iframes = contentRef.current.querySelectorAll("iframe");
+      iframes.forEach((iframe) => {
+        console.log("Adding allowfullscreen to iframe:", iframe); // Debugging line
+        iframe.setAttribute("allowfullscreen", "true");
+      });
+    }
+  }, [markdown]);
+  console.log("Markdown:", markdown); // Debugging line
   return (
     <div className="center min-h-screen">
       <style>
@@ -20,7 +35,8 @@ export default function UserLessonContent({ markdown }) {
           }
           `}
       </style>
-      <div dangerouslySetInnerHTML={{ __html: markdown }} />
+
+      <div ref={contentRef} dangerouslySetInnerHTML={{ __html: markdown }} />
     </div>
   );
 }

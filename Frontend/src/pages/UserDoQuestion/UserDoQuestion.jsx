@@ -4,12 +4,14 @@ import { createLessonQuestionByOpenAi } from "~/services/courseServices";
 import { v4 as uuidv4 } from "uuid";
 import Question from "../UserLessonDetail/UserQuestionList/Question/Question";
 import Warning from "./Warning/Warning";
+import Guide from "./Guide/Guide";
 
 export default function UserDoQuestion() {
   const [questionsData, setQuestionsData] = useState([]);
   const [questionAi, setQuestionAi] = useState("");
   const [number, setNumber] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const [showGuide, setShowGuide] = useState(true);
 
   const handleCreateLessonQuestionsByOpenAi = () => {
     if (!questionAi && number) {
@@ -43,7 +45,15 @@ export default function UserDoQuestion() {
     <div className="w-full min-h-screen flex justify-center">
       <div className="w-5/6 ">
         <div className="w-full rounded-lg bg-gray-50 px-3 py-3 my-10 border border-gray-100  shadow-md hover:shadow-lg transition-all duration-300 ease-in-out">
-          <h1 className="text-3xl mb-3 font-bold">Tạo câu hỏi</h1>
+          <div className="flex flex-row justify-between">
+            <h1 className="text-3xl mb-3 font-bold">Tạo câu hỏi bằng AI</h1>
+            <div
+              onClick={() => setShowGuide(true)}
+              className="bg-blue-700 mb-3  text-white font-extrabold w-8 h-8 rounded-full flex justify-center items-center"
+            >
+              ?
+            </div>
+          </div>
           <div className="w-full flex flex-row items-center mb-3">
             <div className="min-w-[100px] font-bold text-xl">Chủ đề:</div>
             <input
@@ -82,6 +92,8 @@ export default function UserDoQuestion() {
         </div>
       </div>
       {showModal && <Warning setShowModal={setShowModal} />}
+
+      {showGuide && <Guide setShowGuide={setShowGuide} />}
     </div>
   );
 }

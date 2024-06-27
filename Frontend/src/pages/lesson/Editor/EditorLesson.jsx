@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 import { createLessonContent } from "~/services/courseServices";
 import { toast } from "react-toastify";
+import handlePastedText from "../../../utils/pasteText";
 
 export default function EditorLesson({ old }) {
   const { id } = useParams();
@@ -70,6 +71,7 @@ export default function EditorLesson({ old }) {
           <Editor
             editorState={editorState}
             onEditorStateChange={handleOnChange}
+            handlePastedText={handlePastedText}
             toolbar={{
               embedded: {
                 embedCallback: embedVideoCallBack,
