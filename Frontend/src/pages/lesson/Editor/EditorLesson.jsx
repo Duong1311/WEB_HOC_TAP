@@ -56,7 +56,7 @@ export default function EditorLesson({ old }) {
   }, [old]);
 
   return (
-    <div className="w-full flex flex-col mt-6 min-h-[100vh]">
+    <div className="w-full flex flex-col my-6 min-h-[100vh]">
       <div className="flex flex-row justify-between mb-3">
         <div></div>
         <button

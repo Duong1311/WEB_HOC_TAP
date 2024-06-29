@@ -85,7 +85,7 @@ export default function Header() {
                     to={`/course/search/?search=&filter=${category?._id}`}
                     key={category._id}
                   >
-                    <div className="hover:bg-gray-100 py-2">
+                    <div className="hover:bg-gray-100 p-2">
                       {category.categoryName}
                     </div>
                   </Link>
@@ -197,7 +197,8 @@ export default function Header() {
                 <div className="w-full h-full">
                   <Link to={`/userprofile/${id}`}>
                     <MenuItem onClick={handleClose}>
-                      <Avatar /> Profile
+                      <Avatar />{" "}
+                      <div className="max-w-[100px]">{user?.username}</div>
                     </MenuItem>
                   </Link>
                   <Link to={`/usercoursestudys/${id}`}>

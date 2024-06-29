@@ -176,7 +176,7 @@ export default function QuestionList() {
     getLessonQuestionApi(id);
   }, [id]);
   return (
-    <div>
+    <div className="mb-3">
       <div className="flex flex-col mb-3">
         <div className=" border border-black px-3 py-3">
           <h1 className="text-xl font-bold">Tạo câu hỏi</h1>

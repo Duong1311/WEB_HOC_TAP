@@ -89,6 +89,7 @@ export default function UserLessonDetail() {
 
     //get next lesson id
     const nextLessonId = lessonArray[index + 1];
+    if (!nextLessonId) return;
 
     navigate(`/userlessondetail/${nextLessonId}`);
     window.location.reload();
@@ -99,6 +100,7 @@ export default function UserLessonDetail() {
     const index = lessonArray.indexOf(id);
     //get previous lesson id
     const previousLessonId = lessonArray[index - 1];
+    if (!previousLessonId) return;
 
     navigate(`/userlessondetail/${previousLessonId}`);
     window.location.reload();
@@ -217,27 +219,29 @@ export default function UserLessonDetail() {
           <ol className="flex space-x-2">
             <li>
               <Link to={`/usercoursedetail/${lesson?.courseId?._id}`}>
-                <div className="after:content-['/'] after:ml-2 text-xl text-black hover:text-blue-700">
+                <div className=" after:ml-2 text-xl text-black hover:text-blue-700 max-w-[300px] truncate">
                   {lesson?.courseId?.title}
                 </div>
               </Link>
             </li>
             <li>
               <Link to={`/usercoursedetail/${lesson?.courseId?._id}`}>
-                <div className="after:content-['/'] after:ml-2 text-xl text-black hover:text-blue-700">
-                  {lesson?.chapterId?.title}
+                <div className=" after:ml-2 text-xl text-black hover:text-blue-700 max-w-[300px] truncate">
+                  / {lesson?.chapterId?.title}
                 </div>
               </Link>
             </li>
             <li
-              className="text-blue-700 text-xl cursor-pointer"
+              className="text-blue-700 text-xl cursor-pointer max-w-[300px] truncate"
               aria-current="page"
             >
-              {lesson?.title}
+              / {lesson?.title}
             </li>
           </ol>
         </nav>
-        <div className="font-semibold text-3xl mt-4 mb-10">{lesson?.title}</div>
+        <div className="font-semibold text-3xl mt-4 mb-10 max-w-[1000px] truncate">
+          {lesson?.title}
+        </div>
 
         <div className="flex flex-row justify-between items-center pb-2 border-b">
           <div className="flex flex-row">

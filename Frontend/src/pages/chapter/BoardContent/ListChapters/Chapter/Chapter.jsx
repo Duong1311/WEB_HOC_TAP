@@ -161,6 +161,7 @@ function Chapter({
                   fontWeight: "bold",
                   cursor: "pointer",
                 }}
+                className="truncate "
               >
                 {chapter?.title}
               </Typography>
@@ -211,7 +212,7 @@ function Chapter({
               </Box>
             </div>
           ) : (
-            <div className="flex flex-row w-full items-center mt-1">
+            <div className="flex flex-row w-full items-center mt-1 ">
               <TextField
                 label={chapter?.title}
                 type="text"

@@ -17,6 +17,7 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
       console.log("error", error);
     }
   };
+  console.log("course", course);
   return (
     <div
       key={course._id}
@@ -25,14 +26,16 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
       <div className="flex flex-row">
         <div>
           <img
-            className="object-cover w-40 h-32"
-            src="https://s.udemycdn.com/course/200_H/placeholder.jpg"
+            className="object-cover min-w-60 max-w-60 max-h-40 min-h-40"
+            src={"https://drive.google.com/thumbnail?id=" + course?.imageId}
             alt=""
           />
         </div>
-        <div className="ml-4 flex items-center">
+        <div className="ml-4 flex items-center ">
           <div className="flex flex-col space-y-2">
-            <p className="text-lg font-bold">{course.title}</p>
+            <p className="max-w-[20rem] text-lg font-bold truncate   ">
+              {course.title}
+            </p>
             {/* <p className="text-sm">Giáo viên: Tên giáo viên</p> */}
             <p className="text-sm">
               Danh mục: {course.categoryId?.categoryName}
@@ -41,7 +44,7 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
           </div>
         </div>
       </div>
-      <div className="">
+      <div className="max-w-[600px]">
         <Link to={`/CourseChapter/${course._id}`}>
           <button className=" mr-4 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg ">
             Chỉnh sửa nội dung
@@ -69,7 +72,7 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
         )}
         <button
           onClick={handleDeleteCourse}
-          className=" mr-4 rounded-lg text-white bg-red-500 border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-500 dark:focus:ring-red-600 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg "
+          className=" mr-4 mt-1 rounded-lg text-white bg-red-500 border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-500 dark:focus:ring-red-600 py-3 px-6 font-sans text-xs font-bold uppercase hover:shadow-lg "
         >
           Xóa khóa học
         </button>

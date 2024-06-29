@@ -1,12 +1,15 @@
+import { Pagination, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
-import { getAllCategory, getAllcourses } from "~/services/courseServices";
+import { getAllCategory, searchCourse } from "~/services/courseServices";
 
 export default function Home() {
   const [message, setMessage] = useState("");
   const [courses, setCourses] = useState([]);
   const [categories, setCategory] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(null);
 
   const navigate = useNavigate();
   const handleChange = (event) => {
@@ -31,18 +34,54 @@ export default function Home() {
     }
   };
 
-  const getAllcoursesData = async () => {
+  // const getAllcoursesData = async () => {
+  //   try {
+  //     const res = await getAllcourses();
+  //     console.log(res.data);
+  //     setCourses(res.data);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
+  const fetchDataSearch = async (
+    title,
+    selectedCategory,
+    sort,
+    page,
+    limit
+  ) => {
     try {
-      const res = await getAllcourses();
+      const res = await searchCourse(
+        title,
+        selectedCategory,
+        sort,
+        page,
+        limit
+      );
       console.log(res.data);
-      setCourses(res.data);
+      setTotalPage(res.data.totalPage);
+      setCourses(res.data.courses);
+
+      // if (res.status === 200) {
+      //   setCourseSearch(res.data.courses);
+      //   setTotalPage(res.data.totalPage);
+      // }
     } catch (error) {
       console.log("error", error);
     }
   };
+  const setCurPage = async (e, p) => {
+    setPage(p);
+    console.log(p);
+    await fetchDataSearch("", "", "", p, 12);
+
+    // await getCourseStudys(id, p, 5, "");
+  };
 
   useEffect(() => {
-    getAllcoursesData();
+    fetchDataSearch("", "", "", page, 12);
+
+    // getAllcoursesData();
     getCategories();
   }, []);
   return (
@@ -102,7 +141,7 @@ export default function Home() {
               </div>
               <input
                 className="placeholder:italic placeholder:text-slate-400 block bg-white w-[38rem] h-[3.5rem] border border-slate-300 rounded-full text-black py-2 pl-12 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                placeholder="Search for anything..."
+                placeholder="Tìm kiếm bằng tên khóa học..."
                 type="text"
                 name="search"
                 value={message}
@@ -119,7 +158,7 @@ export default function Home() {
         <div className="w-5/6">
           <div className="w-full flex justify-between mt-7">
             <div className="w-auto  font-semibold text-2xl">
-              Khoá học nổi bật
+              Tất cả khóa học
             </div>
             <div className="hidden w-auto font-semibold text-sm text-gray-500 pt-2">
               xem thêm {">>"}
@@ -146,7 +185,9 @@ export default function Home() {
                           alt="anh khoa hoc"
                         />
                       </div>
-                      <div className="font-semibold">{data?.title}</div>
+                      <div className="font-semibold max-w-[250px] truncate">
+                        {data?.title}
+                      </div>
                       <div className="font-light">
                         {data?.userId?.username || "tac gia"}
                       </div>
@@ -168,6 +209,18 @@ export default function Home() {
                 );
               })}
           </div>
+          {totalPage > 1 && (
+            <div className="w-full flex justify-center my-3">
+              <Stack spacing={2}>
+                <Pagination
+                  count={totalPage}
+                  page={parseInt(page, 10)}
+                  onChange={setCurPage}
+                  color="primary"
+                />
+              </Stack>
+            </div>
+          )}
         </div>
       </div>
     </div>

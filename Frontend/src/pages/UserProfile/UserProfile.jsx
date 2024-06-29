@@ -33,9 +33,14 @@ export default function UserProfile() {
       }
       const res = await updateUserInfor(id, {
         username: userName,
-        email: email,
+
         description: description,
       });
+      console.log(res);
+      if (res.data.error) {
+        toast.error(res.data.error);
+        return;
+      }
       toast.success(res.data.message);
     } catch (error) {
       console.log(error);
@@ -73,6 +78,7 @@ export default function UserProfile() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled
                 />
                 <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-xs">
                   Hãy nhập đúng định dạng email

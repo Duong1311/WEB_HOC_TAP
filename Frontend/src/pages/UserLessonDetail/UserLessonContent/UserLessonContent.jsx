@@ -16,7 +16,7 @@ export default function UserLessonContent({ markdown }) {
   }, [markdown]);
   console.log("Markdown:", markdown); // Debugging line
   return (
-    <div className="center min-h-screen">
+    <div className="center min-h-screen mt-10">
       <style>
         {`.center img {
               display: block;

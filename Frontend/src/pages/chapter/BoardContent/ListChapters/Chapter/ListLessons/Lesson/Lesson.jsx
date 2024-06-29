@@ -61,7 +61,9 @@ function Lesson({ lesson, deleteLessonApi }) {
         }}
       >
         <Link to={`/CourseLesson/${lesson._id}`}>
-          <Typography>{lesson?.title}</Typography>
+          <Typography className="max-w-[700px] truncate">
+            {lesson?.title}
+          </Typography>
         </Link>
         <DeleteIcon className="cursor-pointer" onClick={handleDeleteLesson} />
       </CardContent>

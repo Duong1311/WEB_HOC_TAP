@@ -17,7 +17,9 @@ export default function Chapter({ chapter }) {
         }}
         className="flex flex-row justify-between transition cursor-pointer gap-2 border border-gray-300 px-3 py-3 bg-[#f7f9fa]"
       >
-        <div className="text-lg font-semibold">{chapter?.title}</div>
+        <div className="text-lg font-semibold max-w-[600px] truncate ">
+          {chapter?.title}
+        </div>
 
         {openLessons ? (
           <AiOutlineUp className="self-center" />

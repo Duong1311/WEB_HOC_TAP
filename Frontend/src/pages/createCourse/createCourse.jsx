@@ -30,12 +30,20 @@ export default function CreateCourse() {
   const createCourseHandle = async (e) => {
     try {
       e.preventDefault();
-      if (!courseTitle || !courseCategory) {
+      if (!courseTitle && !courseCategory) {
         toast.error("Vui lòng điền đầy đủ thông tin");
         return;
       }
+      if (!courseTitle) {
+        toast.error("Vui lòng điền tên khóa học");
+        return;
+      }
+      if (!courseCategory) {
+        toast.error("Vui lòng chọn thể loại khóa học");
+        return;
+      }
       //check lenght of course title
-      if (courseTitle.length > 200) {
+      if (courseTitle.length > 100) {
         toast.error("Tên khóa học quá dài");
         return;
       }

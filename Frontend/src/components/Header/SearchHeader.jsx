@@ -19,7 +19,7 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 // import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { getAllCategory } from "~/services/courseServices";
+// import { getAllCategory } from "~/services/courseServices";
 import { useEffect, useState } from "react";
 
 export default function SearchHeader() {
@@ -135,7 +135,7 @@ export default function SearchHeader() {
           </div>
           <input
             className="w-full placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-full text-black py-2 pl-12 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-            placeholder="Search for anything..."
+            placeholder="Tìm kiếm bằng tên khóa học..."
             type="text"
             name="search"
             value={message}

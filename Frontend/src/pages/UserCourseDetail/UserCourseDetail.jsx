@@ -15,7 +15,13 @@ import RatingCourse from "./RatingCourse/RatingCourse";
 import WriteRating from "./WriteRating/WriteRating";
 import PublicButton from "~/components/PublicButton/PublicButton";
 import { toast } from "react-toastify";
-import { Pagination, Stack } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 export default function UserCourseDetail() {
   const [orderedchapters, setOrderedchapters] = useState([]);
@@ -24,6 +30,7 @@ export default function UserCourseDetail() {
   const [markdown, setMarkdown] = useState();
   const [allRating, setAllRating] = useState([]);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const setCurPage = async (e, p) => {
     setPage(p);
     console.log(p);
@@ -106,11 +113,28 @@ export default function UserCourseDetail() {
         mapOrder(course?.chapters, course?.chapterOrderIds, "_id")
       );
     });
+    setIsLoading(false);
 
     getRatingData(id, page, 4);
   }, []);
   // console.log(orderedchapters);
-
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+        <Typography>Đang tải...</Typography>
+      </Box>
+    );
+  }
   return (
     <div className="flex flex-col">
       <div className="relative ">
@@ -122,7 +146,7 @@ export default function UserCourseDetail() {
         {/* Thong tin khoa hoc */}
         <div className=" w-full h-full absolute top-0 flex justify-center items-center ">
           <div className="w-10/12 flex flex-col gap-6  ">
-            <div className="font-semibold text-4xl text-white ">
+            <div className="font-semibold text-4xl text-white max-w-[800px] truncate ">
               {course?.title}
             </div>
             <div className="flex flex-row gap-2 ">

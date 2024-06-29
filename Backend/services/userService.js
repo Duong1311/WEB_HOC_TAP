@@ -316,6 +316,14 @@ const userService = {
   },
   updateUserInfor: async (id, data) => {
     try {
+      console.log(data);
+
+      const user2 = await User.findOne({ username: data.username });
+      if (user2) {
+        return {
+          error: "Tên đăng nhập đã tồn tại",
+        };
+      }
       const user = await User.findOneAndUpdate(
         { _id: id },
         { $set: data },

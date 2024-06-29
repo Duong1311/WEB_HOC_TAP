@@ -431,7 +431,9 @@ function BoardContent({
   return (
     <div>
       <div>
-        <div className="font-bold text-2xl mb-5 mt-5">{course?.title}</div>
+        <div className="font-bold text-2xl mb-5 mt-5 truncate max-w-[800px]">
+          {course?.title}
+        </div>
       </div>
       <DndContext
         // Cảm biến (đã giải thích kỹ ở video số 30)
@@ -447,7 +449,7 @@ function BoardContent({
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div className=" flex h-auto min-w-[800px] ">
+        <div className=" flex h-auto min-w-[800px] max-w-[800px] ">
           <ListChapters
             chapters={orderedchapters}
             addNewChapterApi={addNewChapterApi}

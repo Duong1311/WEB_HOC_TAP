@@ -10,6 +10,7 @@ import EditorLesson from "./Editor/EditorLesson";
 import QuestionList from "./QuestionList/QuestionList";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 export default function CourseLesson() {
   // const [nextId, setNextId] = useState("");
@@ -44,6 +45,7 @@ export default function CourseLesson() {
   const [displayPreButtonChapter, setDisplayPreButtonChapter] = useState(false);
   const [displayNextButtonChapter, setDisplayNextButtonChapter] =
     useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleDisplayQuestion = () => {
     setDisplayQuestion(true);
@@ -76,6 +78,7 @@ export default function CourseLesson() {
             ],
       };
       setOld(a);
+      setIsLoading(false);
     } catch (error) {
       console.log("error", error);
     }
@@ -158,7 +161,23 @@ export default function CourseLesson() {
     getLessonContentApi(id);
   }, []);
 
-  if (!lesson) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+        <Typography>Đang tải...</Typography>
+      </Box>
+    );
+  }
   return (
     <div className="min-h-[960px] flex justify-center">
       <div className="w-4/6  ">
@@ -173,20 +192,23 @@ export default function CourseLesson() {
           <ol className="flex space-x-2">
             <li>
               <Link to="/gvhome">
-                <div className="after:content-['/'] after:ml-2 text-gray-600 hover:text-blue-700">
+                <div className="after:content-['/'] after:ml-2 text-gray-600 hover:text-blue-700 max-w-[200px] truncate ">
                   {lesson?.courseId?.title}
                 </div>
               </Link>
             </li>
             <li>
               <Link to={`/CourseChapter/${lesson?.courseId?._id}`}>
-                <div className="after:content-['/'] after:ml-2 text-gray-600 hover:text-blue-700">
-                  {lesson?.chapterId?.title}
+                <div className=" after:ml-2 text-gray-600 hover:text-blue-700 max-w-[200px] truncate">
+                  / {lesson?.chapterId?.title}
                 </div>
               </Link>
             </li>
-            <li className="text-blue-700" aria-current="page">
-              {lesson?.title}
+            <li
+              className="text-blue-700 max-w-[200px] truncate"
+              aria-current="page"
+            >
+              / {text}
             </li>
           </ol>
         </nav>
@@ -213,9 +235,9 @@ export default function CourseLesson() {
           {toggle ? (
             <div
               onDoubleClick={toggleInput}
-              className="font-semibold text-2xl mt-4 "
+              className="font-semibold text-2xl mt-4 max-w-[400px] truncate "
             >
-              {lesson?.title}
+              {text}
             </div>
           ) : (
             <div className="flex flex-row w-full p-3 items-center">

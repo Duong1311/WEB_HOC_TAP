@@ -13,17 +13,25 @@ export default function UserDoQuestion() {
   const [showModal, setShowModal] = useState(false);
   const [showGuide, setShowGuide] = useState(true);
 
-  const handleCreateLessonQuestionsByOpenAi = () => {
-    if (!questionAi && number) {
-      return toast.error("Vui lòng nhập chủ đề và số lượng câu hỏi");
+  const handleCreateLessonQuestionsByOpenAi = async () => {
+    if (!questionAi) {
+      return toast.error("Chủ đề không được để trống");
     }
-    getLessonQuestionApiByOpenAiApi({
+    if (!number) {
+      return toast.error("Số lượng câu hỏi không được để trống");
+    }
+    if (number > 15 || number < 1) {
+      return toast.error("Số lượng câu hỏi phải từ 1 đến 15");
+    }
+
+    await getLessonQuestionApiByOpenAiApi({
       number: number,
       field: questionAi,
     });
   };
   const getLessonQuestionApiByOpenAiApi = async (data) => {
     try {
+      setQuestionsData([]);
       const res = await createLessonQuestionByOpenAi(data);
       console.log("questions", res.data.result);
       // setQuestionsData(res.data);
@@ -38,6 +46,7 @@ export default function UserDoQuestion() {
       setShowModal(true);
     } catch (error) {
       console.log("error", error);
+      toast.error("Tạo câu hỏi thất bại");
     }
   };
 
@@ -71,9 +80,11 @@ export default function UserDoQuestion() {
 
             <input
               type="number"
-              className="w-full max-w-[60px] px-4 py-2 text-gray-800 border rounded-lg  focus:outline-none"
+              className="w-full max-w-[100px] px-4 py-2 text-gray-800 border rounded-lg  focus:outline-none"
               placeholder="Số câu hỏi"
               value={number}
+              min={1}
+              max={15}
               // defaultValue={question.question}
               onChange={(e) => setNumber(e.target.value)}
             />

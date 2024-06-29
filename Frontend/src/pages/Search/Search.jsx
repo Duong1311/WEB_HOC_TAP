@@ -110,7 +110,7 @@ export default function Search() {
         }}
       >
         <CircularProgress />
-        <Typography>Loading Board...</Typography>
+        <Typography>Đang tải...</Typography>
       </Box>
     );
   }

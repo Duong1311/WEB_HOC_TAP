@@ -74,7 +74,19 @@ export default function CourseDetail() {
     // console.log(file);
     // const res = courseImage(file);
     // console.log(res.data);
-    await handleUpload();
+    if (file !== null) {
+      console.log("uploading");
+      await handleUpload();
+      setFile(null);
+    }
+    if (courseName === "") {
+      toast.error("Tên khóa học không được để trống");
+      return;
+    }
+    if (courseCategory === "") {
+      toast.error("Thể loại khóa học không được để trống");
+      return;
+    }
 
     await createCourseDetailApi(id, { courseName, dataUpdate, courseCategory });
   };
@@ -152,7 +164,14 @@ export default function CourseDetail() {
                 accept="image/*"
                 onChange={(e) => {
                   setFile(e.target.files[0]);
+                  const maxSize = 1 * 1024 * 1024; // 1MB in bytes
+                  if (e.target.files[0].size > maxSize) {
+                    console.log("File size is too large");
+                    toast.error("Kích thước file quá lớn hãy thử lại.");
+                    return; // Stop execution if file is too large
+                  }
                   avatarUrl.current = URL.createObjectURL(e.target?.files[0]);
+                  handleUpload;
                 }}
                 className="block w-full text-sm text-slate-500 file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:bg-gray-700 file:text-white  hover:file:bg-gray-600"
               />

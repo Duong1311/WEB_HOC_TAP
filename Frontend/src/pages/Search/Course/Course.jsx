@@ -19,11 +19,11 @@ export default function Course({ data }) {
           />
         </div>
         <div className="w-full flex flex-col justify-between ml-5 p-5">
-          <div className="font-semibold text-2xl">
+          <div className="font-semibold text-2xl max-w-[600px] truncate ">
             {data?.title || "Ten khoa hoc"}
           </div>
           <div className="flex flex-row gap-3">
-            <div className="font-light">
+            <div className="font-light ">
               Tác giả: {data?.userId?.username || "tac gia"}
             </div>
             <div className="font-light">

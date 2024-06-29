@@ -53,7 +53,7 @@ export default function Course({ data, getCourseStudys }) {
           />
         </div>
         <div className="flex flex-col justify-between ml-5 p-5">
-          <div className="font-semibold text-2xl">
+          <div className="font-semibold text-2xl max-w-[700px] truncate ">
             {data?.courseId?.title || "Ten khoa hoc"}
           </div>
           {/* <div className="font-light">{data?.userId?.username || "tac gia"}</div> */}
