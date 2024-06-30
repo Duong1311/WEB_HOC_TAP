@@ -167,6 +167,12 @@ export default function QuestionList() {
     }
   };
   const handleCreateLessonQuestionsByOpenAi = () => {
+    if (!questionAi.trim()) {
+      return toast.error("Chủ đề không được để trống");
+    }
+    if (number > 15 || number < 1) {
+      return toast.error("Số lượng câu hỏi phải từ 1 đến 15");
+    }
     getLessonQuestionApiByOpenAiApi({
       number: number,
       field: questionAi,
@@ -201,6 +207,8 @@ export default function QuestionList() {
               placeholder="Số câu hỏi"
               value={number}
               // defaultValue={question.question}
+              min={1}
+              max={15}
               onChange={(e) => setNumber(e.target.value)}
             />
           </div>
