@@ -31,11 +31,12 @@ export default function UserDoQuestion() {
   };
   const getLessonQuestionApiByOpenAiApi = async (data) => {
     try {
-      setQuestionsData([]);
       const res = await createLessonQuestionByOpenAi(data);
       console.log("questions", res.data.result);
       // setQuestionsData(res.data);
-      const newQuestionsData = [...questionsData];
+      // const newQuestionsData = [...questionsData];
+      const newQuestionsData = [];
+
       res.data.result.questions.forEach((question) => {
         question._id = uuidv4();
         newQuestionsData.push(question);
