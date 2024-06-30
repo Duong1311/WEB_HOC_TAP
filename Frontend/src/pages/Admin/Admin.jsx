@@ -181,7 +181,7 @@ export default function Admin() {
               }}
             >
               <CircularProgress />
-              <Typography>Loading Board...</Typography>
+              <Typography>Đang tải...</Typography>
             </Box>
           )}
           {courses.length === 0 && !isLoading && (

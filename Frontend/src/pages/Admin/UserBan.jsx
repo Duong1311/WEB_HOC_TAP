@@ -153,7 +153,7 @@ export default function Admin() {
               }}
             >
               <CircularProgress />
-              <Typography>Loading Board...</Typography>
+              <Typography>Đang tải...</Typography>
             </Box>
           )}
           {userInfors.length === 0 && !isLoading && (

@@ -23,7 +23,7 @@ export default function Header() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
 
   const accessToken = user?.accessToken;
-  console.log(accessToken);
+  console.log("accessToken", accessToken);
   const id = user?._id;
   const isAdmin = user?.admin;
   // console.log(isAdmin);

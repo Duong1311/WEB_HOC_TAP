@@ -18,6 +18,10 @@ export default function Reset() {
       toast.error("Mật khẩu không khớp");
       return;
     }
+    if (newPassword.length < 6) {
+      toast.error("Mật khẩu phải có ít nhất 6 ký tự");
+      return;
+    }
     try {
       const res = await recoverPassword(email, newPassword);
       if (res.data.error) {

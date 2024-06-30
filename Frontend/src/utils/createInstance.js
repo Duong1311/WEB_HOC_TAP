@@ -4,11 +4,13 @@ import axios from "axios";
 // axios.defaults.withCredentials = true;
 import { jwtDecode } from "jwt-decode";
 axios.defaults.withCredentials = true;
-export const URL = "https://api.gptacademy.io.vn/api/";
+// export const URL = "https://api.gptacademy.io.vn/api/";
+export const URL = "http://localhost:3000/api/";
+
 const refreshToken = async () => {
   try {
     console.log("refresh token");
-    const res = await axios.post(`${URL}/auth/refresh`, {
+    const res = await axios.post(`${URL}auth/refresh`, {
       withCredentials: true,
     });
 
