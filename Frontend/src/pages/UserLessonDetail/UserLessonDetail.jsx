@@ -20,6 +20,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 
 export default function UserLessonDetail() {
   // const [nextId, setNextId] = useState("");
+
   const user = useSelector((state) => state.root.auth.login.currentUser);
   const userId = user?._id;
   const { id } = useParams();
@@ -28,7 +29,10 @@ export default function UserLessonDetail() {
   const [displayEditor, setDisplayEditor] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
+  if (!user) {
+    toast.error("Vui lòng đăng nhập để xem nội dung");
+    navigate("/login");
+  }
   const toggleDisplayEditor = () => {
     setDisplayEditor(true);
     setDisplayQuestion(false);

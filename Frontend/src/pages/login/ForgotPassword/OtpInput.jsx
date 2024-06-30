@@ -53,10 +53,10 @@ export default function OtpInput() {
         <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
           <div className="flex flex-col items-center justify-center text-center space-y-2">
             <div className="font-semibold text-3xl">
-              <p>Email Verification</p>
+              <p>Email xác thực</p>
             </div>
             <div className="flex flex-row text-sm font-medium text-gray-400">
-              <p>We have sent a code to your email {email}</p>
+              <p>Chúng tôi đã gửi mã tới email của bạn {email}</p>
             </div>
           </div>
 
@@ -140,12 +140,12 @@ export default function OtpInput() {
                       onClick={() => verfiyOTP()}
                       className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
                     >
-                      Verify Account
+                      Xác nhận tài khoản
                     </a>
                   </div>
 
                   <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                    <p>Didnt recieve code?</p>{" "}
+                    <p>Bạn chưa nhận được mã?</p>{" "}
                     <a
                       className="flex flex-row items-center"
                       style={{
@@ -155,7 +155,7 @@ export default function OtpInput() {
                       }}
                       onClick={() => resendOTP()}
                     >
-                      {disable ? `Resend OTP in ${timerCount}s` : "Resend OTP"}
+                      {disable ? `Gửi lại OTP ${timerCount}s` : "Gửi lại OTP"}
                     </a>
                   </div>
                 </div>

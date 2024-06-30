@@ -113,7 +113,7 @@ function ListChapters({
         ) : (
           <div className="w-full bg-gray-200 p-2 rounded-md h-fit flex flex-col gap-1">
             <TextField
-              label="Enter chapter title..."
+              label="Nhập tên chương"
               type="text"
               size="small"
               variant="outlined"

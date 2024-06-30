@@ -126,7 +126,7 @@ export default function GvHeader() {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           <MenuItem onClick={handleClose}>
-            <Avatar /> Profile
+            <Avatar /> Thông tin cá nhân
           </MenuItem>
 
           <Divider />
@@ -135,7 +135,7 @@ export default function GvHeader() {
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            Logout
+            Đăng xuất
           </MenuItem>
         </Menu>
       </div>

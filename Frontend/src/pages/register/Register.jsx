@@ -47,7 +47,7 @@ export default function Register() {
               <div className="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
                 <div className="bg-white px-8 py-6 max-w-md">
                   <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">
-                    Register
+                    Đăng ký
                   </h1>
                   {/* <div className="mt-5">
                     <button className="w-full text-center py-2 my-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">

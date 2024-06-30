@@ -197,8 +197,7 @@ export default function Header() {
                 <div className="w-full h-full">
                   <Link to={`/userprofile/${id}`}>
                     <MenuItem onClick={handleClose}>
-                      <Avatar />{" "}
-                      <div className="max-w-[100px]">{user?.username}</div>
+                      <Avatar /> Thông tin cá nhân
                     </MenuItem>
                   </Link>
                   <Link to={`/usercoursestudys/${id}`}>
@@ -225,7 +224,7 @@ export default function Header() {
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
-                Logout
+                Đăng xuất
               </MenuItem>
             </Menu>
           </div>

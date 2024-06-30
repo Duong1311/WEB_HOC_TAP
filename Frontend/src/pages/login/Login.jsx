@@ -3,17 +3,25 @@ import { useState } from "react";
 import { loginUser, loginUserGoogle } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 import { GoogleLogin } from "@react-oauth/google";
+import validator from "email-validator";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(validator.validate("test@email.com"));
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if (!validator.validate(username)) {
+      toast.error("Email không hợp lệ");
+      return;
+    }
+
     const newUser = {
-      username: username,
+      email: username,
       password: password,
     };
     loginUser(newUser, dispatch, navigate);
@@ -74,7 +82,7 @@ export default function Login() {
                         // for="email"
                         className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                       >
-                        Tên đăng nhập
+                        Email
                       </label>
                       <input
                         onChange={(e) => {
@@ -83,9 +91,8 @@ export default function Login() {
                         type="text"
                         id="username"
                         className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Tên đăng nhập"
+                        placeholder="Email"
                         required
-                        maxLength={20}
                       />
                     </div>
                     <div className="mb-4">

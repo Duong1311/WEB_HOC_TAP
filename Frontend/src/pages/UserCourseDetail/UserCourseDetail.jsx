@@ -7,7 +7,7 @@ import {
   getRatingByCourseId,
   publicCourse,
 } from "~/services/courseServices";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { mapOrder } from "~/utils/sorts";
 import draftToHtml from "draftjs-to-html";
 import HeaderCourse from "./FixedOnScroll/HeaderCourse";
@@ -171,9 +171,11 @@ export default function UserCourseDetail() {
             </div>
             <div className="flex flex-row items-center">
               <div className="text-white text-sm">Giáo viên: </div>
-              <div className="text-blue-300 text-lg ml-2">
-                {course?.Users[0]?.username || "tác giả"}
-              </div>
+              <Link to={`/gvdetail/${course?.Users[0]?._id}`}>
+                <div className="text-blue-300 text-lg ml-2">
+                  {course?.Users[0]?.username || "tác giả"}
+                </div>
+              </Link>
             </div>
             <div className="flex flex-row gap-2">
               <div className="text-white text-sm">Thời gian cập nhật:</div>

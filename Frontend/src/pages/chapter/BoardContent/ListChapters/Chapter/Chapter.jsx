@@ -193,7 +193,7 @@ function Chapter({
                     <ListItemIcon>
                       <DeleteForeverIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText>Delete</ListItemText>
+                    <ListItemText>Xóa</ListItemText>
                     <Typography variant="body2" color="text.secondary">
                       ⌘X
                     </Typography>
@@ -202,7 +202,7 @@ function Chapter({
                     <ListItemIcon>
                       <ContentCut fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText>Update</ListItemText>
+                    <ListItemText>Sửa</ListItemText>
                     <Typography variant="body2" color="text.secondary">
                       ⌘X
                     </Typography>
@@ -235,7 +235,7 @@ function Chapter({
                     bgcolor: "rgb(25, 118, 210)",
                   }}
                 >
-                  Update
+                  Sửa
                 </Button>
                 <div>
                   <CloseIcon
@@ -277,7 +277,7 @@ function Chapter({
           ) : (
             <div className="flex flex-row w-full items-center mt-1">
               <TextField
-                label="Enter chapter title..."
+                label="Tên bài học"
                 type="text"
                 size="small"
                 variant="outlined"
@@ -299,7 +299,7 @@ function Chapter({
                     bgcolor: "rgb(25, 118, 210)",
                   }}
                 >
-                  Add
+                  Thêm
                 </Button>
                 <CloseIcon
                   fontSize="small"

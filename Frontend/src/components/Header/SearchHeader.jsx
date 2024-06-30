@@ -224,7 +224,7 @@ export default function SearchHeader() {
                 <div className="w-full h-full">
                   <Link to={`/userprofile/${id}`}>
                     <MenuItem onClick={handleClose}>
-                      <Avatar /> Profile
+                      <Avatar /> Thông tin cá nhân
                     </MenuItem>
                   </Link>
                   <Link to={`/usercoursestudys/${id}`}>
@@ -251,7 +251,7 @@ export default function SearchHeader() {
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
-                Logout
+                Đăng xuất
               </MenuItem>
             </Menu>
           </div>
