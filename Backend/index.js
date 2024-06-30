@@ -35,7 +35,7 @@ app.use("/api/course", courseRoutes);
 app.use("/api/openai", openaiRoutes);
 
 // xu ly loi tap trung
-app.use(errorHandlingMiddleware);
+// app.use(errorHandlingMiddleware);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
