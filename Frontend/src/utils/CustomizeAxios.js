@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000/api/",
+  // baseURL: "http://localhost:3000/api/",
+  baseURL: "https://datn-web-hoc-tap.vercel.app/api/",
+
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

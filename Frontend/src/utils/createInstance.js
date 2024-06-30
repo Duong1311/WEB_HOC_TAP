@@ -4,10 +4,11 @@ import axios from "axios";
 // axios.defaults.withCredentials = true;
 import { jwtDecode } from "jwt-decode";
 axios.defaults.withCredentials = true;
+export const URL = "https://datn-web-hoc-tap.vercel.app/api/";
 const refreshToken = async () => {
   try {
     console.log("refresh token");
-    const res = await axios.post("http://localhost:3000/api/auth/refresh", {
+    const res = await axios.post(`${URL}/auth/refresh`, {
       withCredentials: true,
     });
 

@@ -11,14 +11,12 @@ import {
   logOutFailed,
 } from "./authSlice";
 import { toast } from "react-toastify";
+import { URL } from "~/utils/createInstance";
 
 export const loginUserGoogle = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
-    const res = await axios.post(
-      "http://localhost:3000/api/auth/google-auth",
-      user
-    );
+    const res = await axios.post(`${URL}auth/google-auth`, user);
 
     if (res.data.status === false) {
       toast.error("Tài khoản của bạn đã bị khóa");
@@ -45,7 +43,7 @@ export const loginUserGoogle = async (user, dispatch, navigate) => {
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
-    const res = await axios.post("http://localhost:3000/api/auth/login", user);
+    const res = await axios.post(`${URL}auth/login`, user);
 
     if (res.data.error) {
       toast.error(res.data.error);
@@ -78,10 +76,7 @@ export const loginUser = async (user, dispatch, navigate) => {
 export const registerUser = async (user, dispatch, navigate) => {
   dispatch(registerStart());
   try {
-    const res = await axios.post(
-      "http://localhost:3000/api/auth/register",
-      user
-    );
+    const res = await axios.post(`${URL}auth/register`, user);
     if (res.data.error) {
       toast.error(res.data.error);
       dispatch(registerFailure());
@@ -101,7 +96,7 @@ export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
   dispatch(logOutStart());
   try {
     console.log("logout api");
-    await axiosJWT.post("http://localhost:3000/api/auth/logout", id, {
+    await axiosJWT.post(`${URL}auth/logout`, id, {
       headers: { token: `Bearer ${accessToken}` },
     });
     dispatch(logOutSuccess());
