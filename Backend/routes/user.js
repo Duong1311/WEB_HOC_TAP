@@ -2,10 +2,7 @@
 const userControllers = require("../controllers/userControllers");
 // const user = require("../model/user");
 const multer = require("multer");
-const storage1 = multer.diskStorage({
-  destination: function (req, file, cb) {
-    return cb(null, "./public/Images");
-  },
+const storage1 = multer.memoryStorage({
   filename: function (req, file, cb) {
     return cb(null, `${Date.now()}_${file.originalname}`);
   },

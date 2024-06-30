@@ -28,7 +28,7 @@ export default function Home() {
     try {
       const res = await getAllCategory();
       console.log(res.data);
-      setCategory(res.data);
+      setCategory(res.data.slice(0, 10));
     } catch (error) {
       console.log(error.message);
     }

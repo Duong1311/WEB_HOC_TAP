@@ -4,10 +4,7 @@ const courseValidation = require("../validations/courseValidation");
 const courseController = require("../controllers/courseControllers");
 const multer = require("multer");
 // const { upload } = require("../utils/multerStore");
-const storage1 = multer.diskStorage({
-  destination: function (req, file, cb) {
-    return cb(null, "./public/Images");
-  },
+const storage1 = multer.memoryStorage({
   filename: function (req, file, cb) {
     return cb(null, `${Date.now()}_${file.originalname}`);
   },

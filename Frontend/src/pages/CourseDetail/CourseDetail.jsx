@@ -15,10 +15,11 @@ import {
 } from "~/services/courseServices";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 export default function CourseDetail() {
   const { id } = useParams();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [editorState, setEditorState] = useState(null);
   const [dataUpdate, setDataUpdate] = useState("");
   const [courseCategory, setCourseCategory] = useState("");
@@ -119,6 +120,7 @@ export default function CourseDetail() {
       const initialState = EditorState.createWithContent(contentState);
       // Set the initial state of the editor
       setEditorState(initialState);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -128,6 +130,23 @@ export default function CourseDetail() {
     getCategories();
     getCourseDetailApi(id);
   }, [id]);
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+        <Typography>Đang tải...</Typography>
+      </Box>
+    );
+  }
 
   return (
     <div className="flex flex-col bg-neutral-100 pb-10">

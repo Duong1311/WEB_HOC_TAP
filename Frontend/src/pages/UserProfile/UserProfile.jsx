@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getUserInfor, updateUserInfor } from "~/services/userServices";
 import ChangePass from "./ChangePass/ChangePass";
 import { toast } from "react-toastify";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 export default function UserProfile() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
@@ -13,6 +14,7 @@ export default function UserProfile() {
   const [avatar, setAvatar] = useState("1");
   const [showModal, setShowModal] = useState(false);
   const id = user?._id;
+  const [isLoading, setIsLoading] = useState(true);
   const getUserData = async (id) => {
     try {
       const res = await getUserInfor(id);
@@ -21,6 +23,7 @@ export default function UserProfile() {
       setDescription(res?.data?.description);
       setAvatar(res?.data?.imageId);
       console.log(res.data.imageId);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +52,23 @@ export default function UserProfile() {
   useEffect(() => {
     getUserData(id);
   }, [id]);
-
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+        <Typography>Đang tải...</Typography>
+      </Box>
+    );
+  }
   return (
     <div className="w-full flex justify-center  bg-gray-100">
       <div className="w-10/12 my-10 bg-white p-4 rounded-md">

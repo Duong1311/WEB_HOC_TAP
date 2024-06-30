@@ -62,7 +62,10 @@ const courseService = {
     const courses = await Courses.find(matchQuery)
       .skip((page - 1) * limit)
       .limit(limit)
-      .populate("categoryId");
+      .populate("categoryId")
+      .populate("userId")
+      .select("-entityMap -blocks");
+
     return { courses, totalPage, totalCourses };
   },
   searchCourse: async (query) => {
@@ -91,7 +94,8 @@ const courseService = {
         .skip((page - 1) * limit)
         .limit(limit)
         .populate("userId")
-        .populate("categoryId");
+        .populate("categoryId")
+        .select("-entityMap -blocks");
       // console.log("course", courses);
       return { courses, totalPage, totalCourses };
     } catch (error) {
@@ -163,7 +167,9 @@ const courseService = {
   getAllCourses: async () => {
     const courses = await Courses.find({ public: true })
       .populate("userId")
-      .populate("categoryId");
+      .populate("categoryId")
+      .select("-entityMap -blocks");
+
     return courses;
   },
   getCourseDetail: async (id) => {
@@ -384,9 +390,10 @@ const courseService = {
   },
   getAllCourseCreate: async (id) => {
     try {
-      const courseDetails = await Courses.find({ userId: id }).populate(
-        "categoryId"
-      );
+      const courseDetails = await Courses.find({ userId: id })
+        .populate("categoryId")
+        .select("-entityMap -blocks");
+
       return courseDetails;
     } catch (error) {
       throw error;

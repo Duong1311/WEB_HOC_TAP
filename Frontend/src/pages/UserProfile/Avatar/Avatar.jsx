@@ -160,7 +160,10 @@ const Cropper = () => {
         <div className="img-container rounded-full border border-black">
           {user?.imageId ? (
             <img
-              src={"https://drive.google.com/thumbnail?id=" + user?.imageId}
+              src={
+                preview ||
+                "https://drive.google.com/thumbnail?id=" + user?.imageId
+              }
               // src={"https://drive.google.com/thumbnail?id=" + avatar}
               alt=""
               width="200"

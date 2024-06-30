@@ -44,12 +44,6 @@ const authControllers = {
           error: "Email đã tồn tại",
         });
       }
-      const user2 = await User.findOne({ username: req.body.username });
-      if (user2) {
-        return res.status(201).json({
-          error: "Tên đăng nhập đã tồn tại",
-        });
-      }
 
       //create new user
       const newUser = await new User({
@@ -70,7 +64,7 @@ const authControllers = {
     try {
       console.log("login");
       console.log(req.body);
-      const user = await User.findOne({ username: req.body.username });
+      const user = await User.findOne({ email: req.body.email });
       if (!user)
         return res.status(201).json({
           error: "Không tìm thấy tài khoản",
