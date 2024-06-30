@@ -37,9 +37,7 @@ export default function SearchHeader() {
   const open = Boolean(anchorEl);
   const [searchParams, setSearchParams] = useSearchParams();
   const title = new URLSearchParams(location.search).get("search");
-  if (!user) {
-    navigate("/login");
-  }
+
   const [message, setMessage] = useState(title || "");
   const handleChange = (event) => {
     setMessage(event.target.value);
