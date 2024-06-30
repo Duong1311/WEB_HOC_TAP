@@ -25,11 +25,19 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
     >
       <div className="flex flex-row">
         <div>
-          <img
-            className="object-cover min-w-60 max-w-60 max-h-40 min-h-40"
-            src={"https://drive.google.com/thumbnail?id=" + course?.imageId}
-            alt=""
-          />
+          {!course?.imageId ? (
+            <img
+              className="object-cover min-w-60 max-w-60 max-h-40 min-h-40"
+              src={"https://s.udemycdn.com/course/200_H/placeholder.jpg"}
+              alt=""
+            />
+          ) : (
+            <img
+              className="object-cover min-w-60 max-w-60 max-h-40 min-h-40"
+              src={"https://drive.google.com/thumbnail?id=" + course?.imageId}
+              alt=""
+            />
+          )}
         </div>
         <div className="ml-4 flex items-center ">
           <div className="flex flex-col space-y-2">
