@@ -4,7 +4,7 @@ import axios from "axios";
 // axios.defaults.withCredentials = true;
 import { jwtDecode } from "jwt-decode";
 axios.defaults.withCredentials = true;
-export const URL = "https://datn-web-hoc-tap.vercel.app/api/";
+export const URL = "https://api.gptacademy.io.vn/api/";
 const refreshToken = async () => {
   try {
     console.log("refresh token");

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   // baseURL: "http://localhost:3000/api/",
-  baseURL: "https://datn-web-hoc-tap.vercel.app/api/",
+  baseURL: "https://api.gptacademy.io.vn/api/",
 
   timeout: 10000,
   headers: {
