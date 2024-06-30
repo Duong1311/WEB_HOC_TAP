@@ -16,6 +16,7 @@ import {
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import handlePastedText from "~/utils/pasteText";
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -238,6 +239,7 @@ export default function CourseDetail() {
                   <Editor
                     editorState={editorState}
                     onEditorStateChange={handleOnChange}
+                    handlePastedText={handlePastedText}
                     placeholder="Viết mô tả khóa học của bạn ở đây..."
                     toolbar={{
                       options: [

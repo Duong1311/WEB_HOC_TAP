@@ -92,6 +92,7 @@ export default function CourseLesson() {
 
     //get next lesson id
     const nextLessonId = lessonArray[index + 1];
+    if (!nextLessonId) return;
 
     navigate(`/CourseLesson/${nextLessonId}`);
     window.location.reload();
@@ -103,6 +104,7 @@ export default function CourseLesson() {
     const index = lessonArray.indexOf(id);
     //get previous lesson id
     const previousLessonId = lessonArray[index - 1];
+    if (!previousLessonId) return;
 
     navigate(`/CourseLesson/${previousLessonId}`);
     window.location.reload();
@@ -192,7 +194,7 @@ export default function CourseLesson() {
           <ol className="flex space-x-2">
             <li>
               <Link to="/gvhome">
-                <div className="after:content-['/'] after:ml-2 text-gray-600 hover:text-blue-700 max-w-[200px] truncate ">
+                <div className=" after:ml-2 text-gray-600 hover:text-blue-700 max-w-[200px] truncate ">
                   {lesson?.courseId?.title}
                 </div>
               </Link>

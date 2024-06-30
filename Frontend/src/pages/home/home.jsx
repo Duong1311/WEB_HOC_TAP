@@ -1,4 +1,10 @@
-import { Pagination, Stack } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
@@ -10,6 +16,7 @@ export default function Home() {
   const [categories, setCategory] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
   const handleChange = (event) => {
@@ -61,11 +68,7 @@ export default function Home() {
       console.log(res.data);
       setTotalPage(res.data.totalPage);
       setCourses(res.data.courses);
-
-      // if (res.status === 200) {
-      //   setCourseSearch(res.data.courses);
-      //   setTotalPage(res.data.totalPage);
-      // }
+      setIsLoading(false);
     } catch (error) {
       console.log("error", error);
     }
@@ -84,6 +87,24 @@ export default function Home() {
     // getAllcoursesData();
     getCategories();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+        <Typography>Đang tải...</Typography>
+      </Box>
+    );
+  }
   return (
     <div className=" w-full flex flex-col  items-center ">
       <div className="relative ">
@@ -194,13 +215,13 @@ export default function Home() {
                       <div className="flex flex-row gap-2 ">
                         <Rating
                           disableFillHover={true}
-                          initialValue={data?.totalRating || 5}
+                          initialValue={data?.totalRating || 0}
                           size={20}
                           SVGstyle={{ display: "inline" }}
                           allowFraction={true}
                           className="float-left"
                         />
-                        <div className="text-yellow-600">
+                        <div className="text-yellow-600 mt-[1px]">
                           {data?.totalRating.toFixed(1) || 5}
                         </div>
                       </div>

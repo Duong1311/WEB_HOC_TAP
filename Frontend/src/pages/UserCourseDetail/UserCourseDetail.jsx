@@ -112,8 +112,8 @@ export default function UserCourseDetail() {
       setOrderedchapters(
         mapOrder(course?.chapters, course?.chapterOrderIds, "_id")
       );
+      setIsLoading(false);
     });
-    setIsLoading(false);
 
     getRatingData(id, page, 4);
   }, []);

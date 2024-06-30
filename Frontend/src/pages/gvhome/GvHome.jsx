@@ -175,7 +175,7 @@ export default function GvHome() {
               }}
             >
               <CircularProgress />
-              <Typography>Loading Board...</Typography>
+              <Typography>Đang tải...</Typography>
             </Box>
           )}
           {courses.length === 0 && !isLoading && (
