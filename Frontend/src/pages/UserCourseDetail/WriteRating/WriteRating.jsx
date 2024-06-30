@@ -19,6 +19,9 @@ export default function WriteRating({ addRating }) {
   };
   const handleRating = async () => {
     try {
+      if (!ratingComment.trim()) {
+        return toast.error("Đánh giá không được để trống");
+      }
       const res = await createRating({
         userId: userId,
         courseId: id,

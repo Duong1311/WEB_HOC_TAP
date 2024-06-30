@@ -14,7 +14,7 @@ export default function UserDoQuestion() {
   const [showGuide, setShowGuide] = useState(true);
 
   const handleCreateLessonQuestionsByOpenAi = async () => {
-    if (!questionAi) {
+    if (!questionAi.trim()) {
       return toast.error("Chủ đề không được để trống");
     }
     if (!number) {
