@@ -106,6 +106,13 @@ const courseService = {
     try {
       //delete course
       await Courses.deleteOne({ _id: id });
+      //delete all chapters in course
+      await Chapters.deleteMany({ courseId: id });
+      //delete all lessons in course
+      await Lessons.deleteMany({ courseId: id });
+      //delete all ratings in course
+      await Ratings.deleteMany({ courseId: id });
+
       return { message: "Xóa khóa học thành công" };
     } catch (error) {
       throw error;
@@ -258,8 +265,31 @@ const courseService = {
   },
   deleteLesson: async (id) => {
     try {
+      console.log(id);
+      const lessonDelete = await Lessons.findOne({ _id: id });
+      if (!lessonDelete) {
+        return { message: "Không tìm thấy bài học" };
+      }
+
       //delete lesson
       await Lessons.deleteOne({ _id: id });
+      //delete all questions in lesson
+      await Questions.deleteMany({ lessonId: id });
+      // delete lesson in chapter
+
+      const res = await Chapters.findOneAndUpdate(
+        { _id: lessonDelete.chapterId },
+        {
+          $pull: {
+            lessonOrderIds: id,
+          },
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+      // console.log(res);
+
       return { message: "Xóa bài học thành công" };
     } catch (error) {
       throw error;
