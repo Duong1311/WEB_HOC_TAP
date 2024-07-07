@@ -286,6 +286,13 @@ const userService = {
     if (isMatch) {
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(data.newPassword, salt);
+      // //if new password is the same as old password
+      // if (user.password === hashed) {
+      //   return {
+      //     status: 200,
+      //     message: "Mật khẩu mới không được trùng với mật khẩu cũ",
+      //   };
+      // }
       console.log(hashed);
       const updateUserPassword = await User.findOneAndUpdate(
         { _id: id },

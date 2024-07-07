@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Button } from "@mui/material";
+import { set } from "lodash";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -30,6 +31,8 @@ export default function WriteRating({ addRating }) {
       });
 
       addRating();
+      setRating(0);
+      setRatingComment("");
       toast.success("Đánh giá thành công");
     } catch (error) {
       console.log(error);

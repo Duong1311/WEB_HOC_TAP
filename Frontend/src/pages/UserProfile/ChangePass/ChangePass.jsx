@@ -9,8 +9,20 @@ export default function ChangePass({ setShowModal, id }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const updateUser = async () => {
     try {
-      if (password === "" || newPassword === "" || confirmPassword === "") {
+      if (
+        password.trim() === "" ||
+        newPassword.trim() === "" ||
+        confirmPassword.trim() === ""
+      ) {
         toast.error("Vui lòng điền đầy đủ thông tin");
+        return;
+      }
+      if (newPassword.length < 6) {
+        toast.error("Mật khẩu phải lớn hơn 6 ký tự");
+        return;
+      }
+      if (newPassword === password) {
+        toast.error("Mật khẩu mới không được trùng với mật khẩu cũ");
         return;
       }
       if (newPassword !== confirmPassword) {
