@@ -54,6 +54,9 @@ const openaiService = {
           { role: "user", content: prompt },
         ],
         model: "gpt-3.5-turbo-0125",
+        // max_tokens: 100,
+        temperature: 0.2,
+        top_p: 0.8,
         response_format: { type: "json_object" },
       });
       const parsableJSONresponse = completion.choices[0].message.content;

@@ -48,7 +48,7 @@ export default function UserCourseDetail() {
   const getRatingData = async (id, page, limit) => {
     try {
       const res = await getRatingByCourseId(id, page, limit);
-      console.log(res.data);
+      console.log("rating", res.data);
       setAllRating(res.data);
     } catch (error) {
       console.log(error);
@@ -216,7 +216,7 @@ export default function UserCourseDetail() {
                     ))}
                 </div>
 
-                {allRating?.rating?.length > 3 && (
+                {allRating?.totalPages > 1 && (
                   <div className="w-full flex justify-center mt-3">
                     <Stack spacing={2}>
                       <Pagination
