@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+// import Markdown from "react-markdown";
 
 /* eslint-disable react/prop-types */
 export default function UserLessonContent({ markdown }) {
@@ -37,6 +38,7 @@ export default function UserLessonContent({ markdown }) {
       </style>
 
       <div ref={contentRef} dangerouslySetInnerHTML={{ __html: markdown }} />
+      {/* <Markdown>{markdown}</Markdown> */}
     </div>
   );
 }

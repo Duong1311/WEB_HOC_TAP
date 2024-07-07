@@ -17,6 +17,7 @@ import { addCourseToHistoryApi } from "~/services/userServices";
 import PublicButton from "~/components/PublicButton/PublicButton";
 import { toast } from "react-toastify";
 import { Box, CircularProgress, Typography } from "@mui/material";
+// import draftToMarkdown from "draftjs-to-markdown";
 
 export default function UserLessonDetail() {
   // const [nextId, setNextId] = useState("");
@@ -77,6 +78,10 @@ export default function UserLessonDetail() {
       };
 
       setMarkdown(draftToHtml(a));
+      // setMarkdown(draftToMarkdown(a));
+
+      // const markdown1 = draftToMarkdown(a);
+      // console.log("markdown1", markdown1);
 
       addCourseToHistory(userId, res?.data?.courseId?._id);
       setIsLoading(false);
@@ -122,7 +127,10 @@ export default function UserLessonDetail() {
     //get chapter data api
     const res = await getChapterData(nextChapterId);
     const lessonOrderIds = res?.data?.lessonOrderIds;
+
     const firstLessonId = lessonOrderIds[0];
+    console.log("firstLessonId", firstLessonId);
+    if (!firstLessonId) return;
     navigate(`/userlessondetail/${firstLessonId}`);
     window.location.reload();
   };

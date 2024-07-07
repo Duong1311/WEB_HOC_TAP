@@ -121,8 +121,15 @@ export default function CourseLesson() {
     //get first lesson id of next chapter
     //get chapter data api
     const res = await getChapterData(nextChapterId);
+    console.log("res", res.data);
+
     const lessonOrderIds = res?.data?.lessonOrderIds;
+    // if (!lessonOrderIds == []) return;
     const firstLessonId = lessonOrderIds[0];
+    // console.log("firstLessonId", firstLessonId);
+
+    if (!firstLessonId) return;
+
     navigate(`/CourseLesson/${firstLessonId}`);
     window.location.reload();
   };
