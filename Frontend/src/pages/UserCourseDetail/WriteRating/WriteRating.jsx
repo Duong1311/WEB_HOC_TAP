@@ -64,6 +64,7 @@ export default function WriteRating({ addRating }) {
               name="body"
               placeholder="Đánh giá của bạn"
               required
+              value={ratingComment}
               onChange={(e) => setRatingComment(e.target.value)}
             />
           </div>
