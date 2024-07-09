@@ -18,6 +18,9 @@ export default function Admin() {
   if (!user) {
     navigate("/login");
   }
+  if (user?.admin === false) {
+    navigate("/");
+  }
   //   const id = user?._id;
   // console.log(id);
 

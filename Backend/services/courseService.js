@@ -19,8 +19,33 @@ const courseService = {
     return chapterData;
   },
   deleteRating: async (id) => {
+    //
+    const rating = await Ratings.findOne({ _id: id });
+    console.log(rating);
+    // update rating count, total rating in course
+    const course = await Courses.findOne({ _id: rating.courseId });
+    if (course) {
+      const newRatingCount = course.ratingCount - 1;
+      const newTotalRating =
+        (course.totalRating * course.ratingCount - rating.rating) /
+        newRatingCount;
+      const res = await Courses.findOneAndUpdate(
+        { _id: rating.courseId },
+        {
+          $set: {
+            totalRating: newTotalRating,
+            ratingCount: newRatingCount,
+          },
+        },
+        {
+          returnDocument: "after",
+        }
+      );
+    }
+
     //delete rating by id
     await Ratings.findByIdAndDelete(id);
+
     return {
       status: 200,
       message: "Xóa đánh giá thành công",
