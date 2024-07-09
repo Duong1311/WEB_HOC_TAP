@@ -120,7 +120,7 @@ export default function Home() {
           alt=""
         /> */}
 
-        <div className="h-[560px] w-screen bg-gradient-to-r from-cyan-700 via-blue-500 to-indigo-600"></div>
+        <div className="h-[460px] w-screen bg-gradient-to-r from-cyan-700 via-blue-500 to-indigo-600"></div>
         <div className="absolute mx-auto my-auto top-11 left-0 right-0 text-center  text-white">
           <div className="flex flex-col space-y-10 justify-center items-center">
             <div>

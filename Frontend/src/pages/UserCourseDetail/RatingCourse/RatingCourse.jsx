@@ -107,7 +107,7 @@ export default function RatingCourse({ data, getRatingData }) {
                   <ListItemIcon>
                     <DeleteForeverIcon fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText>Delete</ListItemText>
+                  <ListItemText>Xóa</ListItemText>
                   <Typography variant="body2" color="text.secondary">
                     ⌘X
                   </Typography>

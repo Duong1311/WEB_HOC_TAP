@@ -159,7 +159,7 @@ const userService = {
     );
     return {
       status: 200,
-      message: "Khóa tài khoản thành công",
+      message: "Chuyển trạng thái tài khoản thành công",
       data: blockUser,
     };
   },

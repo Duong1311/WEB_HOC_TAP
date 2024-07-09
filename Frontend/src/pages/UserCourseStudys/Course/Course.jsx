@@ -106,7 +106,7 @@ export default function Course({ data, getCourseStudys }) {
               <ListItemIcon>
                 <DeleteForeverIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText>Delete</ListItemText>
+              <ListItemText>Xóa</ListItemText>
               <Typography variant="body2" color="text.secondary">
                 ⌘X
               </Typography>

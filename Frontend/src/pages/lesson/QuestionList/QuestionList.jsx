@@ -10,6 +10,7 @@ import {
   deleteQuestionApi,
 } from "~/services/courseServices";
 import { toast } from "react-toastify";
+import Guide from "~/pages/UserDoQuestion/Guide/Guide";
 
 export default function QuestionList() {
   const { id } = useParams();
@@ -19,6 +20,7 @@ export default function QuestionList() {
   const [questionAi, setQuestionAi] = useState("");
   const [number, setNumber] = useState(1);
   const [showLoading, setShowLoading] = useState(false);
+  const [showGuide, setShowGuide] = useState(true);
 
   const getLessonQuestionApi = async (id) => {
     try {
@@ -188,7 +190,15 @@ export default function QuestionList() {
     <div className="mb-3">
       <div className="flex flex-col mb-3">
         <div className=" border border-black px-3 py-3">
-          <h1 className="text-xl font-bold">Tạo câu hỏi</h1>
+          <div className="flex flex-row justify-between">
+            <h1 className="text-3xl mb-3 font-bold">Tạo câu hỏi bằng AI</h1>
+            <div
+              onClick={() => setShowGuide(true)}
+              className="bg-blue-700 mb-3  text-white font-extrabold w-8 h-8 rounded-full flex justify-center items-center"
+            >
+              ?
+            </div>
+          </div>
           <div className="w-full flex flex-row items-center">
             <div className="min-w-[100px] font-bold text-xl">Chủ đề:</div>
             <input
@@ -273,6 +283,7 @@ export default function QuestionList() {
           Thêm câu hỏi
         </button>
       </div>
+      {showGuide && <Guide setShowGuide={setShowGuide} />}
     </div>
   );
 }

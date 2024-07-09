@@ -64,6 +64,7 @@ const openaiService = {
       console.log(completion);
       const parsableJSONresponse = completion.choices[0].message.content;
       const parsedResponse = JSON.parse(parsableJSONresponse);
+      console.log(parsedResponse);
       return { result: parsedResponse };
     } catch (err) {
       res.status(500).json(err);
