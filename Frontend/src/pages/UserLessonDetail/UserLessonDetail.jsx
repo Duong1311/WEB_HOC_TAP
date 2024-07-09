@@ -30,10 +30,7 @@ export default function UserLessonDetail() {
   const [displayEditor, setDisplayEditor] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  if (!user) {
-    toast.error("Vui lòng đăng nhập để xem nội dung");
-    navigate("/login");
-  }
+
   const toggleDisplayEditor = () => {
     setDisplayEditor(true);
     setDisplayQuestion(false);
@@ -198,6 +195,10 @@ export default function UserLessonDetail() {
   };
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+      toast.error("Vui lòng đăng nhập để xem nội dung");
+    }
     getLessonContentApi(id);
   }, [id]);
   if (isLoading) {
@@ -218,7 +219,7 @@ export default function UserLessonDetail() {
     );
   }
   return (
-    <div className="min-h-[960px] flex justify-center bg-white">
+    <div className="min-h-[960px] flex justify-center bg-white mb-10">
       <div className="w-10/12  ">
         {/* <div className="flex font-medium text-lg mt-10">
           <div className=" inline-block align-middle ">Khóa học</div>

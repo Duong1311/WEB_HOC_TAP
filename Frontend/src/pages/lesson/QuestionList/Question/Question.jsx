@@ -87,7 +87,7 @@ export default function Question({
               type="number"
               className="w-full px-4 py-3 text-gray-800    focus:outline-none"
               placeholder="Đáp án"
-              value={correct}
+              value={correct || 0}
               onChange={handleCorrectChange}
             />
           </div>

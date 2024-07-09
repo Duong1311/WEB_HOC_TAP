@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
 import Logout from "@mui/icons-material/Logout";
+import { PersonAdd } from "@mui/icons-material";
 
 export default function GvHeader() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
@@ -125,9 +126,19 @@ export default function GvHeader() {
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          <MenuItem onClick={handleClose}>
-            <Avatar /> Thông tin cá nhân
-          </MenuItem>
+          <Link to={`/userprofile/${id}`}>
+            <MenuItem onClick={handleClose}>
+              <Avatar /> Thông tin cá nhân
+            </MenuItem>
+          </Link>
+          <Link to={`/`}>
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <PersonAdd fontSize="small" />
+              </ListItemIcon>
+              Học viên
+            </MenuItem>
+          </Link>
 
           <Divider />
 

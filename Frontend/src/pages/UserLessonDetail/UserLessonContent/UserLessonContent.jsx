@@ -24,6 +24,8 @@ export default function UserLessonContent({ markdown }) {
               margin-left: auto;
               margin-right: auto;
               max-width: 100%;
+              padding-top: 40px;
+              padding-bottom: 40px;
           }
           .center iframe {
               display: block;

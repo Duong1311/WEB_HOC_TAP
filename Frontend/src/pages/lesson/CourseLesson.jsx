@@ -168,7 +168,7 @@ export default function CourseLesson() {
 
   useEffect(() => {
     getLessonContentApi(id);
-  }, []);
+  }, [id]);
 
   if (isLoading) {
     return (

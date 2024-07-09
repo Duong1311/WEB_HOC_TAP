@@ -12,6 +12,7 @@ export default function UserDoQuestion() {
   const [number, setNumber] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [showGuide, setShowGuide] = useState(true);
+  const [showLoading, setShowLoading] = useState(false);
 
   const handleCreateLessonQuestionsByOpenAi = async () => {
     if (!questionAi.trim()) {
@@ -31,6 +32,7 @@ export default function UserDoQuestion() {
   };
   const getLessonQuestionApiByOpenAiApi = async (data) => {
     try {
+      setShowLoading(true);
       const res = await createLessonQuestionByOpenAi(data);
       console.log("questions", res.data.result);
       // setQuestionsData(res.data);
@@ -45,6 +47,7 @@ export default function UserDoQuestion() {
       setQuestionsData(newQuestionsData);
       toast.success("Tạo câu hỏi thành công");
       setShowModal(true);
+      setShowLoading(false);
     } catch (error) {
       console.log("error", error);
       toast.error("Tạo câu hỏi thất bại");
@@ -90,12 +93,29 @@ export default function UserDoQuestion() {
               onChange={(e) => setNumber(e.target.value)}
             />
           </div>
-          <button
-            onClick={handleCreateLessonQuestionsByOpenAi}
-            className=" mt-3 max-w-[5rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
-          >
-            Tạo
-          </button>
+          <div className="flex flex-row items-center">
+            {!showLoading && (
+              <button
+                onClick={handleCreateLessonQuestionsByOpenAi}
+                className=" mt-3 max-w-[5rem] h-10 rounded-lg text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800  px-4 font-sans text-xs font-bold uppercase hover:shadow-lg "
+              >
+                Tạo
+              </button>
+            )}
+
+            {showLoading && (
+              <button
+                type="button"
+                className="bg-blue-700 mt-3 h-10 w-max rounded-lg text-white font-bold hover:bg-blue-800  hover:cursor-not-allowed duration-[500ms,800ms]"
+                disabled
+              >
+                <div className="flex items-center justify-center p-2">
+                  <div className="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4"></div>
+                  <div className="ml-2"> Đang tạo </div>
+                </div>
+              </button>
+            )}
+          </div>
         </div>
         <div className="w-full flex flex-col items-center gap-2">
           {questionsData.map((question, index) => (
