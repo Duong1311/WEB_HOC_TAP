@@ -244,7 +244,7 @@ function Chapter({
                       color: "white",
                       cursor: "pointer",
                       "&:hover": {
-                        color: (theme) => theme.palette.warning.light,
+                        color: "red",
                       },
                     }}
                     onClick={toggleUpdateChapter}
@@ -307,7 +307,7 @@ function Chapter({
                     color: "white",
                     cursor: "pointer",
                     "&:hover": {
-                      color: (theme) => theme.palette.warning.light,
+                      color: "red",
                     },
                   }}
                   onClick={toggleNewLesson}

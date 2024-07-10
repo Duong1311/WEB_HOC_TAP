@@ -133,6 +133,7 @@ function ListChapters({
                   border: "0.5px solid",
                   borderColor: "rgb(25, 118, 210)",
                   bgcolor: "rgb(25, 118, 210)",
+                  uppercase: "none",
                 }}
               >
                 Thêm
@@ -142,7 +143,7 @@ function ListChapters({
                 sx={{
                   color: "white",
                   cursor: "pointer",
-                  "&:hover": { color: (theme) => theme.palette.warning.light },
+                  "&:hover": { color: "red" },
                 }}
                 onClick={toggleNewChapter}
               />

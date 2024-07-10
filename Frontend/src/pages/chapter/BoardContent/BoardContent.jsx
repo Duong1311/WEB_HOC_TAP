@@ -17,8 +17,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { arrayMove } from "@dnd-kit/sortable";
 import Chapter from "./ListChapters/Chapter/Chapter";
 import Lesson from "./ListChapters/Chapter/ListLessons/Lesson/Lesson";
-import { cloneDeep, isEmpty } from "lodash";
-import { generatePlaceholderlesson } from "~/utils/formatters";
+import { cloneDeep } from "lodash";
+// import { generatePlaceholderlesson } from "~/utils/formatters";
 
 const ACTIVE_DRAG_ITEM_TYPE = {
   chapter: "ACTIVE_DRAG_ITEM_TYPE_chapter",
@@ -133,11 +133,11 @@ function BoardContent({
         );
 
         // Thêm Placeholder lesson nếu chapter rỗng: Bị kéo hết lesson đi, không còn cái nào nữa. (Video 37.2)
-        if (isEmpty(nextActivechapter.lessons)) {
-          nextActivechapter.lessons = [
-            generatePlaceholderlesson(nextActivechapter),
-          ];
-        }
+        // if (isEmpty(nextActivechapter.lessons)) {
+        //   nextActivechapter.lessons = [
+        //     generatePlaceholderlesson(nextActivechapter),
+        //   ];
+        // }
 
         // Cập nhật lại mảng lessonOrderIds cho chuẩn dữ liệu
         nextActivechapter.lessonOrderIds = nextActivechapter.lessons.map(
