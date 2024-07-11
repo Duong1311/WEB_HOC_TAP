@@ -1,18 +1,28 @@
 /* eslint-disable react/prop-types */
+import { useConfirm } from "material-ui-confirm";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { deleteCourse } from "~/services/courseServices";
 
 export default function Course({ course, handlePublic, deleteCourseUi }) {
+  const confirm = useConfirm();
+
   const handlePublicClick = () => {
     handlePublic(course._id);
   };
   const handleDeleteCourse = async () => {
     console.log("delete course", course._id);
     try {
-      const res = await deleteCourse(course._id);
-      deleteCourseUi(course._id);
-      toast.success(res.data.message);
+      confirm({
+        title: "Xóa khóa học",
+        description: "Hành động này sẽ xóa khóa học của bạn",
+      })
+        .then(() => {
+          const res = deleteCourse(course._id);
+          deleteCourseUi(course._id);
+          toast.success(res.data.message);
+        })
+        .catch(() => {});
     } catch (error) {
       console.log("error", error);
     }

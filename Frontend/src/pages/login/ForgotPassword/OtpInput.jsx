@@ -12,12 +12,18 @@ export default function OtpInput() {
 
   const email = useSelector((state) => state.loginData.email);
   const otp = useSelector((state) => state.loginData.otp);
+
   const navigate = useNavigate();
+  if (!email) {
+    navigate("/login");
+  }
   const resendOTP = async () => {
     if (disable) return;
     await sendEmailOtp(email, otp)
       .then(() => setDisable(true))
-      .then(() => alert("A new OTP has succesfully been sent to your email."))
+      .then(() =>
+        alert("Một OTP mới đã được gửi thành công đến email của bạn.")
+      )
       .then(() => setTimer(60))
       .catch(console.log);
     console.log("A new OTP has succesfully been sent to your email.");
@@ -29,7 +35,7 @@ export default function OtpInput() {
       return;
     }
     alert(
-      "The code you have entered is not correct, try again or re-send the link"
+      "Mã bạn nhập không chính xác, vui lòng thử lại hoặc gửi lại liên kết"
     );
     return;
   };

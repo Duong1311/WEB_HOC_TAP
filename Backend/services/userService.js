@@ -105,7 +105,7 @@ const userService = {
       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">GPT ACADEMY</a>
     </div>
     <p style="font-size:1.1em">Xin chào,</p>
-    <p>Cảm ơn bạn đã chọn GPT ACADEMY. Sử dụng OTP sau để hoàn tất Quy trình khôi phục mật khẩu của bạn. OTP có hiệu lực trong 5 phút</p>
+    <p>Cảm ơn bạn đã chọn GPT ACADEMY. Sử dụng OTP sau để hoàn tất Quy trình khôi phục mật khẩu của bạn.</p>
     <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${OTP}</h2>
     <p style="font-size:0.9em;">Trân trọng,<br />GPT ACADEMY</p>
     <hr style="border:none;border-top:1px solid #eee" />

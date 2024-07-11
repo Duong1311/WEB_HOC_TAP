@@ -9,6 +9,9 @@ export default function Reset() {
   const [newPassword, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const email = useSelector((state) => state.loginData.email);
+  if (!email) {
+    navigate("/login");
+  }
   const changePassword = async () => {
     if (!newPassword || !confirmPassword) {
       toast.error("Vui lòng điền đầy đủ thông tin");

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useConfirm } from "material-ui-confirm";
 
 function Lesson({ lesson, deleteLessonApi }) {
   const {
@@ -34,8 +35,20 @@ function Lesson({ lesson, deleteLessonApi }) {
     opacity: isDragging ? 0.5 : undefined,
     border: isDragging ? "1px solid #2ecc71" : undefined,
   };
+  // const handleDeleteLesson = () => {
+  //   deleteLessonApi(lesson._id);
+  // };
+  const confirm = useConfirm();
+
   const handleDeleteLesson = () => {
-    deleteLessonApi(lesson._id);
+    confirm({
+      title: "Xóa bài học",
+      description: "Hành động này sẽ xóa bài học của bạn",
+    })
+      .then(() => {
+        deleteLessonApi(lesson._id);
+      })
+      .catch(() => {});
   };
   return (
     <MuiCard

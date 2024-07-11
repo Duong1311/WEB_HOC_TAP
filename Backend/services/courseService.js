@@ -21,27 +21,48 @@ const courseService = {
   deleteRating: async (id) => {
     //
     const rating = await Ratings.findOne({ _id: id });
-    console.log(rating);
     // update rating count, total rating in course
     const course = await Courses.findOne({ _id: rating.courseId });
+    // console.log(course);
     if (course) {
-      const newRatingCount = course.ratingCount - 1;
-      const newTotalRating =
-        (course.totalRating * course.ratingCount - rating.rating) /
-        newRatingCount;
-      const res = await Courses.findOneAndUpdate(
-        { _id: rating.courseId },
-        {
-          $set: {
-            totalRating: newTotalRating,
-            ratingCount: newRatingCount,
+      //if rating count = 1
+      if (course.ratingCount === 1) {
+        console.log("1");
+        await Courses.findOneAndUpdate(
+          { _id: rating.courseId },
+          {
+            $set: {
+              totalRating: 0,
+              ratingCount: 0,
+            },
           },
-        },
-        {
-          returnDocument: "after",
-        }
-      );
+          {
+            returnDocument: "after",
+          }
+        );
+      } else {
+        const newRatingCount = course.ratingCount - 1;
+        //if new
+        const newTotalRating =
+          (course.totalRating * course.ratingCount - rating.rating) /
+          newRatingCount;
+
+        const res = await Courses.findOneAndUpdate(
+          { _id: rating.courseId },
+          {
+            $set: {
+              totalRating: newTotalRating,
+              ratingCount: newRatingCount,
+            },
+          },
+          {
+            returnDocument: "after",
+          }
+        );
+        console.log("update");
+      }
     }
+    console.log("delete rating");
 
     //delete rating by id
     await Ratings.findByIdAndDelete(id);
