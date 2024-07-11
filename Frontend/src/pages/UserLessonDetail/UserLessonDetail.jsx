@@ -98,7 +98,7 @@ export default function UserLessonDetail() {
     if (!nextLessonId) return;
 
     navigate(`/userlessondetail/${nextLessonId}`);
-    window.location.reload();
+    // window.location.reload();
   };
   const handlePreviousLesson = () => {
     //find index of lesson in chapter
@@ -109,7 +109,7 @@ export default function UserLessonDetail() {
     if (!previousLessonId) return;
 
     navigate(`/userlessondetail/${previousLessonId}`);
-    window.location.reload();
+    // window.location.reload();
   };
   const handleNextChapter = async () => {
     //get next chapter id
@@ -129,7 +129,7 @@ export default function UserLessonDetail() {
     console.log("firstLessonId", firstLessonId);
     if (!firstLessonId) return;
     navigate(`/userlessondetail/${firstLessonId}`);
-    window.location.reload();
+    // window.location.reload();
   };
   const handlePreviousChapter = async () => {
     //get next chapter id
@@ -146,7 +146,7 @@ export default function UserLessonDetail() {
     const lessonOrderIds = res?.data?.lessonOrderIds;
     const lastLessonId = lessonOrderIds.pop();
     navigate(`/userlessondetail/${lastLessonId}`);
-    window.location.reload();
+    // window.location.reload();
   };
   const checkButton = (lesson) => {
     const lessonArray = lesson?.chapterId?.lessonOrderIds;

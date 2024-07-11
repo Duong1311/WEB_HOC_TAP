@@ -20,7 +20,7 @@ export default function QuestionList() {
   const [questionAi, setQuestionAi] = useState("");
   const [number, setNumber] = useState(1);
   const [showLoading, setShowLoading] = useState(false);
-  const [showGuide, setShowGuide] = useState(true);
+  const [showGuide, setShowGuide] = useState(false);
 
   const getLessonQuestionApi = async (id) => {
     try {

@@ -85,14 +85,24 @@ export default function GvDetail() {
               {/* <div className="h-[100px]"></div> */}
             </div>
             <div>
-              <img
-                className="object-cover w-52 h-52 rounded-full shadow-md"
-                src={
-                  "https://drive.google.com/thumbnail?id=" +
-                  userDetaill?.imageId
-                }
-                alt=""
-              />
+              {userDetaill?.imageId ? (
+                <img
+                  className="object-cover w-52 h-52 rounded-full shadow-md"
+                  src={
+                    "https://drive.google.com/thumbnail?id=" +
+                    userDetaill?.imageId
+                  }
+                  alt=""
+                />
+              ) : (
+                <img
+                  className="object-cover w-52 h-52 rounded-full shadow-md"
+                  src={
+                    "https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
+                  }
+                  alt=""
+                />
+              )}
             </div>
           </div>
           <div>

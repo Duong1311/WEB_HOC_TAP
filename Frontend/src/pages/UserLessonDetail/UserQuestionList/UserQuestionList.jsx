@@ -26,12 +26,9 @@ export default function UserQuestionList() {
       {questionsData.map((question, index) => (
         <Question key={question._id} index={index} question={question} />
       ))}
-      {/* <button
-        className="bg-blue-500 text-white rounded-md p-2 w-1/4"
-        onClick={handleSubmit}
-      >
-        submit
-      </button> */}
+      {questionsData && (
+        <div className="mt-10">Không có câu hỏi cho bài này</div>
+      )}
     </div>
   );
 }

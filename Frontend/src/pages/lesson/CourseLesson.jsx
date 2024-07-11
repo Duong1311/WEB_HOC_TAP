@@ -11,6 +11,7 @@ import QuestionList from "./QuestionList/QuestionList";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Box, CircularProgress, Typography } from "@mui/material";
+// import { set } from "lodash";
 
 export default function CourseLesson() {
   // const [nextId, setNextId] = useState("");
@@ -45,7 +46,7 @@ export default function CourseLesson() {
   const [displayPreButtonChapter, setDisplayPreButtonChapter] = useState(false);
   const [displayNextButtonChapter, setDisplayNextButtonChapter] =
     useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleDisplayQuestion = () => {
     setDisplayQuestion(true);
@@ -54,6 +55,7 @@ export default function CourseLesson() {
 
   const getLessonContentApi = async (id) => {
     try {
+      setIsLoading(true);
       const res = await getLessonContent(id);
       console.log("getLessonContent", res.data);
       setLesson(res.data);
@@ -95,7 +97,7 @@ export default function CourseLesson() {
     if (!nextLessonId) return;
 
     navigate(`/CourseLesson/${nextLessonId}`);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handlePreviousLesson = () => {
@@ -107,7 +109,7 @@ export default function CourseLesson() {
     if (!previousLessonId) return;
 
     navigate(`/CourseLesson/${previousLessonId}`);
-    window.location.reload();
+    // window.location.reload();
   };
   const handleNextChapter = async () => {
     //get next chapter id
@@ -131,7 +133,7 @@ export default function CourseLesson() {
     if (!firstLessonId) return;
 
     navigate(`/CourseLesson/${firstLessonId}`);
-    window.location.reload();
+    // window.location.reload();
   };
   const handlePreviousChapter = async () => {
     //get next chapter id
@@ -148,7 +150,7 @@ export default function CourseLesson() {
     const lessonOrderIds = res?.data?.lessonOrderIds;
     const lastLessonId = lessonOrderIds.pop();
     navigate(`/CourseLesson/${lastLessonId}`);
-    window.location.reload();
+    // window.location.reload();
   };
   const checkButton = (lesson) => {
     const lessonArray = lesson?.chapterId?.lessonOrderIds;
