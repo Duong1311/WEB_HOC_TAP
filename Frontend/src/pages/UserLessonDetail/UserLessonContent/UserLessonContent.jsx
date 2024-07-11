@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
-// import Markdown from "react-markdown";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import remarkParse from "remark-parse";
+import rehypeHighlight from "rehype-highlight";
 
 /* eslint-disable react/prop-types */
 export default function UserLessonContent({ markdown }) {
@@ -39,8 +43,13 @@ export default function UserLessonContent({ markdown }) {
           `}
       </style>
 
-      <div ref={contentRef} dangerouslySetInnerHTML={{ __html: markdown }} />
-      {/* <Markdown>{markdown}</Markdown> */}
+      {/* <div ref={contentRef} dangerouslySetInnerHTML={{ __html: markdown }} /> */}
+      <Markdown
+        remarkPlugins={[remarkGfm, remarkParse]}
+        rehypePlugins={[rehypeRaw, rehypeHighlight]}
+      >
+        {markdown}
+      </Markdown>
     </div>
   );
 }

@@ -85,7 +85,8 @@ export const registerUser = async (user, dispatch, navigate) => {
 
     if (res.status === 200) {
       dispatch(registerSuccess(res.data));
-      navigate("/");
+      toast.success("Đăng ký thành công");
+      navigate("/login");
     }
   } catch (err) {
     dispatch(registerFailure());

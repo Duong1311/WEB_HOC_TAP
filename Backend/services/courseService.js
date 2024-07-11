@@ -646,6 +646,13 @@ const courseService = {
         }
       );
       console.log(res);
+
+      //delete all questions in lesson in chapter
+      const lessons = await Lessons.find({ chapterId: id });
+      // console.log(lessons);
+      for (const lesson of lessons) {
+        await Questions.deleteMany({ lessonId: lesson._id });
+      }
       //delete chapter
       await Chapters.deleteOne({ _id: id });
 
