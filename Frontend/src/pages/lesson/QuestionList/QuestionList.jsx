@@ -55,7 +55,7 @@ export default function QuestionList() {
       console.log("error", error);
     }
   };
-  const handleCreateLessonQuestions = () => {
+  const handleCreateLessonQuestions = async () => {
     console.log("list questions", questionsData);
     // remove id from answers
     const finalQuestionsData = questionsData.map((question) => ({
@@ -63,8 +63,27 @@ export default function QuestionList() {
       answers: question.answers.map((answer) => answer.answer),
     }));
     console.log("finalQuestionsData", finalQuestionsData);
+    //check if question, answer, ex is empty
+    const check = finalQuestionsData.every((question) => {
+      const isQuestionValid =
+        question.question && question.question.trim() !== "";
+      const areAnswersValid =
+        question.answers &&
+        question.answers.every((answer) => answer && answer.trim() !== "");
+      const isExplanationValid =
+        question.explanation && question.explanation.trim() !== "";
 
-    createLesssonQuestionApi(id, finalQuestionsData);
+      if (!isQuestionValid || !areAnswersValid || !isExplanationValid) {
+        return false;
+      }
+      return true;
+    });
+    if (!check) {
+      return toast.error(
+        "Câu hỏi, câu trả lời, giải thích không được để trống"
+      );
+    }
+    await createLesssonQuestionApi(id, finalQuestionsData);
   };
   const addNewQuestion = () => {
     console.log("add new question");
