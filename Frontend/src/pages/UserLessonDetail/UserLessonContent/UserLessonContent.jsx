@@ -43,13 +43,13 @@ export default function UserLessonContent({ markdown }) {
           `}
       </style>
 
-      {/* <div ref={contentRef} dangerouslySetInnerHTML={{ __html: markdown }} /> */}
-      <Markdown
+      <div ref={contentRef} dangerouslySetInnerHTML={{ __html: markdown }} />
+      {/* <Markdown
         remarkPlugins={[remarkGfm, remarkParse]}
         rehypePlugins={[rehypeRaw, rehypeHighlight]}
       >
         {markdown}
-      </Markdown>
+      </Markdown> */}
     </div>
   );
 }
