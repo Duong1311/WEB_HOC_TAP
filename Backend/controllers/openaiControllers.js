@@ -8,6 +8,7 @@ const openaiController = {
       res.status(StatusCodes.CREATED).json(resResults);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+      console.log(error);
     }
   },
 };

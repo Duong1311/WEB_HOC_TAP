@@ -4,8 +4,9 @@ import axios from "axios";
 // axios.defaults.withCredentials = true;
 import { jwtDecode } from "jwt-decode";
 axios.defaults.withCredentials = true;
-export const URL = "https://api.gptacademy.io.vn/api/";
+// export const URL = "https://api.gptacademy.io.vn/api/";
 // export const URL = "http://localhost:3000/api/";
+export const URL = "https://web-hoc-tap.onrender.com/api/";
 
 const refreshToken = async () => {
   try {
