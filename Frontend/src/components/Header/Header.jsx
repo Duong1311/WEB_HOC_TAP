@@ -131,7 +131,7 @@ export default function Header() {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                 >
-                  {!user?.imageId ? (
+                  {/* {!user?.imageId ? (
                     <Avatar sx={{ width: 38, height: 38 }}>
                       {user?.username.charAt(0).toUpperCase()}
                     </Avatar>
@@ -143,7 +143,10 @@ export default function Header() {
                       }
                       alt=""
                     />
-                  )}
+                  )} */}
+                  <Avatar sx={{ width: 38, height: 38 }}>
+                    {user?.username.charAt(0).toUpperCase()}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
               {/* <div>{user?.username}</div> */}
