@@ -1,31 +1,37 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { loginUser, loginUserGoogle } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 import { GoogleLogin } from "@react-oauth/google";
-import validator from "email-validator";
-import { toast } from "react-toastify";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+// const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+// min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
+
+const LoginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .required("Không được để trống")
+    .email("Email không hợp lệ"),
+  password: yup
+    .string()
+    .required("Không được để trống")
+    .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
+    .max(20, "Mật khẩu không được quá 20 ký tự"),
+  // .matches(passwordRules, { message: "Please create a stronger password" }),
+});
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(validator.validate("test@email.com"));
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(LoginSchema) });
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (!validator.validate(username)) {
-      toast.error("Email không hợp lệ");
-      return;
-    }
-
-    const newUser = {
-      email: username,
-      password: password,
-    };
-    loginUser(newUser, dispatch, navigate);
-    // console.log(res.);
+  const onSubmit = (data) => {
+    loginUser(data, dispatch, navigate);
   };
   const handleLoginGoogle = (credentialResponse) => {
     const newUser = {
@@ -76,7 +82,7 @@ export default function Login() {
                     </p>
                     <hr className="w-full bg-gray-400  " />
                   </div>
-                  <form onSubmit={handleLogin}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4">
                       <label
                         // for="email"
@@ -85,15 +91,19 @@ export default function Login() {
                         Email
                       </label>
                       <input
-                        onChange={(e) => {
-                          setUsername(e.target.value);
-                        }}
-                        type="text"
-                        id="username"
+                        // onChange={(e) => {
+                        //   setUsername(e.target.value);
+                        // }}
+
+                        {...register("email")}
                         className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Email"
-                        required
                       />
+                      {errors.email && (
+                        <p className="text-red-500 text-sm">
+                          {errors.email.message}
+                        </p>
+                      )}
                     </div>
                     <div className="mb-4">
                       <label
@@ -103,17 +113,19 @@ export default function Login() {
                         Mật khẩu
                       </label>
                       <input
-                        onChange={(e) => {
-                          setPassword(e.target.value);
-                        }}
+                        // onChange={(e) => {
+                        //   setPassword(e.target.value);
+                        // }}
+                        {...register("password")}
                         type="password"
-                        id="password"
                         className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Mật khẩu"
-                        required
-                        minLength={6}
-                        maxLength={20}
                       />
+                      {errors.password && (
+                        <p className="text-red-500 text-sm">
+                          {errors.password.message}
+                        </p>
+                      )}
                       <Link to="/forgot-password">
                         <div
                           href="#"
