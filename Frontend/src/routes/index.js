@@ -1,6 +1,8 @@
 import CreateCourse from "~/pages/CreateCourse/CreateCourse.jsx";
 import GvLayout from "~/layout/GvLayout/GvLayout.jsx";
+// import CourseChapter from "../pages/Chapter/CourseChapter.jsx";
 import CourseChapter from "../pages/Chapter/CourseChapter.jsx";
+
 import GvHome from "../pages/Gvhome/GvHome.jsx";
 import Home from "../pages/Home/home.jsx";
 import CourseLesson from "../pages/Lesson/CourseLesson.jsx";
