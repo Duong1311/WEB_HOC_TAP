@@ -3,7 +3,7 @@ import GvLayout from "~/layout/GvLayout/GvLayout.jsx";
 // import CourseChapter from "../pages/Chapter/CourseChapter.jsx";
 import CourseChapter from "../pages/Chapters/CourseChapter.jsx";
 
-import GvHome from "../pages/Gvhome/GvHome.jsx";
+import GvHome from "../pages/GvHome/GvHome.jsx";
 import Home from "../pages/Home/home.jsx";
 import CourseLesson from "../pages/Lesson/CourseLesson.jsx";
 import Login from "../pages/Login/Login.jsx";
