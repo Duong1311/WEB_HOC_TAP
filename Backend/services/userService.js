@@ -23,15 +23,15 @@ const userService = {
     };
   },
   avatar: async (data) => {
-    console.log(data);
+    // console.log(data);
     const res = await uploadFile({ shared: true }, data);
-    console.log(res);
+    // console.log(res);
     // delete old course image
     const courseOld = await User.findOne({ _id: data.originalname });
-    console.log(courseOld);
+    // console.log(courseOld);
     if (courseOld.imageId) {
       const resDelete = await deleteFile(courseOld.imageId);
-      console.log("delete", resDelete);
+      // console.log("delete", resDelete);
     }
     // update course image
     const user = await User.findOneAndUpdate(
@@ -45,7 +45,7 @@ const userService = {
         returnDocument: "after",
       }
     );
-    console.log(user);
+    // console.log(user);
     return {
       data: user,
       status: 200,

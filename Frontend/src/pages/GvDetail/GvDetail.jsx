@@ -22,7 +22,7 @@ export default function GvDetail() {
   const getUserData = async (id) => {
     try {
       const res = await getUserInfor(id);
-      console.log(res.data);
+      // console.log(res.data);
       setUserDetaill(res.data);
       setIsLoading(false);
     } catch (error) {
@@ -42,7 +42,7 @@ export default function GvDetail() {
         setCourses(res.data.courses);
 
         setTotalPage(res.data.totalPage);
-        console.log(res.data);
+        // console.log(res.data);
       }
       // console.log(courses);
       setIsLoading(false);

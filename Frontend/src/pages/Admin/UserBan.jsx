@@ -37,11 +37,11 @@ export default function Admin() {
     // console.log("page", p);
   };
   const handleBlock = async (userId) => {
-    console.log(userId);
+    // console.log(userId);
     //find course by id
     const newInfor = [...userInfors];
     const inFor = newInfor.find((course) => course._id === userId);
-    console.log(inFor);
+    // console.log(inFor);
 
     if (inFor) {
       inFor.status = !inFor.status;
@@ -63,7 +63,7 @@ export default function Admin() {
     try {
       setIsLoading(true);
       const res = await getAllUser(title, page, limit);
-      console.log(res.data);
+      // console.log(res.data);
       setUserInfors(res?.data?.allUser);
 
       setTotalPage(res.data.totalPage);

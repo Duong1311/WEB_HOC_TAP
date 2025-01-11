@@ -26,9 +26,9 @@ export default function RatingCourse({ data, getRatingData }) {
   const handleClose = () => setAnchorEl(null);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const deleteRating = async () => {
-    console.log("delete rating");
+    // console.log("delete rating");
     handleClose();
-    console.log(data);
+    // console.log(data);
     const res = await deleteRatingById(data?._id);
     if (res.data.status === 404) {
       toast.error(res.data.message);

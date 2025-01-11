@@ -14,12 +14,12 @@ export default function UserLessonContent({ markdown }) {
       // Select all iframes within the contentRef and add the allowfullscreen attribute
       const iframes = contentRef.current.querySelectorAll("iframe");
       iframes.forEach((iframe) => {
-        console.log("Adding allowfullscreen to iframe:", iframe); // Debugging line
+        // console.log("Adding allowfullscreen to iframe:", iframe); // Debugging line
         iframe.setAttribute("allowfullscreen", "true");
       });
     }
   }, [markdown]);
-  console.log("Markdown:", markdown); // Debugging line
+  // console.log("Markdown:", markdown); // Debugging line
   return (
     <div className="center min-h-screen mt-10">
       <style>

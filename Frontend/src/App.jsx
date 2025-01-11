@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { publicRoutes } from "./routes";
+import { publicRoutes, privateRoutes } from "./routes";
 import DefaultLayout from "./layout/DefaultLayout/DefaultLayout";
 import ErrorPage from "./pages/Error/ErrorPage";
 
@@ -28,6 +28,9 @@ function App() {
             />
           );
         })}
+
+        {/* private router */}
+
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>

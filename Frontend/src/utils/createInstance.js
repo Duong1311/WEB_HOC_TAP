@@ -10,7 +10,7 @@ export const URL = "https://web-hoc-tap.onrender.com/api/";
 
 const refreshToken = async () => {
   try {
-    console.log("refresh token");
+    // console.log("refresh token");
     const res = await axios.post(`${URL}auth/refresh`, {
       withCredentials: true,
     });
@@ -27,7 +27,7 @@ export const createAxios = (user, dispatch, stateSuccess) => {
     async (config) => {
       let date = new Date();
       const decodedToken = jwtDecode(user?.accessToken);
-      console.log(decodedToken.exp, date.getTime() / 1000);
+      // console.log(decodedToken.exp, date.getTime() / 1000);
       if (decodedToken.exp < date.getTime() / 1000) {
         const data = await refreshToken();
         const refreshUser = {

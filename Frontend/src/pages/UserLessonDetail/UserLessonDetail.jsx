@@ -51,7 +51,7 @@ export default function UserLessonDetail() {
     try {
       setIsLoading(true);
       const res = await getLessonContent(id);
-      console.log("getLessonContent", res.data);
+      // console.log("getLessonContent", res.data);
 
       setLesson(res.data);
       checkButton(res.data);
@@ -119,14 +119,14 @@ export default function UserLessonDetail() {
     const nextChapterId = chapterArray[index + 1];
     // return if it is the last chapter
     if (!nextChapterId) return;
-    console.log("nextChapterId", nextChapterId);
+    // console.log("nextChapterId", nextChapterId);
     //get first lesson id of next chapter
     //get chapter data api
     const res = await getChapterData(nextChapterId);
     const lessonOrderIds = res?.data?.lessonOrderIds;
 
     const firstLessonId = lessonOrderIds[0];
-    console.log("firstLessonId", firstLessonId);
+    // console.log("firstLessonId", firstLessonId);
     if (!firstLessonId) return;
     navigate(`/userlessondetail/${firstLessonId}`);
     // window.location.reload();
@@ -139,7 +139,7 @@ export default function UserLessonDetail() {
     const prevChapterId = chapterArray[index - 1];
     // return if it is the last chapter
     if (!prevChapterId) return;
-    console.log("prevChapterId", prevChapterId);
+    // console.log("prevChapterId", prevChapterId);
     //get last lesson id of prev chapter
     //get chapter data api
     const res = await getChapterData(prevChapterId);
@@ -151,7 +151,7 @@ export default function UserLessonDetail() {
   const checkButton = (lesson) => {
     const lessonArray = lesson?.chapterId?.lessonOrderIds;
     const index = lessonArray.indexOf(id);
-    console.log("index", index);
+    // console.log("index", index);
     if (index === 0) {
       setDisplayPreButton(false);
       setDisplayPreButtonChapter(true);
@@ -167,7 +167,7 @@ export default function UserLessonDetail() {
   const addCourseToHistory = async (userId, courseId) => {
     try {
       const res = await addCourseToHistoryApi(userId, courseId);
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error);
     }

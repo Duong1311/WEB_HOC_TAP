@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 
 export default function Course({ data }) {
-  console.log("data", data);
+  // console.log("data", data);
   return (
     <Link to={`/usercoursedetail/${data?._id}`}>
       <div className="bg-white rounded-md w-full  flex flex-row">

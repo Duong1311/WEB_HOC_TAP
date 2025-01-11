@@ -47,7 +47,7 @@ export default function SearchHeader() {
     if (event.key === "Enter") {
       // 👇 Get input value
       // setUpdated(message);
-      console.log(message);
+      // console.log(message);
       setSearchParams({ search: message });
     }
   };
@@ -70,7 +70,7 @@ export default function SearchHeader() {
   const handleLogout = () => {
     setAnchorEl(null);
 
-    console.log("logout");
+    // console.log("logout");
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   useEffect(() => {

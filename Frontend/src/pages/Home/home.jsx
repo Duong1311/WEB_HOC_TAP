@@ -27,14 +27,14 @@ export default function Home() {
     if (event.key === "Enter") {
       // 👇 Get input value
       // setUpdated(message);
-      console.log(message);
+      // console.log(message);
       navigate(`/course/search/?search=${message}`);
     }
   };
   const getCategories = async () => {
     try {
       const res = await getAllCategory();
-      console.log(res.data);
+      // console.log(res.data);
       setCategory(res.data.slice(0, 10));
     } catch (error) {
       console.log(error.message);
@@ -65,7 +65,7 @@ export default function Home() {
         page,
         limit
       );
-      console.log(res.data);
+      // console.log(res.data);
       setTotalPage(res.data.totalPage);
       setCourses(res.data.courses);
       setIsLoading(false);
@@ -75,7 +75,7 @@ export default function Home() {
   };
   const setCurPage = async (e, p) => {
     setPage(p);
-    console.log(p);
+    // console.log(p);
     await fetchDataSearch("", "", "", p, 12);
 
     // await getCourseStudys(id, p, 5, "");

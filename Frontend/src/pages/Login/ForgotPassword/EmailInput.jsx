@@ -15,7 +15,7 @@ export default function EmailInput() {
   const nagigateToOtp = async () => {
     if (email) {
       const OTP = Math.floor(Math.random() * 9000 + 1000);
-      console.log(OTP);
+      // console.log(OTP);
       dispatch(setOtpData(OTP));
       const res = await sendEmailOtp(email, OTP);
       if (res.data.error) {

@@ -53,7 +53,7 @@ export default function CreateCourse() {
         title: courseTitle,
         categoryId: courseCategory,
       });
-      console.log(res.data);
+      // console.log(res.data);
       navigate("/gvhome");
     } catch (error) {
       console.log(error.message);

@@ -34,8 +34,8 @@ const authControllers = {
 
   registerUser: async (req, res) => {
     try {
-      console.log("register");
-      console.log(req.body);
+      // console.log("register");
+      // console.log(req.body);
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(req.body.password, salt);
       const user1 = await User.findOne({ email: req.body.email });
@@ -54,7 +54,7 @@ const authControllers = {
 
       //save to database
       const user = await newUser.save();
-      console.log(user);
+      // console.log(user);
       res.status(200).json(user);
     } catch (err) {
       res.status(500).json(err);
@@ -62,8 +62,8 @@ const authControllers = {
   },
   loginUser: async (req, res) => {
     try {
-      console.log("login");
-      console.log(req.body);
+      // console.log("login");
+      // console.log(req.body);
       const user = await User.findOne({ email: req.body.email });
       if (!user)
         return res.status(201).json({
@@ -105,7 +105,7 @@ const authControllers = {
       const user = await User.findOne({ email: payload.email });
       // console.log(user);
       if (!user) {
-        console.log("User does not exist");
+        // console.log("User does not exist");
         // Create a user if they do not exist
         const newUser = new User({
           email: payload.email,
@@ -151,11 +151,11 @@ const authControllers = {
   },
   refreshToken: async (req, res) => {
     try {
-      console.log("refresh token");
+      // console.log("refresh token");
       //Take refresh token from user
 
       const refreshToken = req.cookies.refreshToken;
-      console.log(refreshToken);
+      // console.log(refreshToken);
       if (!refreshToken)
         return res.status(401).json("You're not authenticated");
       if (!refreshTokens.includes(refreshToken)) {

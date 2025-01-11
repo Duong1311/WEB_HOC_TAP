@@ -40,7 +40,7 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
       // Validate file size (example limit: 2MB)
       const maxSize = 1 * 1024 * 1024; // 2MB in bytes
       if (blob.size > maxSize) {
-        console.log("File size is too large");
+        // console.log("File size is too large");
         toast.error("Kích thước file quá lớn hãy thử lại.");
         return; // Stop execution if file is too large
       }

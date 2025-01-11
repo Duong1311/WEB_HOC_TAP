@@ -37,9 +37,9 @@ export default function CourseLesson() {
   const handleChangeLesson = async () => {
     setToggle(!toggle);
     const res = await updateLessonTitle(id, { title: text });
-    console.log("res", res);
+    // console.log("res", res);
   };
-  console.log("text", text);
+  // console.log("text", text);
   const [displayQuestion, setDisplayQuestion] = useState(false);
   const [displayPreButton, setDisplayPreButton] = useState(true);
   const [displayNextButton, setDisplayNextButton] = useState(true);
@@ -57,7 +57,7 @@ export default function CourseLesson() {
     try {
       setIsLoading(true);
       const res = await getLessonContent(id);
-      console.log("getLessonContent", res.data);
+      // console.log("getLessonContent", res.data);
       setLesson(res.data);
       checkButton(res.data);
       setText(res.data.title);
@@ -119,11 +119,11 @@ export default function CourseLesson() {
     const nextChapterId = chapterArray[index + 1];
     // return if it is the last chapter
     if (!nextChapterId) return;
-    console.log("nextChapterId", nextChapterId);
+    // console.log("nextChapterId", nextChapterId);
     //get first lesson id of next chapter
     //get chapter data api
     const res = await getChapterData(nextChapterId);
-    console.log("res", res.data);
+    // console.log("res", res.data);
 
     const lessonOrderIds = res?.data?.lessonOrderIds;
     // if (!lessonOrderIds == []) return;
@@ -143,7 +143,7 @@ export default function CourseLesson() {
     const prevChapterId = chapterArray[index - 1];
     // return if it is the last chapter
     if (!prevChapterId) return;
-    console.log("prevChapterId", prevChapterId);
+    // console.log("prevChapterId", prevChapterId);
     //get last lesson id of prev chapter
     //get chapter data api
     const res = await getChapterData(prevChapterId);
@@ -155,7 +155,7 @@ export default function CourseLesson() {
   const checkButton = (lesson) => {
     const lessonArray = lesson?.chapterId?.lessonOrderIds;
     const index = lessonArray.indexOf(id);
-    console.log("index", index);
+    // console.log("index", index);
     if (index === 0) {
       setDisplayPreButton(false);
       setDisplayPreButtonChapter(true);

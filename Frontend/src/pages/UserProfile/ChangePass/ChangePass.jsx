@@ -34,7 +34,7 @@ export default function ChangePass({ setShowModal, id }) {
         password: password,
         newPassword: newPassword,
       });
-      console.log(res);
+      // console.log(res);
       if (res.data.status === 200) toast.success(res.data.message);
       if (res.data.status === 201) toast.error(res.data.message);
     } catch (error) {

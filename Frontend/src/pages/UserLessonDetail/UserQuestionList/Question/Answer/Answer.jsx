@@ -16,8 +16,8 @@ export default function Answer({
   const [selected, setSelected] = useState(null);
   const [stype, setStype] = useState("");
   const handleItemClick = () => {
-    console.log("Clicked item index:", index, typeof index);
-    console.log("Correct answer:", correct, typeof correct);
+    // console.log("Clicked item index:", index, typeof index);
+    // console.log("Correct answer:", correct, typeof correct);
     if (hasClicked) return;
     setSelected(index);
     // onSelect(index);
@@ -27,7 +27,7 @@ export default function Answer({
         : "bg-red-200 border  border-black rounded-sm p-2 cursor-pointer"
     );
     setHasClicked(true);
-    console.log("hasClicked", hasClicked);
+    // console.log("hasClicked", hasClicked);
   };
 
   return (

@@ -26,8 +26,8 @@ export default function QuestionList() {
     try {
       const res = await getLessonQuestions(id);
 
-      console.log("questions", res.data);
-      console.log("fixDataFormat", fixDataFormat(res.data));
+      // console.log("questions", res.data);
+      // console.log("fixDataFormat", fixDataFormat(res.data));
       setQuestionsData(fixDataFormat(res.data));
     } catch (error) {
       console.log("error", error);
@@ -48,7 +48,7 @@ export default function QuestionList() {
   const createLesssonQuestionApi = async (id, questionsData) => {
     try {
       const res = await createLessonQuestion(id, questionsData);
-      console.log("questions", res.data);
+      // console.log("questions", res.data);
       getLessonQuestionApi(id);
       toast.success("Lưu câu hỏi thành công");
     } catch (error) {
@@ -56,13 +56,13 @@ export default function QuestionList() {
     }
   };
   const handleCreateLessonQuestions = async () => {
-    console.log("list questions", questionsData);
+    // console.log("list questions", questionsData);
     // remove id from answers
     const finalQuestionsData = questionsData.map((question) => ({
       ...question,
       answers: question.answers.map((answer) => answer.answer),
     }));
-    console.log("finalQuestionsData", finalQuestionsData);
+    // console.log("finalQuestionsData", finalQuestionsData);
     //check if question, answer, ex is empty
     const check = finalQuestionsData.every((question) => {
       const isQuestionValid =
@@ -86,7 +86,7 @@ export default function QuestionList() {
     await createLesssonQuestionApi(id, finalQuestionsData);
   };
   const addNewQuestion = () => {
-    console.log("add new question");
+    // console.log("add new question");
     const newQuestion = {
       _id: uuidv4(),
       title: "",
@@ -126,7 +126,7 @@ export default function QuestionList() {
     setQuestionsData(newQuestionsData);
   };
   const deleteChoice = (questionId, index) => {
-    console.log("delete choice", questionId, index);
+    // console.log("delete choice", questionId, index);
     const newQuestionsData = [...questionsData];
     const question = newQuestionsData.find((q) => q._id === questionId);
 
@@ -136,11 +136,11 @@ export default function QuestionList() {
 
     // console.log(question.answers);
     setQuestionsData(newQuestionsData);
-    console.log("questionsData", questionsData);
+    // console.log("questionsData", questionsData);
   };
 
   const deleteQuestion = async (questionId) => {
-    console.log("delete question", questionId);
+    // console.log("delete question", questionId);
     const newQuestionsData = [...questionsData];
     const question = newQuestionsData.find((q) => q._id === questionId);
     if (question) {
@@ -149,7 +149,7 @@ export default function QuestionList() {
     }
     setQuestionsData(newQuestionsData);
     const res = await deleteQuestionApi(questionId);
-    console.log("delete question", res.data);
+    // console.log("delete question", res.data);
     toast.success(res.data.message);
   };
   const addExplanation = (questionId, data) => {
@@ -172,7 +172,7 @@ export default function QuestionList() {
     try {
       setShowLoading(true);
       const res = await createLessonQuestionByOpenAi(data);
-      console.log("questions", res.data.result);
+      // console.log("questions", res.data.result);
       // setQuestionsData(res.data);
       const newQuestionsData = [...questionsData];
       const fix = fixDataFormat(res.data.result.questions);
@@ -180,7 +180,7 @@ export default function QuestionList() {
         question._id = uuidv4();
         newQuestionsData.push(question);
       });
-      console.log("newQuestionsData", newQuestionsData);
+      // console.log("newQuestionsData", newQuestionsData);
       // console.log("fixDataFormat", fixDataFormat(newQuestionsData));
 
       setQuestionsData(newQuestionsData);

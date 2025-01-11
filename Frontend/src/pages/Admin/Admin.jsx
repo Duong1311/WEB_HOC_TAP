@@ -44,7 +44,7 @@ export default function Admin() {
   const publicCourseApi = async (courseId) => {
     try {
       const res = await publicCourse(courseId);
-      console.log(res.data);
+      // console.log(res.data);
       // getAllCourses(id);
     } catch (error) {
       console.log(error.message);
@@ -52,11 +52,11 @@ export default function Admin() {
   };
 
   const handlePublic = (courseId) => {
-    console.log(courseId);
+    // console.log(courseId);
     //find course by id
     const newCourse = [...courses];
     const course = newCourse.find((course) => course._id === courseId);
-    console.log(course);
+    // console.log(course);
 
     if (course) {
       course.public = !course.public;

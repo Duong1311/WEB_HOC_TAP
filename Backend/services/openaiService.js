@@ -37,10 +37,10 @@ const openaiService = {
       top_p: 0.8,
       response_format: { type: "json_object" },
     });
-    console.log(completion);
+    // console.log(completion);
     const parsableJSONresponse = completion.choices[0].message.content;
     const parsedResponse = JSON.parse(parsableJSONresponse);
-    console.log(parsedResponse);
+    // console.log(parsedResponse);
     return { result: parsedResponse };
   },
 };

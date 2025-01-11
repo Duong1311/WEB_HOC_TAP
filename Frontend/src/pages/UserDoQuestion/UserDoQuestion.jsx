@@ -34,7 +34,7 @@ export default function UserDoQuestion() {
     try {
       setShowLoading(true);
       const res = await createLessonQuestionByOpenAi(data);
-      console.log("questions", res.data.result);
+      // console.log("questions", res.data.result);
       // setQuestionsData(res.data);
       // const newQuestionsData = [...questionsData];
       const newQuestionsData = [];
@@ -43,13 +43,13 @@ export default function UserDoQuestion() {
         question._id = uuidv4();
         newQuestionsData.push(question);
       });
-      console.log("newQuestionsData", newQuestionsData);
+      // console.log("newQuestionsData", newQuestionsData);
       setQuestionsData(newQuestionsData);
       toast.success("Tạo câu hỏi thành công");
       setShowModal(true);
       setShowLoading(false);
     } catch (error) {
-      console.log("error", error);
+      // console.log("error", error);
       toast.error("Tạo câu hỏi thất bại");
     }
   };

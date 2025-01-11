@@ -22,7 +22,7 @@ export default function UserProfile() {
       setEmail(res?.data?.email);
       setDescription(res?.data?.description);
       setAvatar(res?.data?.imageId);
-      console.log(res.data.imageId);
+      // console.log(res.data.imageId);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -39,7 +39,7 @@ export default function UserProfile() {
 
         description: description,
       });
-      console.log(res);
+      // console.log(res);
       if (res.data.error) {
         toast.error(res.data.error);
         return;

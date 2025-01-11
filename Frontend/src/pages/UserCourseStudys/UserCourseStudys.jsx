@@ -17,14 +17,14 @@ export default function UserCourseStudys() {
   const [isLoading, setIsLoading] = useState(true);
   const setCurPage = async (e, p) => {
     setPage(p);
-    console.log(p);
+    // console.log(p);
     await getCourseStudys(id, p, 5, "");
   };
   const getCourseStudys = async (id, page, limit, title) => {
     try {
       setIsLoading(true);
       const res = await getAllCourseStudys(id, page, limit, title);
-      console.log("data", res.data);
+      // console.log("data", res.data);
       setCourseStudys(res.data);
       setIsLoading(false);
     } catch (error) {

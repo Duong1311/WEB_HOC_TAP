@@ -33,9 +33,9 @@ export default function CourseDetail() {
   const handleUpload = async () => {
     const formData = new FormData();
     formData.append("file", file, id);
-    console.log(formData);
+    // console.log(formData);
     const res = await courseImage(formData);
-    console.log(res);
+    // console.log(res);
   };
   // const courseImageApi = async (file) => {
   //   try {
@@ -63,7 +63,7 @@ export default function CourseDetail() {
   const createCourseDetailApi = async (id, data) => {
     try {
       const res = await courseDetail(id, data);
-      console.log(res.data);
+      // console.log(res.data);
       toast.success(res.data.message);
     } catch (error) {
       console.log(error);
@@ -100,7 +100,7 @@ export default function CourseDetail() {
       setCourseCategory(res.data.categoryId._id);
       avatarUrl.current =
         "https://drive.google.com/thumbnail?id=" + res.data.imageId;
-      console.log(avatarUrl.current);
+      // console.log(avatarUrl.current);
       let a = {
         entityMap: res.data?.entityMap ? res.data.entityMap : {},
         blocks: res.data?.blocks
@@ -186,7 +186,7 @@ export default function CourseDetail() {
                   setFile(e.target.files[0]);
                   const maxSize = 1 * 1024 * 1024; // 1MB in bytes
                   if (e.target.files[0].size > maxSize) {
-                    console.log("File size is too large");
+                    // console.log("File size is too large");
                     toast.error("Kích thước file quá lớn hãy thử lại.");
                     return; // Stop execution if file is too large
                   }

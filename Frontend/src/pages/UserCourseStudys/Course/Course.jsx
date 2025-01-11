@@ -18,7 +18,7 @@ import { deleteCourseHistory } from "~/services/userServices";
 import { toast } from "react-toastify";
 
 export default function Course({ data, getCourseStudys }) {
-  console.log("data", data);
+  // console.log("data", data);
   const { id } = useParams();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,7 +26,7 @@ export default function Course({ data, getCourseStudys }) {
   const handleClose = () => setAnchorEl(null);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const deleteCourse = async () => {
-    console.log("delete course");
+    // console.log("delete course");
     handleClose();
     const res = await deleteCourseHistory(data?._id);
     if (res.data.status === 404) {

@@ -26,7 +26,7 @@ export default function OtpInput() {
       )
       .then(() => setTimer(60))
       .catch(console.log);
-    console.log("A new OTP has succesfully been sent to your email.");
+    // console.log("A new OTP has succesfully been sent to your email.");
   };
 
   const verfiyOTP = () => {

@@ -66,7 +66,7 @@ export default function Login() {
                     <GoogleLogin
                       className="w-full"
                       onSuccess={(credentialResponse) => {
-                        console.log(credentialResponse);
+                        // console.log(credentialResponse);
                         handleLoginGoogle(credentialResponse);
                       }}
                       onError={() => {

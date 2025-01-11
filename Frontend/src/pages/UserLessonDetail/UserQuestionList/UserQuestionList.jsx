@@ -10,7 +10,7 @@ export default function UserQuestionList() {
     try {
       const res = await getLessonQuestions(id);
       setQuestionsData(res.data);
-      console.log("questions", res.data);
+      // console.log("questions", res.data);
     } catch (error) {
       console.log("error", error);
     }

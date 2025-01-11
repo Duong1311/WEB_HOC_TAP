@@ -11,7 +11,7 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
     handlePublic(course._id);
   };
   const handleDeleteCourse = async () => {
-    console.log("delete course", course._id);
+    // console.log("delete course", course._id);
     try {
       confirm({
         title: "Xóa khóa học",
@@ -27,7 +27,7 @@ export default function Course({ course, handlePublic, deleteCourseUi }) {
       console.log("error", error);
     }
   };
-  console.log("course", course);
+  // console.log("course", course);
   return (
     <div
       key={course._id}

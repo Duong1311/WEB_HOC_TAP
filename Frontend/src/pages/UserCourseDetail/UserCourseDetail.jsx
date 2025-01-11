@@ -33,7 +33,7 @@ export default function UserCourseDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const setCurPage = async (e, p) => {
     setPage(p);
-    console.log(p);
+    // console.log(p);
     await getRatingData(id, p, 4);
   };
   const fetchData = async (id) => {
@@ -48,7 +48,7 @@ export default function UserCourseDetail() {
   const getRatingData = async (id, page, limit) => {
     try {
       const res = await getRatingByCourseId(id, page, limit);
-      console.log("rating", res.data);
+      // console.log("rating", res.data);
       setAllRating(res.data);
     } catch (error) {
       console.log(error);
@@ -77,7 +77,7 @@ export default function UserCourseDetail() {
   useEffect(() => {
     fetchData(id).then((course) => {
       setCourse(course);
-      console.log("course", course);
+      // console.log("course", course);
       let a = {
         entityMap: course?.entityMap ? course.entityMap : {},
         blocks: course?.blocks

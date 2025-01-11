@@ -76,13 +76,13 @@ export default function CourseChapter() {
   const addNewLessonApi = async (data) => {
     try {
       const res = await createLesson(data);
-      console.log("old data", data);
+      // console.log("old data", data);
       const newCourse = { ...course };
       const chapterUpdate = newCourse.chapters.find(
         (chapter) => chapter._id === data.chapterId
       );
       if (chapterUpdate) {
-        console.log("chapterUpdate", chapterUpdate);
+        // console.log("chapterUpdate", chapterUpdate);
         chapterUpdate.lessons.push(res.data);
         chapterUpdate.lessonOrderIds.push(res.data._id);
       }
@@ -112,7 +112,7 @@ export default function CourseChapter() {
   const updateMoveChapterApi = async (id, updateData) => {
     try {
       const res = await updateMoveChapter(id, updateData);
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -120,7 +120,7 @@ export default function CourseChapter() {
   const updateMoveLessonInOneChapterApi = async (chapterId, updateData) => {
     try {
       const res = await updateMoveLessonInOneChapter(chapterId, updateData);
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +164,7 @@ export default function CourseChapter() {
       chapterUpdate.title = updateData.title;
       setCourse(newCourse);
       const res = await updateChapter(chapterId, updateData);
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
       console.log(error);
     }

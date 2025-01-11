@@ -23,7 +23,7 @@ export default function Header() {
   const user = useSelector((state) => state.root.auth.login.currentUser);
 
   const accessToken = user?.accessToken;
-  console.log("accessToken", accessToken);
+  // console.log("accessToken", accessToken);
   const id = user?._id;
   const isAdmin = user?.admin;
   // console.log(isAdmin);
@@ -52,7 +52,7 @@ export default function Header() {
   const handleLogout = () => {
     setAnchorEl(null);
 
-    console.log("logout");
+    // console.log("logout");
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   useEffect(() => {

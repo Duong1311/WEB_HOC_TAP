@@ -39,7 +39,7 @@ export default function GvHeader() {
   const handleLogout = () => {
     setAnchorEl(null);
 
-    console.log("logout");
+    // console.log("logout");
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   return (
